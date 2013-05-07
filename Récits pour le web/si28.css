@@ -1,0 +1,29 @@
+@font-face{
+	font-family: 'Demihaut';
+	src: url('Demihautafinee_2010.ttf');
+}
+
+@font-face {
+    font-family: 'Demibas';
+    src: url('Demibasafinee_2010.ttf');
+}
+
+@font-face{
+	font-family: 'Demihaut_haut';
+	src: url('Demihaut_partiehaut.ttf');
+}
+
+@font-face{
+	font-family: 'Demihaut_bas';
+	src: url('Demihaut_partiebasse.ttf');
+}
+
+@font-face{
+	font-family: 'Demibas_haut';
+	src: url('Demibas_partiehaut.ttf');
+}
+
+@font-face {
+    font-family: 'Demibas_bas';
+    src: url('Demibas_partiebasse.ttf');
+}

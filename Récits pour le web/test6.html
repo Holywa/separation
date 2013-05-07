@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <link rel="stylesheet" href="si28.css" />
+  <title>Du debut en oiio</title>
+</head>
+
+<body bgcolor="#000000">
+    <div id="container"></div>
+    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.4.2.min.js"></script>
+    <script defer="defer">
+      var stage = new Kinetic.Stage({
+        container: 'container',
+        width: 1024,
+        height: 720
+      });
+      var layer = new Kinetic.Layer();
+
+      /////////////////////////////
+      //          OIIO           //
+      var oiio_h = new Kinetic.Text({
+        x: stage.getWidth() / 2,
+        y: 15,
+        text: 'OIIO',
+        fontSize: 30,
+        fontFamily: 'Demihaut_haut',
+        fill: 'white'
+      });
+
+      oiio_h.setOffset({ // align text on the center
+        x: oiio_h.getWidth() / 2,
+        y: -320
+      });
+
+
+      var oiio_b = new Kinetic.Text({
+        x: stage.getWidth() / 2,
+        y: 15,
+        text: 'OIIO',
+        fontSize: 30,
+        fontFamily: 'Demihaut_bas',
+        fill: 'white'
+      });
+
+      oiio_b.setOffset({ // align text on the center
+        x: oiio_b.getWidth() / 2,
+        y: -350
+      });
+
+
+      /////////////////////////////
+      //         Phrases         //
+      var phrase1 = new Kinetic.Text({
+        x: stage.getWidth() / 2,
+        y: 15,
+        text: 'SUR LE COMMENCEMENT DES \n CHOSES ETAIT UN \n DEBUT POUR LES UNS',
+        fontSize: 60,
+        fontFamily: 'Demihaut',
+        fill: 'white' 
+      })   
+
+      phrase1.setOffset({ // align text on the center
+        x: oiio_b.getWidth() / 2,
+        y: -350
+      });
+
+      var phrase2 = new Kinetic.Text({
+        x: stage.getWidth() / 2,
+        y: 15,
+        text: 'DUO DE CHOSES QUE LES \n AUTRES NE COMPRIRENT \n QUE LORSQUE TOUT BAS',
+        fontSize: 30,
+        fontFamily: 'Demihaut',
+        fill: 'white' 
+      }) 
+
+      phrase2.setOffset({ // align text on the center
+        x: oiio_b.getWidth() / 2,
+        y: -350
+      });
+
+      var phrase3 = new Kinetic.Text({
+        x: stage.getWidth() / 2,
+        y: 15,
+        text: 'ELLE LEUR APPRIT QUE \n LEURS DEBUTS AVAIENT \n DEJA ETE DITS',
+        fontSize: 30,
+        fontFamily: 'Demihaut',
+        fill: 'white' 
+      }) 
+
+      phrase3.setOffset({ // align text on the center
+        x: oiio_b.getWidth() / 2,
+        y: -350
+      });
+
+
+      /////////////////////////////
+      //       Animations        //
+      /////////////////////////////
+      var anim_explosion = new Kinetic.Animation( function(frame) {
+        var time = frame.time,
+        timeDiff = frame.timeDiff,
+        frameRate = frame.frameRate;
+
+        oiio_h.setX(oiio_h.getX()-5);
+        oiio_h.setY(oiio_h.getY()-5);
+
+        oiio_b.setX(oiio_b.getX()+5);
+        oiio_b.setY(oiio_b.getY()+5);
+      }, layer );
+
+      function oiio_explosion() {
+        anim_explosion.start();
+        setTimeout(function(){ anim_explosion.stop(); }, 500)
+      }
+
+      var anim_implosion = new Kinetic.Animation( function(frame) {
+        var time = frame.time,
+        timeDiff = frame.timeDiff,
+        frameRate = frame.frameRate;
+
+        oiio_h.setX(oiio_h.getX()+5);
+        oiio_h.setY(oiio_h.getY()+5);
+
+        oiio_b.setX(oiio_b.getX()-5);
+        oiio_b.setY(oiio_b.getY()-5);
+      }, layer );
+
+      function oiio_implosion() {
+        anim_implosion.start();
+        setTimeout(function(){ anim_implosion.stop(); }, 500)
+      }
+
+	layer.on('gestureend', function(e) {
+    if (e.scale < 1.0) {
+          oiio_explosion();
+    } else if (e.scale > 1.0) {
+        // User moved fingers further apart
+    }
+    
+}, false);
+	
+      var period = 2000;
+
+      var anim_p1 = new Kinetic.Animation(function(frame) {
+        var scale = Math.sin(frame.time * 2 * Math.PI / period) + 0.001;
+        phrase1.setScale(scale);
+      }, layer);
+
+      function p1_appear(){
+        anim_p1.start();  
+        setTimeout(function(){ anim_p1.stop(); }, 300)   
+      }
+
+      var anim_p2 = new Kinetic.Animation(function(frame) {
+        var scale = Math.sin(frame.time * 2 * Math.PI / period) + 0.001;
+        phrase2.setScale(scale);
+      }, layer);
+
+      function p2_appear(){
+        anim_p2.start();  
+        setTimeout(function(){ anim_p2.stop(); }, 300)   
+      }
+
+      var anim_p3 = new Kinetic.Animation(function(frame) {
+        var scale = Math.sin(frame.time * 2 * Math.PI / period) + 0.001;
+        phrase3.setScale(scale);
+      }, layer);
+
+      function p3_appear(){
+        anim_p3.start();  
+        setTimeout(function(){ anim_p3.stop(); }, 300)   
+      }
+
+
+      // add the shapes to the layer
+      layer.add(oiio_h);
+      layer.add(oiio_b);
+      stage.add(layer);
+
+      // core of the animation
+      var it = 0;
+
+     /* layer.on('touchmove', function() {  // fonctionne en tactile avec 'touchstart'
+        // phrase 1
+        if(it == 0){
+          oiio_explosion();
+          it = 1;
+        } else if(it == 1){ // faire apparaitre la phrase
+          layer.add(phrase1);
+          p1_appear();
+          it = 2;
+        } else if(it == 2){ // faire disparaitre la phrase
+          it = 3;
+        } else if(it == 3){
+          phrase1.destroy();
+          oiio_implosion();
+          it = 4;
+        }
+        // phrase 2
+        else if(it == 4){
+          oiio_explosion();
+          it = 5;
+        } else if(it == 5){ // faire apparaitre la phrase
+          layer.add(phrase2);
+          p2_appear();
+          it = 6;
+        } else if(it == 6){ // faire disparaitre la phrase
+          it = 7;
+        } else if(it == 7){
+          phrase2.destroy();
+          oiio_implosion();
+          it = 8;
+        }
+        // phrase 3
+        else if(it == 8){
+          oiio_explosion();
+          it = 9;
+        } else if(it == 9){ // faire apparaitre la phrase
+          layer.add(phrase3);
+          p3_appear();
+          it = 10;
+        } else if(it == 10){ // faire disparaitre la phrase
+          it = 11;
+        } else if(it == 11){
+          phrase3.destroy();
+          oiio_implosion();
+          it = 12;
+        }*/
+      });
+
+    </script>
+
+</body>
+</html>
