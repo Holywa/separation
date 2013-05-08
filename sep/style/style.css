@@ -1,0 +1,82 @@
+﻿@import "fontface.css";
+
+body {
+	background-color:#000000;
+	font-family:DemiBas,DemiHaut,DemiHautH,DemiHautB,DemiBasH,DemiBasB;
+	color:#FFFFFF;
+	border:0;
+	padding:0;
+	margin:0;
+}
+
+div #main {
+	border:0;
+	padding:0;
+	margin:0;
+}
+
+img .loading {
+	border:0;
+	padding:0;
+	margin:0;
+}
+
+a {
+	color:#FFFFFF;
+	font-family:DemiHaut;
+	font-size:1.5em;
+	text-decoration:none;
+	border:0;
+	padding:0;
+	margin:0;
+}
+
+.coupableHaut {
+	font-family:DemiHaut;
+	font-size:3em;
+	margin:0;
+	border:0;
+	padding:0;
+}
+
+.demiHautH {
+	font-family:DemiHautH;
+	font-size:1.5em;
+	margin:0;
+	border:0;
+	padding:0;
+}
+
+.demiHautB {
+	font-family:DemiHautB;
+	font-size:1.5em;
+	margin:0;
+	border:0;
+	padding:0;
+	line-height:0.5em;
+}
+
+.demiBasB {
+	font-family:DemiBasB;
+	font-size:1.5em;
+	margin:0;
+	border:0;
+	padding:0;
+	line-height:0.5em;
+}
+
+.demiBasH {
+	font-family:DemiBasH;
+	font-size:1.5em;
+	margin:0;
+	border:0;
+	padding:0;
+}
+
+.coupableBas {
+	font-family:DemiBas;
+	font-size:3em;
+	margin:0;
+	border:0;
+	padding:0;
+}

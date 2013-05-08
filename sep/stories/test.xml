@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<stories>
+	<story type="alter">
+		<title>Batman</title>
+		<sentences>
+			<sentence>
+				<word>The</word>
+				<word font="coupable_bas" next="ART">UTC</word>
+			</sentence>
+			<sentence>
+				<word>Ce</word>
+				<word font="coupable_haut" next="RIEN">DIEU</word>
+			</sentence>
+		</sentences>
+	</story>
+	<story type="continue">
+		<title>Superman</title>
+		<sentences>
+			<sentence>
+				<word>Stop...</word>
+				<word font="coupable_bas" next="time">hammer</word>
+			</sentence>
+		</sentences>
+	</story>
+</stories>
