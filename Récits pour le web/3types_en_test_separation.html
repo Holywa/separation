@@ -8,6 +8,7 @@
   <body bgcolor="#000000">
     <div id="container"></div>
     <script src="lib/kinetic-v4.4.3.min.js"></script>
+    <script src="lib/separation-gestures-v1.0.0.js"></script>
     <script defer="defer">
     var stage = new Kinetic.Stage({
       container: 'container',
@@ -77,15 +78,6 @@
         y: - p1_4.getHeight() * 2 + 6
       });
 
-      // Pour le mot séparation
-      var rect = new Kinetic.Rect({
-        x: col - word_size + p1_1.getTextWidth(),
-        y: lines + 20,
-        width: p1_2.getTextWidth(),
-        height: 25,
-        fill: 'green'
-      });
-
       function cut_word(){
         p1_4.setX(stage.getWidth() + p1_4.getWidth() / 2);
 
@@ -104,33 +96,14 @@
 
       this.start = function(){
         var x = 0;
-
-        rect.on('touchmove', function(){
-          var touchPos = stage.getTouchPosition();
-
-          if(touchPos.x >= (rect.getWidth + rect.getX() - 20)) { 
-            x = rect.getWidth + rect.getX(); 
-          }
-          else if((x != 0) && (touchPos.x <= (rect.getX()) + 20)) {
-            rect.setFill('red');
-            cut_word();
-            x = 0;
-          }  
-          else if((touchPos.x < x) && ((touchPos.y < (rect.getY() + rect.getHeight())) && (touchPos.y > rect.getY()))) {
-            rect.setFill('yellow');
-            x = touchPos.x;
-          }
-          else{ 
-            rect.setFill('pink');
-            x = 0; 
-          }
-        });
   
         layer.add(p1_1);
         layer.add(p1_2);
         layer.add(p1_3);
         layer.add(p1_4);
-        layer.add(rect); 
+
+        var couper = new Gestures.cut(col - word_size + p1_1.getTextWidth(), lines + 20, p1_2.getTextWidth(), 25, layer, stage);
+        couper.on(cut_word);
         stage.add(layer);
       }
 

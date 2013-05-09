@@ -9,9 +9,7 @@
           y: _y,
           width: _width,
           height: _height,
-          fill: 'green',
-          stroke: 'black',
-          strokeWidth: 2
+          opacity: 0
         });
 
         var x = 0;
