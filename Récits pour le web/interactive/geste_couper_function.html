@@ -12,6 +12,7 @@
   <body onmousedown="return false;">
     <div id="container"></div>
     <script src="http://www.html5canvastutorials.com/libraries/kinetic-v4.5.0-beta.js"></script>
+    <script src="../lib/separation-gestures-v1.0.0.js"></script>
     <script defer="defer">
       function writeMessage(messageLayer, message) {
         var context = messageLayer.getContext();
@@ -33,37 +34,7 @@
 
       stage.add(messageLayer);
 
-      function geste_couper(_x, _y, _width, _height, _layer, _stage){
-        var rect = new Kinetic.Rect({
-          x: _x,
-          y: _y,
-          width: _width,
-          height: _height,
-          fill: 'green',
-          stroke: 'black',
-          strokeWidth: 2
-        });
-
-        var x = 0;
-
-        this.on = function(handler) {
-          rect.on('touchmove', function(){
-            var touchPos = _stage.getTouchPosition();
-
-            if(touchPos.x >= (_width + _x - 20)){ x = _width + _x; }
-            else if((x != 0) && (touchPos.x <= (_x + 20))){
-              x = 0;
-              handler()
-            }  
-            else if((touchPos.x < x) && ((touchPos.y < (_height + _y)) && (touchPos.y > _y))){ x = touchPos.x; }
-            else{ x = 0; }
-          });
-        }
-
-        _layer.add(rect);
-      }
-
-      var couper = new geste_couper(239, 75, 600, 50, layer, stage);
+      var couper = new Gestures.cut(239, 75, 600, 50, layer, stage);
 
       couper.on(function(){
         writeMessage(messageLayer, 'ended') 
