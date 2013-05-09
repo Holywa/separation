@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width"/>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body onmousedown="return false;">
+    <div id="container"></div>
+    <script src="http://www.html5canvastutorials.com/libraries/kinetic-v4.5.0-beta.js"></script>
+    <script defer="defer">
+      function writeMessage(messageLayer, message) {
+        var context = messageLayer.getContext();
+        messageLayer.clear();
+        context.font = '18pt Calibri';
+        context.fillStyle = 'black';
+        context.fillText(message, 10, 25);
+      }
+
+      var stage = new Kinetic.Stage({
+        container: 'container',
+        width: 1000,
+        height: 200
+      });
+
+      var messageLayer = new Kinetic.Layer();
+
+      var layer = new Kinetic.Layer();
+
+      stage.add(messageLayer);
+
+      function geste_couper(_x, _y, _width, _height, _layer, _stage){
+        var rect = new Kinetic.Rect({
+          x: _x,
+          y: _y,
+          width: _width,
+          height: _height,
+          fill: 'green',
+          stroke: 'black',
+          strokeWidth: 2
+        });
+
+        var x = 0;
+
+        this.on = function(handler) {
+          rect.on('touchmove', function(){
+            var touchPos = _stage.getTouchPosition();
+
+            if(touchPos.x >= (_width + _x - 20)){ x = _width + _x; }
+            else if((x != 0) && (touchPos.x <= (_x + 20))){
+              x = 0;
+              handler()
+            }  
+            else if((touchPos.x < x) && ((touchPos.y < (_height + _y)) && (touchPos.y > _y))){ x = touchPos.x; }
+            else{ x = 0; }
+          });
+        }
+
+        _layer.add(rect);
+      }
+
+      var couper = new geste_couper(239, 75, 600, 50, layer, stage);
+
+      couper.on(function(){
+        writeMessage(messageLayer, 'ended') 
+      });
+
+      stage.add(layer);
+    </script>
+  </body>
+</html>
