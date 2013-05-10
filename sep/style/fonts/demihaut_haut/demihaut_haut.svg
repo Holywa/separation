@@ -5,13 +5,13 @@
 <defs>
 <font id="demihaut_partiehautregular" horiz-adv-x="1014" >
 <font-face units-per-em="2048" ascent="1638" descent="-410" />
-<missing-glyph horiz-adv-x="508" />
+<missing-glyph horiz-adv-x="1098" />
 <glyph horiz-adv-x="2048" />
 <glyph horiz-adv-x="2048" />
 <glyph unicode="&#xd;" horiz-adv-x="508" />
-<glyph unicode=" "  horiz-adv-x="508" />
-<glyph unicode="&#x09;" horiz-adv-x="508" />
-<glyph unicode="&#xa0;" horiz-adv-x="508" />
+<glyph unicode=" "  horiz-adv-x="1098" />
+<glyph unicode="&#x09;" horiz-adv-x="1098" />
+<glyph unicode="&#xa0;" horiz-adv-x="1098" />
 <glyph unicode="!" horiz-adv-x="672" d="M207 136q0 15 16 31l82 84q15 14 29 14q13 0 31 -16l80 -86q12 -16 12 -29q0 -15 -14 -31l-80 -88q-20 -20 -29 -20q-16 0 -29 14l-88 101q-10 13 -10 26zM264 1364q0 46 21 69t62 23q42 0 62.5 -23t20.5 -69l-80 -1036h-37z" />
 <glyph unicode="&#x22;" horiz-adv-x="672" d="M101 1500q0 37 20.5 57t59.5 20t60.5 -19.5t21.5 -56.5q0 -8 -4 -34l-62 -359h-30l-62 359q-4 23 -4 33zM413 1500q0 37 20.5 57t59.5 20t60.5 -19.5t21.5 -56.5q0 -8 -4 -34l-62 -359h-30l-62 359q-4 23 -4 33z" />
 <glyph unicode="#" horiz-adv-x="1336" d="M117 472l30 98h271l86 290h-295l29 97h295l140 477h93l-141 -477h242l142 477h92l-141 -477h259l-29 -97h-259l-83 -290h279l-30 -98h-280l-140 -472h-92l139 472h-240l-142 -472h-92l140 472h-273zM511 569h242l86 290h-243z" />
@@ -63,16 +63,16 @@
 <glyph unicode="Q" horiz-adv-x="3002" d="M554 0l2 733q0 204 73 381q72 183 199 312q131 137 304 211q173 82 370 82q199 0 371 -82q172 -74 304 -211q133 -128 205 -312q80 -177 80 -381v-733h-390l-7 733q0 239 -166 402q-164 163 -397 163q-232 0 -384 -170q-152 -164 -162 -395v-190q-3 -14 -3 -75v-468h-399 z" />
 <glyph unicode="R" horiz-adv-x="3002" d="M554 0l2 733q0 204 73 381q72 183 199 312q131 137 304 211q173 82 370 82q199 0 371 -82q172 -74 304 -211q133 -128 205 -312q80 -177 80 -381v-733h-390l-7 733q0 239 -166 402q-164 163 -397 163q-232 0 -384 -170q-152 -164 -162 -395v-190q-3 -14 -3 -75v-468h-399 z" />
 <glyph unicode="S" horiz-adv-x="3006" d="M554 0l2 733q0 204 73 381q72 183 199 312q131 137 304 211q173 82 370 82q199 0 371 -82q172 -74 304 -211q133 -128 205 -312q80 -177 80 -381v-733h-390l-7 733q0 239 -166 402q-164 163 -397 163q-232 0 -384 -170q-152 -164 -162 -395v-190q-3 -14 -3 -75v-468h-399 z" />
-<glyph unicode="T" horiz-adv-x="1503" d="M-20 1294h563v-1294h413v1294h561v420h-1537v-420z" />
+<glyph unicode="T" horiz-adv-x="1503" d="M96 1293h457v-1293h403v1293h446v421h-1306v-421z" />
 <glyph unicode="U" horiz-adv-x="3002" d="M550 0h401v1714h-401v-1714zM2047 0h403v1714h-403v-1714z" />
 <glyph unicode="V" horiz-adv-x="3005" d="M550 0h401v1714h-401v-1714zM2047 0h403v1714h-403v-1714z" />
 <glyph unicode="W" horiz-adv-x="4400" d="M550 0h397v1716h-397v-1716zM1998 0h402v1716h-402v-1716zM3451 0h401v1716h-401v-1716z" />
 <glyph unicode="X" horiz-adv-x="3002" d="M550 0h401v1714h-401v-1714zM2047 0h403v1714h-403v-1714z" />
 <glyph unicode="Y" horiz-adv-x="3002" d="M550 0h401v1714h-401v-1714zM2047 0h403v1714h-403v-1714z" />
 <glyph unicode="Z" horiz-adv-x="3000" d="M490 1294h1267l-539 -1294h455l717 1714h-1900v-420z" />
-<glyph unicode="[" horiz-adv-x="758" />
+<glyph unicode="[" horiz-adv-x="3002" d="M550 0h420v1292h1531v422h-1951v-1714z" />
 <glyph unicode="\" horiz-adv-x="569" />
-<glyph unicode="]" horiz-adv-x="758" />
+<glyph unicode="]" horiz-adv-x="3002" d="M554 0l2 733q0 204 73 381q72 183 199 312q131 137 304 211q173 82 370 82q199 0 371 -82q172 -74 304 -211q133 -128 205 -312q80 -177 80 -381v-733h-390l-7 733q0 239 -166 402q-164 163 -397 163q-232 0 -384 -170q-152 -164 -162 -395v-190q-3 -14 -3 -75v-468h-399 z" />
 <glyph unicode="^" horiz-adv-x="3005" d="M554 0l2 733q0 204 73 381q72 183 199 312q131 137 304 211q173 82 370 82q199 0 371 -82q172 -74 304 -211q133 -128 205 -312q80 -177 80 -381v-733h-390l-7 733q0 239 -166 402q-164 163 -397 163q-232 0 -384 -170q-152 -164 -162 -395v-190q-3 -14 -3 -75v-468h-399 z" />
 <glyph unicode="_" horiz-adv-x="1024" d="M0 -100h1024v-60h-1024v60z" />
 <glyph unicode="`" horiz-adv-x="1024" d="M212 1363q0 31 20.5 51t53.5 20q20 0 40.5 -12t55.5 -47l291 -296h-69l-330 202q-31 20 -46.5 40t-15.5 42z" />
