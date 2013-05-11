@@ -1,8 +1,7 @@
-﻿//Un array de phrases, et dans chaque phrase, plusieurs mots + mot actif
-var storyTest;
+﻿//Un array de titres
+var stories = new Array();
 
-//Un array de titres
-var stories;
+var alreadyReadXML = false;
 
 var xmlFile;
 var xmlPath = "./stories/test.xml";
@@ -24,6 +23,7 @@ function loadXMLDoc() {
 		xmlhttp.send();
 		xmlFile = xmlhttp.responseXML;
 	}
+<<<<<<< HEAD
 	//alert(xmlFile);
 	return xmlFile;
 }
@@ -32,13 +32,20 @@ function loadXMLDoc() {
 //Object Story, with its name, its type, and the array of sentences
 function Story(name, type) {
 	this.name = name;
+=======
+}
+
+//Object Story, with its title, its type, and the array of sentences
+function Story(title, type) {
+	this.title = title;
+>>>>>>> 86663d0c2f3f97116b6d612cc27a240ef8fbd837
 	this.type = type;
-	this.sentences = array();
+	this.sentences = new Array();
 }
 
 //Object Sentence with the array of words (inactive and active)
 function Sentence() {
-	this.words = array();
+	this.words = new Array();
 }
 
 function Word(value)
@@ -99,26 +106,44 @@ ActiveWord.prototype.removeHelp = function () {
 	clearTimeout(helpTimer);
 };
 
+<<<<<<< HEAD
 
 
+=======
+//Getting all stories to display titles
+>>>>>>> 86663d0c2f3f97116b6d612cc27a240ef8fbd837
 function storiesFromXML() {
+	alreadyReadXML = true;
 	var tmpStories = xmlFile.getElementsByTagName("story");
 	for(var index = 0; index < tmpStories.length ; index++) {
 		var tmpType;
 		if(tmpStories[index].getAttribute("type") == "alter") {
-			alert("alter");
 			tmpType = StoryType["alter"];
 		}
 		else {
-			alert("continue");
 			tmpType = StoryType["continue"];
 		}
-		tmpStories[index].
-		stories[index] = new Story(tmpStories[index].val(), tmpType);
+		var title = tmpStories[index].getElementsByTagName("title")[0].textContent;
+		stories[index] = new Story(title, tmpType);
 	}
 }
 
+<<<<<<< HEAD
 function getStoryFromXml(titlePost) {
+=======
+function getRightStory(title) {
+	for(var i = 0; i < stories.length ; i++) {
+		if(stories[i].title.value == title.value) {
+			return stories[i];
+		}		
+	}
+	alert("Story not found.");
+	return null;
+}
+
+function getStoryFromXML(story) {
+	alert("getStoryFromXML");
+>>>>>>> 86663d0c2f3f97116b6d612cc27a240ef8fbd837
 	//reouvrir fichier
 	xmlFile=loadXMLDoc();
 	//selectionner bonne balise avec title

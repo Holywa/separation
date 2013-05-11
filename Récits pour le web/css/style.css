@@ -1,29 +1,67 @@
-@font-face{
-	font-family: 'Demihaut';
-	src: url('fonts/Demihautafinee_2010.ttf');
+/* La Séparation project */
+
+@font-face {
+    font-family: 'Demihaut_bas';
+    src: url('fonts/demihaut_partiebasse-webfont.eot');
+    src: url('fonts/demihaut_partiebasse-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/demihaut_partiebasse-webfont.woff') format('woff'),
+         url('fonts/demihaut_partiebasse-webfont.ttf') format('truetype'),
+         url('fonts/demihaut_partiebasse-webfont.svg#demihaut_partiebasseregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
-    font-family: 'Demibas';
-    src: url('fonts/Demibasafinee_2010.ttf');
+    font-family: 'Demihaut_haut';
+    src: url('fonts/demihaut_partiehaut-webfont.eot');
+    src: url('fonts/demihaut_partiehaut-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/demihaut_partiehaut-webfont.woff') format('woff'),
+         url('fonts/demihaut_partiehaut-webfont.ttf') format('truetype'),
+         url('fonts/demihaut_partiehaut-webfont.svg#demihaut_partiehautregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
-@font-face{
-	font-family: 'Demihaut_haut';
-	src: url('fonts/Demihaut_partiehaut.ttf');
-}
-
-@font-face{
-	font-family: 'Demihaut_bas';
-	src: url('fonts/Demihaut_partiebasse.ttf');
-}
-
-@font-face{
-	font-family: 'Demibas_haut';
-	src: url('fonts/Demibas_partiehaut.ttf');
+@font-face {
+    font-family: 'Demihaut';
+    src: url('fonts/demihautafinee_2010-webfont.eot');
+    src: url('fonts/demihautafinee_2010-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/demihautafinee_2010-webfont.woff') format('woff'),
+         url('fonts/demihautafinee_2010-webfont.ttf') format('truetype'),
+         url('fonts/demihautafinee_2010-webfont.svg#demihaut-afineemedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
     font-family: 'Demibas_bas';
-    src: url('fonts/Demibas_partiebasse.ttf');
+    src: url('fonts/demibas_partiebasse-webfont.eot');
+    src: url('fonts/demibas_partiebasse-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/demibas_partiebasse-webfont.woff') format('woff'),
+         url('fonts/demibas_partiebasse-webfont.ttf') format('truetype'),
+         url('fonts/demibas_partiebasse-webfont.svg#demibas_partiebasseregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Demibas_haut';
+    src: url('fonts/demibas_partiehaut-webfont.eot');
+    src: url('fonts/demibas_partiehaut-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/demibas_partiehaut-webfont.woff') format('woff'),
+         url('fonts/demibas_partiehaut-webfont.ttf') format('truetype'),
+         url('fonts/demibas_partiehaut-webfont.svg#demibas_partiehautregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Demibas';
+    src: url('fonts/demibasafinee_2010-webfont.eot');
+    src: url('fonts/demibasafinee_2010-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/demibasafinee_2010-webfont.woff') format('woff'),
+         url('fonts/demibasafinee_2010-webfont.ttf') format('truetype'),
+         url('fonts/demibasafinee_2010-webfont.svg#demibas-afineemedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
