@@ -12,6 +12,7 @@
   <body onmousedown="return false;">
     <div id="container"></div>
     <script src="http://www.html5canvastutorials.com/libraries/kinetic-v4.5.0-beta.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.9.3/TweenLite.min.js"></script>
     <script src="../lib/separation-gestures-v1.0.0.js"></script>
     <script defer="defer">
       function writeMessage(messageLayer, message) {
@@ -34,16 +35,17 @@
 
       stage.add(messageLayer);
 
-      var couper = new Gestures.cut({
-        x: 239, 
-        y: 75, 
-        width: 600, 
-        height: 50
-      }, layer, stage);
+      var couper = new Gestures.Word({
+        x: 12,
+        y: 12,
+        text: 'ABC',
+        fontSize: 60,
+        fontFamily: 'Arial',
+        fill: 'black'
+      }, layer);
 
-      couper.on(function(){
-        writeMessage(messageLayer, 'ended') 
-      });
+
+      layer.add(couper);
 
       stage.add(layer);
     </script>

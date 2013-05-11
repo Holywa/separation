@@ -102,7 +102,13 @@
         layer.add(p1_3);
         layer.add(p1_4);
 
-        var couper = new Gestures.cut(col - word_size + p1_1.getTextWidth(), lines + 20, p1_2.getTextWidth(), 25, layer, stage);
+        var couper = new Gestures.cut({
+          x: col - word_size + p1_1.getTextWidth(), 
+          y: lines + 20, 
+          width: p1_2.getTextWidth(), 
+          height: 25
+        }, layer, stage);
+        
         couper.on(cut_word);
         stage.add(layer);
       }
