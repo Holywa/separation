@@ -24,8 +24,10 @@ function loadXMLDoc() {
 		xmlhttp.send();
 		xmlFile = xmlhttp.responseXML;
 	}
-	alert(xmlFile);
+	//alert(xmlFile);
+	return xmlFile;
 }
+
 
 //Object Story, with its name, its type, and the array of sentences
 function Story(name, type) {
@@ -86,13 +88,18 @@ ActiveWord.prototype.changeWord = function () {
 	
 ActiveWord.prototype.helpUser = function () {
 	setTimeout( function() {
-	//changer opacite avec kinetic js
+		//changer opacite avec kinetic js
+		objectTaChange.transitionTo({
+			opacity:0;
+		});
 	}, 10000);
 };	
 
 ActiveWord.prototype.removeHelp = function () {
 	clearTimeout(helpTimer);
 };
+
+
 
 function storiesFromXML() {
 	var tmpStories = xmlFile.getElementsByTagName("story");
@@ -111,10 +118,81 @@ function storiesFromXML() {
 	}
 }
 
-function getStoryFromXml(title) {
+function getStoryFromXml(titlePost) {
 	//reouvrir fichier
+	xmlFile=loadXMLDoc();
 	//selectionner bonne balise avec title
+	titlesList=xmlFile.getElementsByTagName("title");
+	for(i=0;i<titlesList.length;i++){
+		if(titlesList[i]==titlePost){
+			storyNode=titlesList[i].parentNode;
+		}
+	}
+	if(storyNode.getAttribute("type")=="alter"){
+		createStoryAlter(storyNode);
+	}
+	else if(storyNode.getAttribute("type")=="continue"){
+		createStoryContinue(storyNode);
+	}
+
+}
+
+
+function createStoryAlter(storyNode){
+	sentencesNodes=storyNode.getElementsByTagName(sentence);
+	for(i=0;i<sentencesNodes.length;i++){
+		//affichage de toutes les phrases en même temps à l'écran
+	}
+	
 	//créer plusieurs phrases
 	//on boucle sur les phrases pour stocker mots
 	//créer mots actifs
+}
+
+function createStoryContinue(storyNode){
+	//phrase une à une. if transition=>phrase=2
+	
+	//créer plusieurs phrases
+	//on boucle sur les phrases pour stocker mots
+	//créer mots actifs
+}
+
+function displaySentence(sentenceNode){
+	wordsList=sentenceNode.childNodes;
+	var sentenceArray=new Array();
+	for(i=0;i<wordsList.length;i++){
+		if(wordsList[i].hasAttributes()==false){
+			sentenceArray.push(wordsList[i].nodeValue);
+		}
+		else{
+			var wordWithTransition=getWordWithTransition(wordsList[i]);
+			sentenceArray.push(wordWithTransition);
+		}
+	}
+}
+
+function getWordWithTransition(wordNode){ // récupérer transition adéquate pour chaque procédé
+	transitionType=wordNode.getAttribute("font");
+	var wordWithTransition="";
+	switch (transitionType) {
+		case coupable_haut: 
+			
+		break; 
+		
+		case coupable_bas: 
+			
+		break; 
+		
+		case centrale: 
+			
+		break; 
+		case ombre: 
+			
+		break; 
+		
+		default: 
+			
+		break;
+	}
+	return wordWithTransition;
 }
