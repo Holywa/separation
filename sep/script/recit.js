@@ -41,11 +41,40 @@ function getStoriesMenu() {
 	mainLayer.draw();
 }
 
+//Function called when user chooses a story
 function getStoryLayout(title) {
 	clearStage();
 	setHomeBtn();
 
+	//Get the correct node story
 	var currentStory = getRightStory(title);
 	
-	var sentences = getStoryFromXML(currentStory);
+	//Retrieve all sentences
+	getStoryFromXML(currentStory);
+	
+	//Decide which layout to set up
+	if(currentStory.type==StoryType["alter"]){
+		createStoryAlter(currentStory);
+	}
+	else if(currentStory.type==StoryType["continue"]){
+		createStoryContinue(currentStory);
+	}
+}
+
+//affichage de toutes les phrases en même temps à l'écran
+function createStoryAlter(story) {
+	alert("alter");
+	for(var s=0; s < story.sentences.length ; s++) {
+		for(var w=0; w < story.sentences[s].words.length ; w++) {
+			//disposition des mots
+		}
+	}
+}
+
+function createStoryContinue(sentences) {
+	alert("continue");
+	//phrase une à une. if transition=>phrase=2
+	//créer plusieurs phrases
+	//on boucle sur les phrases pour stocker mots
+	//créer mots actifs
 }

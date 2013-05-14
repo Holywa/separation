@@ -23,22 +23,12 @@ function loadXMLDoc() {
 		xmlhttp.send();
 		xmlFile = xmlhttp.responseXML;
 	}
-<<<<<<< HEAD
-	//alert(xmlFile);
-	return xmlFile;
-}
-
-
-//Object Story, with its name, its type, and the array of sentences
-function Story(name, type) {
-	this.name = name;
-=======
 }
 
 //Object Story, with its title, its type, and the array of sentences
-function Story(title, type) {
+function Story(title, type, node) {
+	this.storyNode = node;
 	this.title = title;
->>>>>>> 86663d0c2f3f97116b6d612cc27a240ef8fbd837
 	this.type = type;
 	this.sentences = new Array();
 }
@@ -64,7 +54,6 @@ function ActiveWord(value, newValue, type)
 {
 	this.value = value;
 	this.newValue = newValue;
-	this.activeZone;
 	this.type = type;
 }
 
@@ -83,8 +72,7 @@ ActiveWord.prototype.activeTransition = function () {
 		}
 };
 
-ActiveWord.prototype.recognizeGesture = function () {
-	alert("gesture");
+ActiveWord.prototype.setActiveZone = function () {
 };
 	
 ActiveWord.prototype.changeWord = function () {
@@ -95,10 +83,12 @@ ActiveWord.prototype.changeWord = function () {
 	
 ActiveWord.prototype.helpUser = function () {
 	setTimeout( function() {
+		alert("help");
 		//changer opacite avec kinetic js
-		objectTaChange.transitionTo({
+		/*objectTaChange.transitionTo({
 			opacity:0;
 		});
+	}, 10000);*/
 	}, 10000);
 };	
 
@@ -106,12 +96,8 @@ ActiveWord.prototype.removeHelp = function () {
 	clearTimeout(helpTimer);
 };
 
-<<<<<<< HEAD
 
-
-=======
 //Getting all stories to display titles
->>>>>>> 86663d0c2f3f97116b6d612cc27a240ef8fbd837
 function storiesFromXML() {
 	alreadyReadXML = true;
 	var tmpStories = xmlFile.getElementsByTagName("story");
@@ -124,13 +110,10 @@ function storiesFromXML() {
 			tmpType = StoryType["continue"];
 		}
 		var title = tmpStories[index].getElementsByTagName("title")[0].textContent;
-		stories[index] = new Story(title, tmpType);
+		stories[index] = new Story(title, tmpType, tmpStories[index]);
 	}
 }
 
-<<<<<<< HEAD
-function getStoryFromXml(titlePost) {
-=======
 function getRightStory(title) {
 	for(var i = 0; i < stories.length ; i++) {
 		if(stories[i].title.value == title.value) {
@@ -141,45 +124,27 @@ function getRightStory(title) {
 	return null;
 }
 
+//Create entire sentences and words from story in memory
 function getStoryFromXML(story) {
-	alert("getStoryFromXML");
->>>>>>> 86663d0c2f3f97116b6d612cc27a240ef8fbd837
-	//reouvrir fichier
-	xmlFile=loadXMLDoc();
-	//selectionner bonne balise avec title
-	titlesList=xmlFile.getElementsByTagName("title");
-	for(i=0;i<titlesList.length;i++){
-		if(titlesList[i]==titlePost){
-			storyNode=titlesList[i].parentNode;
+	tmpSen = story.storyNode.getElementsByTagName("sentence");
+	for(var s = 0 ; s < tmpSen.length ; s++) {
+		tmpWords = tmpSen[s].getElementsByTagName("word");
+		tmpSentence = new Sentence();
+		for(var w = 0; w < tmpWords.length ; w++) {
+			var tmpWord;
+			if(tmpWords[w].attributes.length > 0) {
+				tmpWord = new ActiveWord( tmpWords[w].textContent );
+			}
+			else {
+				tmpWord = new Word( tmpWords[w].textContent );
+				tmpWord.value.on("tap click", function() {
+					this.activeFalse();
+				} );
+			}
+			tmpSentence.words[w] = tmpWord;
 		}
+		story.sentences[s] = tmpSentence;
 	}
-	if(storyNode.getAttribute("type")=="alter"){
-		createStoryAlter(storyNode);
-	}
-	else if(storyNode.getAttribute("type")=="continue"){
-		createStoryContinue(storyNode);
-	}
-
-}
-
-
-function createStoryAlter(storyNode){
-	sentencesNodes=storyNode.getElementsByTagName(sentence);
-	for(i=0;i<sentencesNodes.length;i++){
-		//affichage de toutes les phrases en même temps à l'écran
-	}
-	
-	//créer plusieurs phrases
-	//on boucle sur les phrases pour stocker mots
-	//créer mots actifs
-}
-
-function createStoryContinue(storyNode){
-	//phrase une à une. if transition=>phrase=2
-	
-	//créer plusieurs phrases
-	//on boucle sur les phrases pour stocker mots
-	//créer mots actifs
 }
 
 function displaySentence(sentenceNode){

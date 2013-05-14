@@ -1,0 +1,51 @@
+/*
+ * Gestures for the Separation Project
+ */
+
+ var Gestures = {};
+
+ Gestures.cut = function(parameters, layer, stage){
+  var rect = new Kinetic.Rect({
+    x: parameters.x,
+    y: parameters.y,
+    width: parameters.width,
+    height: parameters.height,
+    opacity: 0
+  });
+
+  var x = 0;
+
+  this.on = function(handler) {
+    rect.on('touchmove', function(){
+      var touchPos = stage.getTouchPosition();
+
+      if(touchPos.x >= (parameters.width + parameters.x - 20)){ x = parameters.width + parameters.x; }
+      else if((x != 0) && (touchPos.x <= (parameters.x + 20))){
+        x = 0;
+        handler()
+      }  
+      else if((touchPos.x < x) && ((touchPos.y < (parameters.height + parameters.y)) && (touchPos.y > parameters.y))){ x = touchPos.x; }
+      else{ x = 0; }
+    });
+  }
+
+  layer.add(rect);
+};
+
+Gestures.Word = function(parameters, layer){
+  Kinetic.Text.call(this, parameters);
+
+  this.on('tap', function(){
+      TweenLite.to(this, 1, {
+        setScaleX: 2,
+        setScaleY: 2,
+        delay: 0,
+        onUpdate: function() {
+          layer.batchDraw() 
+        }
+      })
+  });
+};
+
+Gestures.Word.prototype = new Kinetic.Text();
+ 
