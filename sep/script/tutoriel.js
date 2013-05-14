@@ -2,8 +2,6 @@ function getTutorielMenu() {
 	clearStage();
 	setHomeBtn();
 	
-	alert("tutoriel");
-	
 	var lines = stage.getHeight() / 5;
     var col = stage.getWidth() / 2;
 
@@ -16,7 +14,7 @@ function getTutorielMenu() {
         y: lines,
         text: 'THIS ',
         fontSize: 3 * size_font,
-        fontFamily: 'Demihaut',
+        fontFamily: 'DemiHaut',
         fill: 'white'
       });
 
@@ -25,7 +23,7 @@ function getTutorielMenu() {
         y: lines,
         text: 'S^PARATION',
         fontSize: size_font,
-        fontFamily: 'Demihaut_haut',
+        fontFamily: 'DemiHautH',
         fill: 'white'
       });
 
@@ -34,7 +32,7 @@ function getTutorielMenu() {
         y: lines,
         text: 'S^PARATION',
         fontSize: size_font,
-        fontFamily: 'Demihaut_bas',
+        fontFamily: 'DemiHautB',
         fill: 'white'
       });
 
@@ -43,7 +41,7 @@ function getTutorielMenu() {
         y: lines,
         text: 'P^RC^PTION',
         fontSize: size_font,
-        fontFamily: 'Demihaut_bas',
+        fontFamily: 'DemiHautB',
         fill: 'white'
       });
 
@@ -67,7 +65,7 @@ function getTutorielMenu() {
       });
 
       this.start = function(){
-        p1_3.on('click', function(){
+        p1_3.on('tap click', function(){
           p1_4.setX(stage.getWidth() + p1_4.getWidth() / 2);
 
           p1_3.transitionTo({
@@ -83,7 +81,7 @@ function getTutorielMenu() {
           }, 400)
         })    
 
-        p1_4.on('click', function(){
+        p1_4.on('tap click', function(){
           p1_3.setX(stage.getWidth() + p1_3.getWidth() / 2 + word_size - p1_1.getWidth());
 
           p1_4.transitionTo({
@@ -99,11 +97,11 @@ function getTutorielMenu() {
           }, 400)
         })     
 
-        layer.add(p1_1);
-        layer.add(p1_2);
-        layer.add(p1_3);
-        layer.add(p1_4);
-        stage.add(layer);
+        actionLayer.add(p1_1);
+        actionLayer.add(p1_2);
+        actionLayer.add(p1_3);
+        actionLayer.add(p1_4);
+        stage.add(actionLayer);
       }
 
       this.stop = function(){
@@ -113,7 +111,7 @@ function getTutorielMenu() {
         p1_2.destroy();
         p1_3.destroy();
         p1_4.destroy();
-        stage.add(layer);
+        stage.add(actionLayer);
       }
     }
 
@@ -167,7 +165,7 @@ function getTutorielMenu() {
       p2_4.setOffset({ x: word_size - p2_1.getWidth() - p2_2.getWidth() });
 
       this.start = function(){  
-        p2_2.on('click', function(){
+        p2_2.on('tap click', function(){
           p2_3.transitionTo({
             opacity: 0,
             duration: 2
@@ -181,7 +179,7 @@ function getTutorielMenu() {
           p2_3.moveToTop();
         })
 
-        p2_3.on('click', function(){
+        p2_3.on('tap click', function(){
           p2_2.transitionTo({
             opacity: 0,
             duration: 2
@@ -195,11 +193,11 @@ function getTutorielMenu() {
           p2_2.moveToTop();
         })
 
-        layer.add(p2_1);
-        layer.add(p2_2);
-        layer.add(p2_3);
-        layer.add(p2_4);
-        stage.add(layer);
+        actionLayer.add(p2_1);
+        actionLayer.add(p2_2);
+        actionLayer.add(p2_3);
+        actionLayer.add(p2_4);
+        stage.add(actionLayer);
       }
 
       this.stop = function(){
@@ -207,7 +205,7 @@ function getTutorielMenu() {
         p2_2.destroy();
         p2_3.destroy();
         p2_4.destroy();
-        stage.add(layer);
+        stage.add(actionLayer);
       }
     }
 
@@ -240,17 +238,17 @@ function getTutorielMenu() {
       this.start = function(){  
         i = 0; 
 
-        p3_1.on('click', function(){
+        p3_1.on('tap click', function(){
           var rect = new Kinetic.Rect({
             x: 800,
             y: 3*lines + 21,
             width: 300,
-            height: 15,
+            height: 20,
             fill: 'black'
           });
 
-          layer.add(rect);
-          stage.add(layer);
+          actionLayer.add(rect);
+          stage.add(actionLayer);
 
           setTimeout(function(){
             if(i==0){
@@ -261,7 +259,7 @@ function getTutorielMenu() {
               p3_1.setText('SHREDS');
               i = 0;
             }
-            stage.add(layer);   
+            stage.add(actionLayer);   
           }, 2000)
 
           rect.transitionTo({
@@ -270,15 +268,15 @@ function getTutorielMenu() {
           })           
         })
 
-        layer.add(p3_1);
-        layer.add(p3_2);
-        stage.add(layer);
+        actionLayer.add(p3_1);
+        actionLayer.add(p3_2);
+        stage.add(actionLayer);
       }
 
       this.stop = function(){
         p3_1.destroy();
         p3_2.destroy();
-        stage.add(layer);
+        stage.add(actionLayer);
       }
     }        
 

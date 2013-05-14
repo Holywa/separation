@@ -2,11 +2,11 @@
  * Gestures for the Separation Project
  */
 
- var Gestures = new Array();
+ var Gestures = {};
  
  var mouseDown = false;
 
- Gestures.prototype.cut = function(parameters, layer, stage){
+ Gestures.cut = function(parameters, actionLayer, stage){
   var rect = new Kinetic.Rect({
     x: parameters.x,
     y: parameters.y,
@@ -59,19 +59,19 @@
 	
   }
 
-  layer.add(rect);
+  actionLayer.add(rect);
 };
 
-Gestures.Word = function(parameters, layer){
+Gestures.Word = function(parameters, actionLayer){
   Kinetic.Text.call(this, parameters);
 
-  this.on('tap', function(){
+  this.on('tap click', function(){
       TweenLite.to(this, 1, {
         setScaleX: 2,
         setScaleY: 2,
         delay: 0,
         onUpdate: function() {
-          layer.batchDraw() 
+          actionLayer.batchDraw() 
         }
       })
   });
