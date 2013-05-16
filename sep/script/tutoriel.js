@@ -3,117 +3,141 @@ function getTutorielMenu() {
 	setHomeBtn();
 	
 	var lines = stage.getHeight() / 5;
-    var col = stage.getWidth() / 2;
+  var col = stage.getWidth() / 2;
 
-    var size_font = 20;
+  var size_font = 20;
 
-    // phrase 1
-    function Phrase1(){
-      var p1_1 = new Kinetic.Text({
-        x: col,
-        y: lines,
-        text: 'THIS ',
-        fontSize: 3 * size_font,
-        fontFamily: 'DemiHaut',
-        fill: 'white'
-      });
+  // phrase 1
+  function Phrase1(){
+    var p1_1 = new Kinetic.Text({
+      x: col,
+      y: lines,
+      text: 'THIS ',
+      fontSize: 3 * size_font,
+      fontFamily: 'DemiHaut',
+      fill: 'white'
+    });
 
-      var p1_2 = new Kinetic.Text({
-        x: col,
-        y: lines,
-        text: 'S^PARATION',
-        fontSize: size_font,
-        fontFamily: 'DemiHautH',
-        fill: 'white'
-      });
+    var p1_2 = new Kinetic.Text({
+      x: col,
+      y: lines,
+      text: 'S^PARATION',
+      fontSize: size_font,
+      fontFamily: 'DemiHautH',
+      fill: 'white'
+    });
 
-      var p1_3 = new Gestures.Word({
-        x: col,
-        y: lines,
-        text: 'S^PARATION',
-        fontSize: size_font,
-        fontFamily: 'DemiHautB',
-        fill: 'white'
-      });
+    var p1_3 = new Kinetic.Text({
+      x: col,
+      y: lines,
+      text: 'S^PARATION',
+      fontSize: size_font,
+      fontFamily: 'DemiHautB',
+      fill: 'white'
+    });
 
-      var p1_4 = new Kinetic.Text({
-        x: stage.getWidth(),
-        y: lines,
-        text: 'P^RC^PTION',
-        fontSize: size_font,
-        fontFamily: 'DemiHautB',
-        fill: 'white'
-      });
+    var p1_4 = new Kinetic.Text({
+      x: stage.getWidth(),
+      y: lines,
+      text: 'P^RC^PTION',
+      fontSize: size_font,
+      fontFamily: 'DemiHautB',
+      fill: 'white'
+    });
 
-      var word_size = (p1_1.getWidth() + p1_2.getWidth())/2;
+    var word_size = (p1_1.getWidth() + p1_2.getWidth())/2;
 
-      p1_1.setOffset({ x: word_size });
+    p1_1.setOffset({ x: word_size });
 
-      p1_2.setOffset({ 
-        x: word_size - p1_1.getWidth(),
-        y: - p1_2.getHeight() + (size_font / 10)
-      });
+    p1_2.setOffset({ 
+      x: word_size - p1_1.getWidth(),
+      y: - p1_2.getHeight() + (size_font / 10)
+    });
 
-      p1_3.setOffset({
-        x: word_size - p1_1.getWidth(),
-        y: - p1_3.getHeight() * 2 + 6
-      });
+    p1_3.setOffset({
+      x: word_size - p1_1.getWidth(),
+      y: - p1_3.getHeight() * 2 + 6
+    });
 
-      p1_4.setOffset({
-        x: - p1_4.getWidth() / 2,
-        y: - p1_4.getHeight() * 2 + 6
-      });
+    p1_4.setOffset({
+      x: - p1_4.getWidth() / 2,
+      y: - p1_4.getHeight() * 2 + 6
+    });
 
-      this.start = function(){
-        p1_3.on('tap click', function(){
-          p1_4.setX(stage.getWidth() + p1_4.getWidth() / 2);
+    function cut_word(x){
+      switch(x){
+        case 0:
+        p1_4.setX(stage.getWidth() + p1_4.getWidth() / 2);
 
-          p1_3.transitionTo({
-            x : - p1_3.getWidth(),
-            duration : 2
-          });
+        var tween1 = new Kinetic.Tween({
+          node: p1_3,
+          duration: 2,
+          x: - p1_3.getWidth()
+        });
 
-          setTimeout(function(){ 
-            p1_4.transitionTo({
-              x : stage.getWidth()/2 - word_size + p1_1.getWidth() - p1_4.getWidth()/2,
-              duration : 2
-            })
-          }, 400)
-        })    
+        var tween2 = new Kinetic.Tween({
+          node: p1_4,
+          duration: 2,
+          x : stage.getWidth()/2 - word_size + p1_1.getWidth() - p1_4.getWidth()/2
+        });
 
-        p1_4.on('tap click', function(){
-          p1_3.setX(stage.getWidth() + p1_3.getWidth() / 2 + word_size - p1_1.getWidth());
+        tween1.play();
 
-          p1_4.transitionTo({
-            x : - p1_4.getWidth() * 2,
-            duration : 2
-          });
+        setTimeout(function(){
+          tween2.play();
+        }, 400)   
+        break;
 
-          setTimeout(function(){ 
-            p1_3.transitionTo({
-              x : stage.getWidth()/2,
-              duration : 2
-            })
-          }, 400)
-        })     
+        default: 
+        p1_3.setX(stage.getWidth() + p1_3.getWidth() / 2 + word_size - p1_1.getWidth());
 
-        actionLayer.add(p1_1);
-        actionLayer.add(p1_2);
-        actionLayer.add(p1_3);
-        actionLayer.add(p1_4);
-        stage.add(actionLayer);
+        var tween3 = new Kinetic.Tween({
+          node: p1_4,
+          duration: 2,
+          x: - p1_4.getWidth() * 2
+        });
+
+        var tween4 = new Kinetic.Tween({
+          node: p1_3,
+          duration: 2,
+          x : stage.getWidth()/2
+        });
+
+        tween3.play();
+
+        setTimeout(function(){ 
+          tween4.play();
+        }, 400)
+        break;
       }
-
-      this.stop = function(){
-        old_gone.stop();
-        new_back.stop();
-        p1_1.destroy();
-        p1_2.destroy();
-        p1_3.destroy();
-        p1_4.destroy();
-        stage.add(actionLayer);
-      }
+      
     }
+
+    this.start = function(){
+      actionLayer.add(p1_1);
+      actionLayer.add(p1_2);
+      actionLayer.add(p1_3);
+      actionLayer.add(p1_4);
+
+      var couper = new Separation.cut({
+          x: col - word_size + p1_1.getTextWidth(), 
+          y: lines + 20, 
+          width: p1_2.getTextWidth(), 
+          height: 25
+        }, actionLayer, stage);
+        
+      var x = 0;
+
+      couper.on(function(){
+        cut_word(x)
+        if(x == 0) {x++;}
+        else {x = 0;}
+      });
+
+
+      stage.add(actionLayer);
+    }
+  }
 
     // phrase 2
     function Phrase2(){
@@ -165,7 +189,7 @@ function getTutorielMenu() {
       p2_4.setOffset({ x: word_size - p2_1.getWidth() - p2_2.getWidth() });
 
       this.start = function(){  
-        p2_2.on('tap click', function(){
+        p2_2.on('touchmove', function(){
           p2_3.transitionTo({
             opacity: 0,
             duration: 2
@@ -179,7 +203,7 @@ function getTutorielMenu() {
           p2_3.moveToTop();
         })
 
-        p2_3.on('tap click', function(){
+        p2_3.on('touchmove', function(){
           p2_2.transitionTo({
             opacity: 0,
             duration: 2
@@ -197,14 +221,6 @@ function getTutorielMenu() {
         actionLayer.add(p2_2);
         actionLayer.add(p2_3);
         actionLayer.add(p2_4);
-        stage.add(actionLayer);
-      }
-
-      this.stop = function(){
-        p2_1.destroy();
-        p2_2.destroy();
-        p2_3.destroy();
-        p2_4.destroy();
         stage.add(actionLayer);
       }
     }
@@ -272,12 +288,6 @@ function getTutorielMenu() {
         actionLayer.add(p3_2);
         stage.add(actionLayer);
       }
-
-      this.stop = function(){
-        p3_1.destroy();
-        p3_2.destroy();
-        stage.add(actionLayer);
-      }
     }        
 
     // Animation
@@ -288,5 +298,5 @@ function getTutorielMenu() {
     phrase1.start();
     phrase2.start();
     phrase3.start();   
-	
-}
+
+  }
