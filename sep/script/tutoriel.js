@@ -124,7 +124,7 @@ function getTutorielMenu() {
           y: lines + 20, 
           width: p1_2.getTextWidth(), 
           height: 25
-        }, actionLayer, stage);
+        }, "", actionLayer, stage);
         
       var x = 0;
 

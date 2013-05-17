@@ -1,23 +1,24 @@
 /*
  * Toolkit for the Separation Project
  * 
- * Inlcudes the gestures and the animations
+ * Includes the gestures and the animations
  */
 
+/*
+ * @namespace Separation
+ */
 var Separation = {};
 
 /*
  * Geste qui détecte la séparation d'un mot
  *
- * paramètres :
- *  taille du rectangle
- *  location du rectangle sur le layer
- *  layer
- *  stage
- *
+ * @param {Object} paramètres pour dessiner le rectangle : taille du rectangle, placement du rectangle
+ * @param {Text} type de coupure : "l_r" pour left to right, "r_l" pour le contraire, toutes les autres valeurs pour les deux sens
+ * @param {Kinetic.Layer} layer sur lequel on va mettre le rectangle
+ * @param {Kinetic.Stage} stage de la page
  * déclenche la fonction handler dès que la fonction repère un mouvement de coupure
  */
-Separation.cut = function(parameters, actionLayer, stage){
+Separation.cut = function(parameters, type, actionLayer, stage){
   var rect = new Kinetic.Rect({
     x: parameters.x,
     y: parameters.y,
@@ -26,29 +27,63 @@ Separation.cut = function(parameters, actionLayer, stage){
     opacity: 0
   });
 
-  var x = 0;
+  var rTl = 0;
+  var lTr = 0;
 
-  this.on = function(handler) { // CODER LA FONCTION DANS LES DEUX SENS
+  function cutRightToLeft(touchPos, handler){
+    if(touchPos.x >= (parameters.width + parameters.x - 20)) {
+      rTl = parameters.width + parameters.x;
+    }
+    else if((rTl != 0) && (touchPos.x <= (parameters.x + 20))) {
+      rTl = 0;
+      handler()
+    }  
+    else if((touchPos.x < rTl) && ((touchPos.y < (parameters.height + parameters.y)) && (touchPos.y > parameters.y))){ 
+      rTl = touchPos.x; 
+    }
+    else{ 
+      rTl = 0; 
+    }  
+  }
+
+  function cutLeftToRight(touchPos, handler){
+    if(touchPos.x <= (parameters.x + 20)) {
+      lTr = parameters.x;
+    }
+    else if((lTr != 0) && (touchPos.x >= (parameters.width + parameters.x - 20))) {
+      lTr = 0;
+      handler()
+    }
+    else if((touchPos.x > lTr) && ((touchPos.y < (parameters.height + parameters.y)) && (touchPos.y > parameters.y))){
+      lTr = touchPos.x;
+    }
+    else{ 
+      lTr = 0;
+    }  
+  }
+
+  this.on = function(handler) {
     rect.on('touchmove', function(){
-      var touchPos = stage.getTouchPosition();
+      touchPos = stage.getTouchPosition();
 
-      if(touchPos.x >= (parameters.width + parameters.x - 20)) {
-        x = parameters.width + parameters.x;
-      }
-      else if((x != 0) && (touchPos.x <= (parameters.x + 20))) {
-        x = 0;
-        handler()
-      }  
-      else if((touchPos.x < x) && ((touchPos.y < (parameters.height + parameters.y)) && (touchPos.y > parameters.y))){ 
-        x = touchPos.x; 
-      }
-      else{ 
-        x = 0; 
-      }
+      if (type != "l_r") {cutRightToLeft(touchPos, handler);}
+      if (type != "r_l") {cutLeftToRight(touchPos, handler);} 
     });
   }
 
   actionLayer.add(rect);
+};
+
+Separation.tear = function(){
+
+};
+
+Separation.rub = function(){
+
+};
+
+Separation.scroll = function(){
+
 };
 
 /*
@@ -75,3 +110,7 @@ Separation.Word = function(parameters, layer){
 };
 
 Separation.Word.prototype = new Kinetic.Text();
+
+/*
+ * CREER LES CLASSES POLICES MAJ MIN CENTRALE ...
+ */
