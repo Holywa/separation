@@ -11,8 +11,8 @@
   </head>
   <body>
     <div id="container"></div>
-    <script src="http://www.html5canvastutorials.com/libraries/kinetic-v4.5.0-beta.js"></script>
-    <script src="../lib/separation-gestures-v1.0.0.js"></script>
+    <script src="../script/libs/kinetic-v4.5.1.js"></script>
+    <script src="../script/libs/separation-toolkit-v1.0.js"></script>
     <script defer="defer">
       function writeMessage(messageLayer, message) {
         var context = messageLayer.getContext();
@@ -34,12 +34,12 @@
 
       stage.add(messageLayer);
 
-      var couper = new Gestures.cut({
+      var couper = new Separation.tear({
         x: 239, 
         y: 75, 
         width: 600, 
         height: 50
-      }, layer, stage);
+      }, "", layer, stage);
 
       couper.on(function(){
         writeMessage(messageLayer, 'ended') 

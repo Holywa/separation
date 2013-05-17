@@ -24,7 +24,7 @@
         text: 'OIIO',
         fontSize: 30,
         fontFamily: 'Demihaut_haut',
-        fill: 'white'
+        fill: 'green'
       });
 
       oiio_h.setOffset({ // align text on the center
@@ -39,7 +39,7 @@
         text: 'OIIO',
         fontSize: 30,
         fontFamily: 'Demihaut_bas',
-        fill: 'white'
+        fill: 'green'
       });
 
       oiio_b.setOffset({ // align text on the center
@@ -47,16 +47,15 @@
         y: -350
       });
 
-
       /////////////////////////////
       //         Phrases         //
       var phrase1 = new Kinetic.Text({
         x: stage.getWidth() / 2,
         y: 15,
         text: 'SUR LE COMMENCEMENT DES \n CHOSES ETAIT UN \n DEBUT POUR LES UNS',
-        fontSize: 60,
+        fontSize: 30,
         fontFamily: 'Demihaut',
-        fill: 'white' 
+        fill: 'green' 
       })   
 
       phrase1.setOffset({ // align text on the center
@@ -70,7 +69,7 @@
         text: 'DUO DE CHOSES QUE LES \n AUTRES NE COMPRIRENT \n QUE LORSQUE TOUT BAS',
         fontSize: 30,
         fontFamily: 'Demihaut',
-        fill: 'white' 
+        fill: 'green' 
       }) 
 
       phrase2.setOffset({ // align text on the center
@@ -84,7 +83,7 @@
         text: 'ELLE LEUR APPRIT QUE \n LEURS DEBUTS AVAIENT \n DEJA ETE DITS',
         fontSize: 30,
         fontFamily: 'Demihaut',
-        fill: 'white' 
+        fill: 'green' 
       }) 
 
       phrase3.setOffset({ // align text on the center
@@ -130,15 +129,9 @@
         setTimeout(function(){ anim_implosion.stop(); }, 500)
       }
 
-	layer.on('gestureend', function(e) {
-    if (e.scale < 1.0) {
-          oiio_explosion();
-    } else if (e.scale > 1.0) {
-        // User moved fingers further apart
-    }
-    
-}, false);
-	
+
+
+
       var period = 2000;
 
       var anim_p1 = new Kinetic.Animation(function(frame) {
@@ -180,7 +173,7 @@
       // core of the animation
       var it = 0;
 
-     /* layer.on('touchmove', function() {  // fonctionne en tactile avec 'touchstart'
+      layer.on('click', function() {  // fonctionne en tactile avec 'touchstart'
         // phrase 1
         if(it == 0){
           oiio_explosion();
@@ -225,7 +218,7 @@
           phrase3.destroy();
           oiio_implosion();
           it = 12;
-        }*/
+        }
       });
 
     </script>
