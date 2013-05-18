@@ -15,7 +15,8 @@ Separation.horizontal_move = function(params, actionLayer, stage){
     y: params.y,
     width: params.width,
     height: params.height,
-    opacity: 0
+    opacity: 1,
+    fill: 'blue'
   });
 
   var rTl = 0;
@@ -47,6 +48,7 @@ Separation.horizontal_move = function(params, actionLayer, stage){
             rTl = 3;
           }
         } else { rTl = 0; }
+        break;
 
       case 3:
         if(x < oldx){
@@ -55,6 +57,7 @@ Separation.horizontal_move = function(params, actionLayer, stage){
             rTl = 0;
           }
         } else { rTl = 0; }
+        break;
     };
   }
 
@@ -80,6 +83,7 @@ Separation.horizontal_move = function(params, actionLayer, stage){
             lTr = 3;
           }
         } else { lTr = 0; }
+        break;
 
       case 3:
         if(x > oldx){
@@ -88,6 +92,7 @@ Separation.horizontal_move = function(params, actionLayer, stage){
             lTr = 0;
           }
         } else { lTr = 0; }
+        break;
     };
   }  
 
@@ -144,112 +149,158 @@ Separation.rub = function(params, actionLayer, stage){
   }
 };
 
-Separation.tear = function(params, actionLayer, stage){
-  var rect_h = new Kinetic.Rect({
-    x: params.x,
-    y: params.y,
-    width: params.width,
-    height: params.height / 2,
-    fill: "blue",
-    opacity: 1
-  });
+Separation.tear = function(params, type, actionLayer, stage){
+  var rTl = 0;
+  var lTr = 0;
+  var x1 = 0;
+  var x2 = 0;
+  var oldx1 = 0;
+  var oldx2 = 0;
 
-  var rect_b = new Kinetic.Rect({
-    x: params.x,
-    y: params.y + params.height / 2,
-    width: params.width,
-    height: params.height / 2,
-    fill: "red",
-    opacity: 1
-  });
-
-  var rTl_1 = 0;
-  var rTl_2 = 0;
-  //var lTr = 0;
-
-  function tearRightToLeft(touchPos, handler){
-    handler()
-    /*if( 
-      (touchPos.touch1_x >= (params.width + params.x - 20) &&       
-      (touchPos.touch2_x >= (params.width + params.x - 20)     
-    ) {
-      rTl_1 = params.width + params.x;
-      rTl_2 = params.width + params.x;
-    }
-    else if(
-      (rTl1 != 0) && (touchPos.touch1_x <= (params.x + 20)) &&
-      (rTl2 != 0) && (touchPos.touch2_x <= (params.x + 20))
-    ) {
-      rTl_1 = 0;
-      rTl_2 = 0;
-      handler()
-    }  
-    else if(
-      (touchPos.touch1_x < rTl_1) && 
-        ((touchPos.touch1_y < (params.height / 2 + params.y)) && (touchPos.touch1_y > params.y)) &&
-      (touchPos.touch2_x < rTl_2) && 
-        ((touchPos.touch2_y < (params.height + params.y)) && (touchPos.touch2_y > params.y + params.height / 2))
-    ){ 
-      rTl_1 = touchPos.touch1_x; 
-      rTl_2 = touchPos.touch2_x;
-    }
-    else{ 
-      rTl = 0; 
-    }  */
+  var section = params.width / 4;
+  
+  function inRectangle(touchPos){
+    if(
+      ((touchPos.x1 > params.x) && (touchPos.x1 < (params.x + params.width))) &&
+      ((touchPos.x2 > params.x) && (touchPos.x2 < (params.x + params.width))) &&
+      ((touchPos.y1 > params.y) && (touchPos.y1 < (params.y + params.height / 2))) &&
+      ((touchPos.y2 > (params.y + params.height / 2)) && (touchPos.y2 < (params.y + params.height)))
+    ){
+      return true;
+    } else { return false; }
   }
 
-  function tearLeftToRight(touchPos, handler){
-    /*if(touchPos.x <= (params.x + 20)) {
-      lTr = params.x;
-    }
-    else if((lTr != 0) && (touchPos.x >= (params.width + params.x - 20))) {
-      lTr = 0;
-      handler()
-    }
-    else if((touchPos.x > lTr) && ((touchPos.y < (params.height + params.y)) && (touchPos.y > params.y))){
-      lTr = touchPos.x;
-    }
-    else{ 
-      lTr = 0;
-    }  */
+  function rightToLeft(handler){
+    switch(rTl){
+      case 0:
+        if(
+          (x1 > (params.x + section * 3)) &&
+          (x2 > (params.x + section * 3))
+        ){
+          rTl = 1;
+        }
+        break;
+
+      case 1:
+        if((x1 < oldx1) && (x2 < oldx2)){
+          if(
+            ((x1 > (params.x + section * 2)) && (x1 < (params.x + section * 3))) &&
+            ((x2 > (params.x + section * 2)) && (x2 < (params.x + section * 3)))
+          ){
+            rTl = 2;
+          }
+        } else { rTl = 0; }
+        break;
+
+      case 2:
+        if((x1 < oldx1) && (x2 < oldx2)){
+          if(
+            ((x1 > (params.x + section)) && (x1 < (params.x + section * 2))) &&
+            ((x2 > (params.x + section)) && (x2 < (params.x + section * 2)))
+          ){
+            rTl = 3;
+          }
+        } else { rTl = 0; }
+
+      case 3:
+        if((x1 < oldx1) && (x2 < oldx2)){
+          if(
+            (x1 < (params.x + section)) &&
+            (x2 < (params.x + section))          
+          ){
+            handler()
+            rTl = 0;
+          }
+        } else { rTl = 0; }
+    };
+  }
+
+  function leftToRight(handler){
+    switch(lTr){
+      case 0:
+        if(
+          (x1 < (params.x + section)) &&
+          (x2 < (params.x + section))
+        ){
+          lTr = 1;
+        }
+        break;
+
+      case 1:
+        if((x1 > oldx1) && (x2 > oldx2)){
+          if(
+            ((x1 > (params.x + section)) && (x1 < (params.x + section * 2))) &&
+            ((x2 > (params.x + section)) && (x2 < (params.x + section * 2)))
+          ){
+            lTr = 2;
+          }
+        } else { lTr = 0; }
+        break;
+
+      case 2:
+        if((x1 > oldx1) && (x2 > oldx2)){
+          if(
+            ((x1 > (params.x + section * 2)) && (x1 < (params.x + section * 3))) &&
+            ((x2 > (params.x + section * 2)) && (x2 < (params.x + section * 3)))
+          ){
+            rTl = 3;
+          }
+        } else { lTr = 0; }
+
+      case 3:
+        if((x1 > oldx1) && (x2 > oldx2)){
+          if(
+            (x1 > (params.x + section * 3)) &&
+            (x2 > (params.x + section * 3))          
+          ){
+            handler()
+            lTr = 0;
+          }
+        } else { lTr = 0; }
+    };
   }
 
   this.on = function(handler) {
     function detect(event){
-      handler()
-      event.preventDefault
+      event.preventDefault;
 
-      var touch1 = 0;
-      var touch2 = 1;
+      if(event.touches[1]){
+        var touch1 = 0;
+        var touch2 = 1;
 
-      if(event.touches[0].pageY < event.touches[0].pageY) {
-        touch1 = event.touches[0];
-        touch2 = event.touches[1];  
-      } else {
-        touch1 = event.touches[1];
-        touch2 = event.touches[0]; 
-      }  
+        if(event.touches[0].pageY < event.touches[0].pageY) {
+          touch1 = event.touches[0];
+          touch2 = event.touches[1];
+        } else {
+          touch1 = event.touches[1];
+          touch2 = event.touches[0];
+        }
 
-      var touchPos = {
-        touch1_x: touch1.pageX,
-        touch1_y: touch1.pageY,
-        touch2_x: touch2.pageX,
-        touch2_y: touch2.pageY
-      };
+        var touchPos = {
+          x1: touch1.pageX,
+          y1: touch1.pageY,
+          x2: touch2.pageX,
+          y2: touch2.pageY
+        };
 
-      if (type != "l_r") {cutRightToLeft(touchPos, handler);}
-      if (type != "r_l") {cutLeftToRight(touchPos, handler);} 
+        x1 = touch1.pageX;
+        x2 = touch2.pageX;
+
+        if(inRectangle(touchPos)){
+          if (type != "l_r") { rightToLeft(handler); }
+          if (type != "r_l") { leftToRight(handler); }
+  
+          actionLayer.add(rect_h);
+          stage.add(actionLayer);
+        }
+
+        oldx1 = x1;
+        oldx2 = x2;        
+      }
     };
 
-    window.addEventListener("gestureend", detect, false);
+    window.addEventListener("touchmove", detect, false);
   }
-
-  actionLayer.add(rect_h);
-  actionLayer.add(rect_b);
-};
-
-Separation.scroll = function(){
-
 };
 
 /*

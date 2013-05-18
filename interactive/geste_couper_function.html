@@ -25,7 +25,7 @@
       var stage = new Kinetic.Stage({
         container: 'container',
         width: 1000,
-        height: 200
+        height: 500
       });
 
       var messageLayer = new Kinetic.Layer();
@@ -34,17 +34,37 @@
 
       stage.add(messageLayer);
 
+      var rect_h = new Kinetic.Rect({
+    x: 239,
+    y: 50,
+    width: 400,
+    height: 100,
+    fill: "blue",
+    opacity: 1
+  });
+
+  var rect_b = new Kinetic.Rect({
+    x: 239,
+    y: 150,
+    width: 400,
+    height: 100,
+    fill: "red",
+    opacity: 1
+  });
+
       var couper = new Separation.tear({
         x: 239, 
-        y: 75, 
-        width: 600, 
-        height: 50
+        y: 50, 
+        width: 400, 
+        height: 200
       }, "", layer, stage);
 
       couper.on(function(){
         writeMessage(messageLayer, 'ended') 
       });
 
+      layer.add(rect_h);
+      layer.add(rect_b);
       stage.add(layer);
     </script>
   </body>
