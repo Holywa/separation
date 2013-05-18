@@ -9,14 +9,21 @@
  */
 var Separation = {};
 
+/*
+ * détecterdes mouvement horizontaux
+ *
+ * @param {Object} paramètres pour dessiner le rectangle : taille du rectangle, placement du rectangle
+ * @param {Kinetic.Layer} layer sur lequel on va mettre le rectangle
+ * @param {Kinetic.Stage} stage de la page
+ * fonction utilisée pour coder cut et rub
+ */
 Separation.horizontal_move = function(params, actionLayer, stage){
   var rect = new Kinetic.Rect({
     x: params.x,
     y: params.y,
     width: params.width,
     height: params.height,
-    opacity: 1,
-    fill: 'blue'
+    opacity: 0
   });
 
   var rTl = 0;
@@ -115,6 +122,7 @@ Separation.horizontal_move = function(params, actionLayer, stage){
  * @param {Kinetic.Layer} layer sur lequel on va mettre le rectangle
  * @param {Kinetic.Stage} stage de la page
  * déclenche la fonction handler dès que la fonction repère un mouvement de coupure
+ * faire attention à définir la fonction après les autres variables pour que le rectangle soit au premier plan
  */
 Separation.cut = function(params, type, actionLayer, stage){
   var detect = new Separation.horizontal_move(params, actionLayer, stage);
@@ -127,6 +135,16 @@ Separation.cut = function(params, type, actionLayer, stage){
   }
 };
 
+/*
+ * Geste qui détecte le frottement d'un mot
+ *
+ * @param {Object} paramètres pour dessiner le rectangle : taille du rectangle, placement du rectangle
+ * @param {Kinetic.Layer} layer sur lequel on va mettre le rectangle
+ * @param {Kinetic.Stage} stage de la page
+ * déclenche la fonction handler dès que la fonction repère un mouvement de frottement
+ * penser à coder une fonction qui procède par paliers
+ * faire attention à définir la fonction après les autres variables pour que le rectangle soit au premier plan
+ */
 Separation.rub = function(params, actionLayer, stage){
   var detect = new Separation.horizontal_move(params, actionLayer, stage); 
 
@@ -149,6 +167,15 @@ Separation.rub = function(params, actionLayer, stage){
   }
 };
 
+/*
+ * Geste qui détecte la déchirure d'un mot (coupure à deux doigts)
+ *
+ * @param {Object} paramètres pour dessiner le rectangle : taille du rectangle, placement du rectangle
+ * @param {Text} type de coupure : "l_r" pour left to right, "r_l" pour le contraire, toutes les autres valeurs pour les deux sens
+ * @param {Kinetic.Layer} layer sur lequel on va mettre le rectangle
+ * @param {Kinetic.Stage} stage de la page
+ * déclenche la fonction handler dès que la fonction repère un mouvement de déchirure
+ */
 Separation.tear = function(params, type, actionLayer, stage){
   var rTl = 0;
   var lTr = 0;
@@ -289,9 +316,6 @@ Separation.tear = function(params, type, actionLayer, stage){
         if(inRectangle(touchPos)){
           if (type != "l_r") { rightToLeft(handler); }
           if (type != "r_l") { leftToRight(handler); }
-  
-          actionLayer.add(rect_h);
-          stage.add(actionLayer);
         }
 
         oldx1 = x1;

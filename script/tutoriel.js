@@ -249,11 +249,8 @@ function getTutorielMenu() {
 
       p3_2.setOffset({ x: word_size - p3_1.getWidth() });
 
-      this.start = function(){  
-        i = 0; 
-
-        p3_1.on('tap click', function(){
-          var rect = new Kinetic.Rect({
+      function activated(i){
+        var rect = new Kinetic.Rect({
             x: 800,
             y: 3*lines + 21,
             width: 300,
@@ -276,14 +273,29 @@ function getTutorielMenu() {
             stage.add(actionLayer);   
           }, 2000)
 
-          rect.transitionTo({
-            x : -300,
-            duration: 4
-          })           
-        })
+          var tween = new Kinetic.Tween({
+            node: rect,
+            duration: 2,
+            x: -300
+          })
+          
+          tween.play();       
+      }
 
+      this.start = function(){  
+        i = 0; 
         actionLayer.add(p3_1);
         actionLayer.add(p3_2);
+
+        var coup = new Separation.tear({
+          x: col - word_size,
+          y: 3 * lines - 75,
+          width: p3_1.getTextWidth(),
+          height: 200
+        }, "", actionLayer, stage);
+
+        coup.on(activated);
+
         stage.add(actionLayer);
       }
     }        
