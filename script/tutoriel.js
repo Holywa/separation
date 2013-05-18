@@ -188,39 +188,37 @@ function getTutorielMenu() {
 
       p2_4.setOffset({ x: word_size - p2_1.getWidth() - p2_2.getWidth() });
 
+      function rub_word(x){
+        var tween1 = new Kinetic.Tween({
+            node: p2_2,
+            duration: 0,
+            opacity: p2_2.getOpacity() - 0.5
+          });
+        
+        tween1.play();
+      }
+
       this.start = function(){  
-        p2_2.on('touchmove', function(){
-          p2_3.transitionTo({
-            opacity: 0,
-            duration: 2
-          }) 
-
-          p2_2.transitionTo({
-            opacity: 1,
-            duration: 2
-          }) 
-
-          p2_3.moveToTop();
-        })
-
-        p2_3.on('touchmove', function(){
-          p2_2.transitionTo({
-            opacity: 0,
-            duration: 2
-          }) 
-
-          p2_3.transitionTo({
-            opacity: 1,
-            duration: 2
-          }) 
-
-          p2_2.moveToTop();
-        })
-
         actionLayer.add(p2_1);
         actionLayer.add(p2_2);
         actionLayer.add(p2_3);
         actionLayer.add(p2_4);
+
+        var frotter = new Separation.rub({
+          x: col - word_size + p2_1.getTextWidth(), 
+          y: 2* lines + 20, 
+          width: p2_2.getTextWidth(), 
+          height: 25
+        }, actionLayer, stage);
+
+        var x = 0;
+
+        frotter.on(function(){
+          rub_word(x)
+          if(x == 0){x++;}
+          else{x = 0;}
+        });
+
         stage.add(actionLayer);
       }
     }
