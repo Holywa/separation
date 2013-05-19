@@ -13,25 +13,24 @@ var Separation = {};
  * détecterdes mouvement horizontaux
  *
  * @param {Object} paramètres pour dessiner le rectangle : taille du rectangle, placement du rectangle
- * @param {Kinetic.Layer} layer sur lequel on va mettre le rectangle
- * @param {Kinetic.Stage} stage de la page
  * fonction utilisée pour coder cut et rub
  */
-Separation.horizontal_move = function(params, actionLayer, stage){
-  var rect = new Kinetic.Rect({
-    x: params.x,
-    y: params.y,
-    width: params.width,
-    height: params.height,
-    opacity: 0
-  });
-
+Separation.horizontal_move = function(params){
   var rTl = 0;
   var lTr = 0;
   var x = 0;
   var oldx = 0;
 
   var section = params.width / 4;
+
+  function inRectangle(touchPos){
+    if(
+      ((touchPos.x > params.x) && (touchPos.x < (params.x + params.width))) &&
+      ((touchPos.y > params.y) && (touchPos.y < (params.y + params.height))) 
+    ){
+      return true;
+    } else { return false; }
+  }
 
   this.rightToLeft = function(handler){
     switch(rTl){
@@ -104,14 +103,28 @@ Separation.horizontal_move = function(params, actionLayer, stage){
   }  
 
   this.on = function(handler){
-    rect.on('touchmove', function(){
-      x = stage.getTouchPosition().x;
-      handler()
-      oldx = x;
-    });
-  }
+    function detect(event){
+      event.preventDefault;
 
-  actionLayer.add(rect);
+      var touchPos = {
+        x: event.touches[0].pageX,
+        y: event.touches[0].pageY
+      }
+      x = touchPos.x;
+
+      if(inRectangle(touchPos) == true){
+        handler()
+      }
+      else {
+        rTl = 0;
+        lTr = 0;
+      }
+
+      oldx = x;
+    };
+
+    window.addEventListener("touchmove", detect, false);
+  }
 }
 
 /*
@@ -119,13 +132,11 @@ Separation.horizontal_move = function(params, actionLayer, stage){
  *
  * @param {Object} paramètres pour dessiner le rectangle : taille du rectangle, placement du rectangle
  * @param {Text} type de coupure : "l_r" pour left to right, "r_l" pour le contraire, toutes les autres valeurs pour les deux sens
- * @param {Kinetic.Layer} layer sur lequel on va mettre le rectangle
- * @param {Kinetic.Stage} stage de la page
  * déclenche la fonction handler dès que la fonction repère un mouvement de coupure
  * faire attention à définir la fonction après les autres variables pour que le rectangle soit au premier plan
  */
-Separation.cut = function(params, type, actionLayer, stage){
-  var detect = new Separation.horizontal_move(params, actionLayer, stage);
+Separation.cut = function(params, type){
+  var detect = new Separation.horizontal_move(params);
 
   this.on = function(handler) {
     detect.on(function(){
@@ -139,13 +150,11 @@ Separation.cut = function(params, type, actionLayer, stage){
  * Geste qui détecte le frottement d'un mot
  *
  * @param {Object} paramètres pour dessiner le rectangle : taille du rectangle, placement du rectangle
- * @param {Kinetic.Layer} layer sur lequel on va mettre le rectangle
- * @param {Kinetic.Stage} stage de la page
  * déclenche la fonction handler dès que la fonction repère un mouvement de frottement
  * penser à coder une fonction qui procède par paliers
  * faire attention à définir la fonction après les autres variables pour que le rectangle soit au premier plan
  */
-Separation.rub = function(params, actionLayer, stage){
+Separation.rub = function(params){
   var detect = new Separation.horizontal_move(params, actionLayer, stage); 
 
   this.on = function(handler) {
@@ -172,11 +181,9 @@ Separation.rub = function(params, actionLayer, stage){
  *
  * @param {Object} paramètres pour dessiner le rectangle : taille du rectangle, placement du rectangle
  * @param {Text} type de coupure : "l_r" pour left to right, "r_l" pour le contraire, toutes les autres valeurs pour les deux sens
- * @param {Kinetic.Layer} layer sur lequel on va mettre le rectangle
- * @param {Kinetic.Stage} stage de la page
  * déclenche la fonction handler dès que la fonction repère un mouvement de déchirure
  */
-Separation.tear = function(params, type, actionLayer, stage){
+Separation.tear = function(params, type){
   var rTl = 0;
   var lTr = 0;
   var x1 = 0;
@@ -328,30 +335,34 @@ Separation.tear = function(params, type, actionLayer, stage){
 };
 
 /*
- * Création d'une classe word destinée à stocker les mots de tous nos textes
- * Les mots possèderons ainsi des fonctions spécifiques
- * hérite de la classe Kinetic.Text
+ * Detecter si un mouvement est sur une zone
+ *
+ * @param {Object} pamètres pour dessiner le rectangle
+ * renvoie vrai si le toucher est dans le rectangle, et faux sinon
  */
-Separation.Word = function(params, layer){
-  Kinetic.Text.call(this, params);
+Separation.onZone = function(params){
+  function inRectangle(touchPos){
+    if(
+      ((touchPos.x > params.x) && (touchPos.x < (params.x + params.width))) &&
+      ((touchPos.y > params.y) && (touchPos.y < (params.y + params.height)))
+    ){
+      return true;
+    } else { return false; }
+  }
 
-  /*
-   * Fonction tap qui permet d'agrandir un mot dès que celui-ci est sélectionné
-   */
-  this.on('tap', function(){ // REACTUALISER EN FONCTION DE KINETIC
-      /*TweenLite.to(this, 1, {
-        setScaleX: 2,
-        setScaleY: 2,
-        delay: 0,
-        onUpdate: function() {
-          layer.batchDraw() 
-        }
-      })*/
-  });
+  this.on = function(handler){
+    function detect(event){
+      touchPos = {
+        x: event.touches[0].pageX,
+        y: event.touches[0].pageY
+      }
+
+      if(!inRectangle(touchPos)){ handler() };
+
+    }
+
+    window.addEventListener('touchmove', detect, false);
+
+  }
+
 };
-
-Separation.Word.prototype = new Kinetic.Text();
-
-/*
- * CREER LES CLASSES POLICES MAJ MIN CENTRALE ...
- */
