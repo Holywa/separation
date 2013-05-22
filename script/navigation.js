@@ -1,9 +1,6 @@
 ﻿window.onload = function() {
 	checkDevice();
 };
-/*window.onresize = function() {
-	readjustSizes();
-};*/
 
 var screenWidth;
 var screenHeight;
@@ -14,7 +11,7 @@ var mainLayer;
 var actionLayer;
 var titleSize;
 var textSize;
-var wordSize;
+var maxVisibleLines = 10;
 
 function checkDevice() {
 	readjustSizes();
@@ -54,13 +51,17 @@ function checkDevice() {
 	
 	stage.add(mainLayer);
 	stage.add(actionLayer);
-	
-	getGesture();
 }
 
 function setHomeBtn() {
 	actionLayer.add(homeBtn);
 	actionLayer.draw();
+}
+
+function setShuffleBtn() {
+}
+
+function setReturnBtn() {
 }
 
 function clearStage() {
@@ -77,7 +78,6 @@ function readjustSizes() {
 	
 	titleSize = 0.1*screenHeight;
 	textSize = 0.05*screenHeight;
-	wordSize = 0.075*screenHeight;
 }
 
 //Creating the main menu
@@ -126,7 +126,7 @@ function initMainMenu() {
 		x : tutorielH.getX()-(tutorielH.getWidth()*0.5)+(tutorielH.getWidth()*0.25),
 		y : tutorielH.getY(),
 		offset : tutorielH.getOffset(),
-		opacity : 0.5,
+		opacity : 0,
 		fill : "red"
 	} );
 	
@@ -160,7 +160,7 @@ function initMainMenu() {
 		x : recitH.getX()-(recitH.getWidth()*0.5)+(recitH.getWidth()*0.25),
 		y : recitH.getY(),
 		offset : recitH.getOffset(),
-		opacity : 0.5,
+		opacity : 0,
 		fill : "red"
 	} );
 	
@@ -193,7 +193,7 @@ function initMainMenu() {
 		x : laboratoireH.getX()-(laboratoireH.getWidth()*0.5)+(laboratoireH.getWidth()*0.25),
 		y : laboratoireH.getY(),
 		offset : laboratoireH.getOffset(),
-		opacity : 0.5,
+		opacity : 0,
 		fill : "red"
 	} );
 	
@@ -226,7 +226,7 @@ function initMainMenu() {
 		x : conceptH.getX()-(conceptH.getWidth()*0.5)+(conceptH.getWidth()*0.25),
 		y : conceptH.getY(),
 		offset : conceptH.getOffset(),
-		opacity : 0.5,
+		opacity : 0,
 		fill : "red"
 	} );
 	
@@ -264,12 +264,4 @@ function getMainMenu() {
 	
 	mainLayer.draw();
 	actionLayer.draw();
-}
-
-function getGesture() {
-	var isDown = false;
-	var nbFingers = 0;
-	/*stage.on("mousedown", function(evt) {
-		alert("prout");
-	} );*/
 }

@@ -1,3 +1,10 @@
+var blank = new Kinetic.Text( {
+	fontFamily : 'DemiHaut',
+	fontSize : textSize*2,
+	fill : "#FFF",
+	text : "  "
+	} );
+	
 function getStoriesMenu() {
 	clearStage();
 	setHomeBtn();
@@ -11,26 +18,23 @@ function getStoriesMenu() {
 	var y = 0;
 	var last;
 	for(var index = 0; index < stories.length; index++) {
-		var title;
-		if(index == 0) {
-			title = new Kinetic.Text( {
+		var title = new Kinetic.Text( {
 				fontFamily : 'DemiHaut',
 				fontSize : textSize*2,
 				fill : "#FFF",
-				text : stories[index].title + "  ",
-				x : 0,
-				y : 0
-			} );
+				text : stories[index].title
+				} );
+		if(index == 0) {
+				title.setX(0);
+				title.setY(0);
 		}
 		else {
-			title = new Kinetic.Text( {
-				fontFamily : 'DemiHaut',
-				fontSize : textSize*2,
-				fill : "#FFF",
-				text : stories[index].title + "  ",
-				x : last.getX() + last.getWidth(),
-				y : last.getY()
-			} );
+			title.setX(last.getX() + last.getWidth() + blank.getWidth()*2);
+				title.setY(last.getY());
+		}
+		if(title.getX() > screenWidth) {
+			title.setX(0);
+			title.setY(last.getHeight() + blank.getHeight());
 		}
 		title.on('tap click', function (evt) {
 			getStoryLayout(this.getText());
@@ -59,20 +63,38 @@ function getStoryLayout(title) {
 	else if(currentStory.type==StoryType["continue"]){
 		createStoryContinue(currentStory);
 	}
+	setShuffleBtn();
+	setReturnBtn();
 }
 
 //affichage de toutes les phrases en même temps à l'écran
 function createStoryAlter(story) {
-	alert("alter");
+	var storyGroup = new Kinetic.Group( {
+		x : 0,
+		y : 0
+	} );
 	for(var s=0; s < story.sentences.length ; s++) {
+		var sentenceGroup = new Kinetic.Group( {
+			x : 0,
+			y : 0
+		} );
 		for(var w=0; w < story.sentences[s].words.length ; w++) {
-			//disposition des mots
+			var word = story.sentences[s].words[w];
+			if(word.active) {
+				alert("actif : " + word.value.getText() + " / " + word.nextValue.getText());
+			}
+			else {
+				alert("normal : " + word.value.getText() + " ");
+			}
+			sentenceGroup.add(word);
 		}
+		storyGroup.add(sentenceGroup)
 	}
+	mainLayer.add(storyGroup);
 }
 
 function createStoryContinue(sentences) {
-	alert("continue");
+	var storyGroup = new Array();
 	//phrase une à une. if transition=>phrase=2
 	//créer plusieurs phrases
 	//on boucle sur les phrases pour stocker mots

@@ -1,24 +1,63 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <stories>
 	<story type="alter">
-		<title>Batman</title>
+		<title>Quotidien</title>
 		<sentences>
 			<sentence>
-				<word>The</word>
-				<word font="coupable_bas" next="ART">UTC</word>
-			</sentence>
-			<sentence>
-				<word>Ce</word>
-				<word font="coupable_haut" next="RIEN">DIEU</word>
+				<word font="coupable_haut" next="BOXEUSE">BOUCHER</word>
+				<word>,</word>
+				<word font="coupable_haut" next="EVE">LUC</word>
+				<word font="coupable_bas" next="DEGUSTE">DECOUPE</word>
+				<word>DU</word>
+				<word font="coupable_haut" next="SANG">PORC</word>
+				<word>.</word>
 			</sentence>
 		</sentences>
 	</story>
 	<story type="continue">
-		<title>Superman</title>
+		<title>Saison</title>
 		<sentences>
 			<sentence>
-				<word>Stop...</word>
-				<word font="coupable_bas" next="time">hammer</word>
+				<word>A</word>
+				<word>blank</word>
+				<word>page</word>
+				<word>was</word>
+				<word>on</word>
+				<word>the</word>
+				<word font="coupable_haut" next="dark">desk</word>
+				<word>,</word>
+			</sentence>
+			<sentence>
+				<word>in</word>
+				<word>the</word>
+				<word>dark</word>
+				<word font="coupable_haut" next="sunlit">corner</word>
+				<word>of</word>
+				<word>the</word>
+				<word>room</word>
+				<word>,</word>
+			</sentence>
+			<sentence>
+				<word>a</word>
+				<word>sunlit</word>
+				<word>pen</word>
+				<word font="coupable_bas" next="heading">floating</word>
+				<word>through</word>
+				<word>the</word>
+				<word>air</word>
+				<word>.</word>
+			</sentence>
+			<sentence>
+				<word>Suddenly,</word>
+				<word>it</word>
+				<word>was</word>
+				<word>heading</word>
+				<word>toward</word>
+				<word>the</word>
+				<word>paper</word>
+				<word>and</word>
+				<word>started</word>
+				<word>writing.</word>
 			</sentence>
 		</sentences>
 	</story>

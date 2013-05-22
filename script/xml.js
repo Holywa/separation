@@ -7,7 +7,7 @@ var xmlFile;
 var xmlPath = "./stories/test.xml";
 
 var StoryType = {"alter" : 0, "continue" : 1};
-var Transition = {"up" : 0, "down" : 1, "central" : 2, "shadow" : 3};
+var Transition = {"up" : 0, "down" : 1, "central" : 2, "shadow" : 3, "err" : -1};
 
 function loadXMLDoc() {
 	if(navigator.appname == 'Microsoft Internet Explorer') {
@@ -46,59 +46,65 @@ function Word(value)
 	} );
 }
 
-Word.prototype.activeFalse = function () {
-	alert("mauvais mot");
-};
-
-function ActiveWord(value, newValue, type)
+function ActiveWord(value, next, type)
 {
-	this.value = value;
-	this.newValue = newValue;
+	this.value = new Kinetic.Text( {
+		fill : "#FFF",
+		text : value
+	} );
+	this.nextValue = new Kinetic.Text( {
+		fill : "#FFF",
+		text : next
+	} );
+	
+	this.active = true;
+	
 	this.type = type;
 }
 
-ActiveWord.prototype.activeTransition = function () {
-		if(this.type = Type.bas) {
-			alert("bas");
-		}
-		else if(this.type = Type.haut) {
-			alert("haut");
-		}
-		else if(this.type = Type.centrale) {
-			alert("centrale");
-		}
-		else if(this.type = Type.ombre) {
-			alert("ombre");
-		}
-};
+/*function ActiveWord(value, newValue, type)
+{
+	if(this.type == Transition["shadow"])
+	{
+		this.value = new Word(value);
+		this.newValue = new Word(newValue);
+		this.newValue.setOpacity(0);
+		this.active = this.value;
+	}
+	else {
+		this.value = value;
+		this.newValue = newValue;
+	}
+}
 
-ActiveWord.prototype.setActiveZone = function () {
-};
-	
-ActiveWord.prototype.changeWord = function () {
-	alert("changeword");
-		//animation en fction classe
-		//réafficher à l'écran
-};
-	
-ActiveWord.prototype.helpUser = function () {
-	setTimeout( function() {
-		alert("help");
-		//changer opacite avec kinetic js
-		/*objectTaChange.transitionTo({
-			opacity:0;
-		});
-	}, 10000);*/
-	}, 10000);
-};	
-
-ActiveWord.prototype.removeHelp = function () {
-	clearTimeout(helpTimer);
-};
-
+ActiveWord.prototype.transitionShadow = function () {
+	this.active.on('tap click', function() {
+		if(this.active == this.value) {
+			this.value.transitionTo( {
+				opacity : 0, duration : 2
+			} );
+			this.newValue.transitionTo( {
+				opacity : 1, duration : 2
+			} );
+			this.active = this.newValue;
+			newValue.moveToTop();
+		}
+		else {
+			this.value.transitionTo( {
+				opacity : 1, duration : 2
+			} );
+			this.newValue.transitionTo( {
+				opacity : 0, duration : 2
+			} );
+			this.active = this.value;
+			value.moveToTop();
+		}
+	});
+}*/
 
 //Getting all stories to display titles
 function storiesFromXML() {
+	if(alreadyReadXML) return;
 	alreadyReadXML = true;
 	var tmpStories = xmlFile.getElementsByTagName("story");
 	for(var index = 0; index < tmpStories.length ; index++) {
@@ -116,7 +122,7 @@ function storiesFromXML() {
 
 function getRightStory(title) {
 	for(var i = 0; i < stories.length ; i++) {
-		if(stories[i].title.value == title.value) {
+		if(title === stories[i].title) {
 			return stories[i];
 		}		
 	}
@@ -133,13 +139,19 @@ function getStoryFromXML(story) {
 		for(var w = 0; w < tmpWords.length ; w++) {
 			var tmpWord;
 			if(tmpWords[w].attributes.length > 0) {
-				tmpWord = new ActiveWord( tmpWords[w].textContent );
+				var next = tmpWords[w].getAttribute("next");
+				var type = Transition["err"];
+				switch(tmpWords[w].getAttribute("font"))
+				{
+					case "coupable_haut": Transition["up"]; break;
+					case "coupable_bas" : Transition["down"]; break;
+					case "centrale" : Transition["central"]; break;
+					case "ombre" : Transition["shadow"]; break;
+				}
+				tmpWord = new ActiveWord( tmpWords[w].textContent, next, type );
 			}
 			else {
 				tmpWord = new Word( tmpWords[w].textContent );
-				tmpWord.value.on("tap click", function() {
-					this.activeFalse();
-				} );
 			}
 			tmpSentence.words[w] = tmpWord;
 		}

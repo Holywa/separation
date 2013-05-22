@@ -1,10 +1,19 @@
 <!doctype html>
 <html>
   <head>
-   <title>tittle</title>
+  <link rel="stylesheet" href="style/style.css" />
+   <title>title</title>
    <script>
-     window.location='./main.html';
+     setTimeout( function() {
+		window.location='./main.html';
+	 }, 5000);
    </script>
-  <body>
+   </head>
+  <body bgcolor="#000">
+  <center>
+  <p id="loading" color="#FFF">Loading...</p>
+  <br />
+  <img src="imgs/loading.gif" />
+  </center>
   </body>
 </html>
