@@ -54,63 +54,91 @@ function ActiveWord(value, next, type)
 	this.active = true;
 	this.type = type;
 	this.value = new Kinetic.Group();
+	this.stillPart;
+	this.actualPart;
+	this.nextPart;
 	switch(this.type) {
-		case Transition["up"] : {
+		case Transition["up"] :
 			this.stillPart = new Kinetic.Text( {
 				fontFamily : "DemiHautB",
-				fontSize : demiSize/2,
+				fontSize : demiSize,
 				fill : "#FFF",
 				text : value,
 				offset : { x : 0 , y : 0}
 			} );
 			this.actualPart = new Kinetic.Text( {
 				fontFamily : "DemiHautH",
-				fontSize : demiSize/2,
+				fontSize : demiSize,
 				fill : "#FFF",
 				text : value,
-				offset : { x : 0, y ; 0}
-				x : stillPart.getX(),
-				y : stillPart.getY() - stillPart.getHeight()
+				offset : { x : 0, y : 0},
+				x : this.stillPart.getX(),
+				y : this.stillPart.getY() - this.stillPart.getHeight()
 			} );
 			this.nextPart = new Kinetic.Text( {
 				fontFamily : "DemiHautH",
-				fontSize : demiSize/2,
+				fontSize : demiSize,
 				fill : "#FFF",
 				text : next,
-				offset : { x : 0, y : 0}
+				offset : { x : 0, y : 0 }
 			} );
 			break;
-		}
 
-		case Transition["down"] : {
+		case Transition["down"] : 
 			this.stillPart = new Kinetic.Text( {
 				fontFamily : "DemiBasH",
-				fontSize : demiSize/2,
+				fontSize : demiSize,
 				fill : "#FFF",
 				text : value,
-				offset : { x : 0 , y : 0}
+				offset : { x : 0 , y : 0 },
+				position : { x: 0, y : 0 }
 			} );
 			this.actualPart = new Kinetic.Text( {
 				fontFamily : "DemiBasB",
-				fontSize : demiSize/2,
+				fontSize : demiSize,
 				fill : "#FFF",
 				text : value,
 				offset : { x : 0 , y : 0},
-				x : stillPart.getX(),
-				y : stillPart.getY() + stillPart.getHeight()
+				x : this.stillPart.getX(),
+				y : this.stillPart.getY() + this.stillPart.getHeight()
 			} );
 			this.nextPart = new Kinetic.Text( {
 				fontFamily : "DemiBasB",
-				fontSize : demiSize/2,
+				fontSize : demiSize,
 				fill : "#FFF",
 				text : next,
-				offset : { x : 0 , y : 0}
+				offset : { x : 0 , y : 0 }
 			} );
 			break;
-		}
-		this.value.add(stillPart);
-		this.value.add(actualPart);
-		this.value.add(nextPart);
+	}
+	this.value.add(this.stillPart);
+	this.value.add(this.actualPart);
+}
+
+ActiveWord.prototype.addHitZone = function () {
+	switch(this.type) {
+		case Transition["up"] : 
+			this.hitZone = new Kinetic.Rect( {
+				listening : true,
+				width : this.stillPart.getWidth()*1.5,
+				height : this.stillPart.getHeight() + this.actualPart.getHeight(),
+				offset : { x : this.stillPart.getOffsetX(), y : this.stillPart.getOffsetY()-this.stillPart.getHeight() },
+				position : this.stillPart.getPosition(),
+				opacity : 0.5,
+				fill : "red"
+			} );
+			break;
+		case Transition["down"] : 
+			this.hitZone = new Kinetic.Rect( {
+				listening : true,
+				width : this.stillPart.getWidth()*1.5,
+				height : this.stillPart.getHeight() + this.actualPart.getHeight(),
+				offset : this.stillPart.getOffset(),
+				position : this.stillPart.getPosition(),
+				opacity : 0.5,
+				fill : "red"
+			} );
+			break;
 	}
 }
 
