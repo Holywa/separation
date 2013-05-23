@@ -10,7 +10,7 @@
 var Separation = {};
 
 /*
- * détecterdes mouvement horizontaux
+ * détecter des mouvements horizontaux
  *
  * @param {Object} paramètres pour dessiner le rectangle : taille du rectangle, placement du rectangle
  * fonction utilisée pour coder cut et rub

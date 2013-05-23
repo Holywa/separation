@@ -4,14 +4,31 @@
 
 var screenWidth;
 var screenHeight;
-var homeImg;
+
 var homeBtn;
+var shuffleBtn;
+var returnBtn;
+
 var stage;
-var mainLayer;
-var actionLayer;
+var mainLayer = new Kinetic.Layer();
+var actionLayer = new Kinetic.Layer();
+
 var titleSize;
-var textSize;
+var demiSize;
+var entireSize;
+var centraleSize;
+
 var maxVisibleLines = 10;
+
+function readjustSizes() {
+	screenWidth = window.innerWidth;
+	screenHeight = window.innerHeight;
+	
+	titleSize = 0.10*screenHeight;
+	entireSize = 0.05*screenHeight;
+	demiSize = (entireSize*6)/11;
+	centraleSize = (entireSize*9)/11;
+}
 
 function checkDevice() {
 	readjustSizes();
@@ -25,32 +42,69 @@ function checkDevice() {
 	
 	//Need to force style in block to not resize the div content of stage
 	stage.getContent().style.display = 'block';
-	mainLayer = new Kinetic.Layer();
-	actionLayer = new Kinetic.Layer();
 	
-	homeImg = new Image();
+	loadButtons();
+	
+	initMainMenu();
+	
+	stage.add(mainLayer);
+	stage.add(actionLayer);
+}
+
+function loadButtons() {
+	var homeImg = new Image();
 	homeImg.src = "imgs/icon.png";
-	
 	homeImg.onload = function() {
 		homeBtn = new Kinetic.Image({
-          x : 0,
-          y : screenHeight,
-		  listening : true,
-          image: homeImg,
-		  width : screenHeight*0.10,
-		  height : screenHeight*0.10
-        });
+			x : 0,
+			y : screenHeight,
+			listening : true,
+			image: homeImg,
+			width : screenHeight*0.10,
+			height : screenHeight*0.10
+		});
 		homeBtn.setOffset(0,homeBtn.getHeight());
 		homeBtn.on("tap click", function() {
 			clearStage();
 			getMainMenu();
 		} );
 	};
+
+	var shuffleImg = new Image();
+	shuffleImg.src = "imgs/shuffle.png";
+	shuffleImg.onload = function() {
+		shuffleBtn = new Kinetic.Image({
+			x : screenWidth,
+			y : screenHeight,
+			listening : true,
+			image: shuffleImg,
+			width : screenHeight*0.10,
+			height : screenHeight*0.10
+		});
+		shuffleBtn.setOffset(shuffleBtn.getWidth(),shuffleBtn.getHeight());
+		shuffleBtn.on("tap click", function() {
+			clearStage();
+			getRandomStory();
+		} );
+	};
 	
-	initMainMenu();
-	
-	stage.add(mainLayer);
-	stage.add(actionLayer);
+	var returnImg = new Image();
+	returnImg.src = "imgs/arrow.png";
+	returnImg.onload = function() {
+		returnBtn = new Kinetic.Image({ 
+			x : 0,
+			y : 0,
+			listening : true,
+			image: returnImg,
+			width : screenHeight*0.10,
+			height : screenHeight*0.10
+		});
+	returnBtn.setOffset(0,0);
+	returnBtn.on("tap click", function() {
+		clearStage();
+		getStoriesMenu();
+		} );
+	};
 }
 
 function setHomeBtn() {
@@ -59,9 +113,13 @@ function setHomeBtn() {
 }
 
 function setShuffleBtn() {
+	actionLayer.add(shuffleBtn);
+	actionLayer.draw();
 }
 
 function setReturnBtn() {
+	actionLayer.add(returnBtn);
+	actionLayer.draw();
 }
 
 function clearStage() {
@@ -70,14 +128,6 @@ function clearStage() {
 	actionLayer.removeChildren();
 	mainLayer.draw();
 	actionLayer.draw();
-}
-
-function readjustSizes() {
-	screenWidth = window.innerWidth;
-	screenHeight = window.innerHeight;
-	
-	titleSize = 0.1*screenHeight;
-	textSize = 0.05*screenHeight;
 }
 
 //Creating the main menu
@@ -99,7 +149,7 @@ function initMainMenu() {
 	tutorielH = new Kinetic.Text( {
 		text : "tutoriel",
 		fontFamily : "DemiHautH",
-		fontSize : textSize/2,
+		fontSize : demiSize,
 		fill : "#FFF",
 		align : "center",
 		x : stage.getWidth()/2,
@@ -110,7 +160,7 @@ function initMainMenu() {
 	tutorielB = new Kinetic.Text( {
 		text : "tutoriel",
 		fontFamily : "DemiHautB",
-		fontSize : textSize/2,
+		fontSize : demiSize,
 		fill : "#FFF",
 		align : "center",
 		offset : { x :tutorielH.getWidth()/2,
@@ -133,7 +183,7 @@ function initMainMenu() {
 	recitH = new Kinetic.Text( {
 		text : "le  recit  des  mots",
 		fontFamily : "DemiHautH",
-		fontSize : textSize/2,
+		fontSize : demiSize,
 		fill : "#FFF",
 		align : "center",
 		x : stage.getWidth()/2,
@@ -144,7 +194,7 @@ function initMainMenu() {
 	recitB = new Kinetic.Text( {
 		text : "le  recit  des  mots",
 		fontFamily : "DemiHautB",
-		fontSize : textSize/2,
+		fontSize : demiSize,
 		fill : "#FFF",
 		align : "center",
 		offset : { x :recitH.getWidth()/2,
@@ -167,7 +217,7 @@ function initMainMenu() {
 	laboratoireH = new Kinetic.Text( {
 		text : "le  laboratoire  des  mots",
 		fontFamily : "DemiHautH",
-		fontSize : textSize/2,
+		fontSize : demiSize,
 		fill : "#FFF",
 		align : "center",
 		x : stage.getWidth()/2,
@@ -177,7 +227,7 @@ function initMainMenu() {
 	laboratoireB = new Kinetic.Text( {
 		text : "le  laboratoire  des  mots",
 		fontFamily : "DemiHautB",
-		fontSize : textSize/2,
+		fontSize : demiSize,
 		fill : "#FFF",
 		align : "center",
 		offset : { x :laboratoireH.getWidth()/2,
@@ -200,7 +250,7 @@ function initMainMenu() {
 	conceptH = new Kinetic.Text( {
 		text : "concept  poetique",
 		fontFamily : "DemiHautH",
-		fontSize : textSize/2,
+		fontSize : demiSize,
 		fill : "#FFF",
 		align : "center",
 		x : stage.getWidth()/2,
@@ -210,7 +260,7 @@ function initMainMenu() {
 	conceptB = new Kinetic.Text( {
 		text : "concept  poetique",
 		fontFamily : "DemiHautB",
-		fontSize : textSize/2,
+		fontSize : demiSize,
 		fill : "#FFF",
 		align : "center",
 		offset : { x :conceptH.getWidth()/2,
@@ -230,16 +280,16 @@ function initMainMenu() {
 		fill : "red"
 	} );
 	
-	tutoriel.on("tap click", function(evt) {
+	tutoriel.on("tap click", function() {
 		getTutorielMenu();
 	} );
-	recit.on("tap click", function(evt) {
+	recit.on("tap click", function() {
 		getStoriesMenu();
 	} );
-	laboratoire.on("tap click", function(evt) {
+	laboratoire.on("tap click", function() {
 		getLaboratoryMenu();
 	} );
-	concept.on("tap click", function(evt) {
+	concept.on("tap click", function() {
 		getConceptMenu();
 	} );
 	

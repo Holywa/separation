@@ -1,8 +1,7 @@
 ﻿@font-face {
 	font-family: 'DemiHautB';
-    src: url('fonts/demihaut_bas/demihaut_bas.eot');
-    src: url('fonts/demihaut_bas/demihaut_bas.eot?#iefix') format('embedded-opentype'),
-         url('fonts/demihaut_bas/demihaut_bas.woff') format('woff'),
+    src: url('fonts/demihaut_bas/demihaut_bas.woff') format('woff'), 
+		 url('fonts/demihaut_bas/demihaut_bas.eot?#iefix') format('embedded-opentype'),
          url('fonts/demihaut_bas/demihaut_bas.ttf') format('truetype'),
          url('fonts/demihaut_bas/demihaut_bas.svg#DemiHautB') format('svg');
     font-weight: normal;
@@ -11,9 +10,8 @@
 
 @font-face {
 	font-family: 'DemiHautH';
-    src: url('fonts/demihaut_haut/demihaut_haut.eot');
-    src: url('fonts/demihaut_haut/demihaut_haut.eot?#iefix') format('embedded-opentype'),
-         url('fonts/demihaut_haut/demihaut_haut.woff') format('woff'),
+    src: url('fonts/demihaut_haut/demihaut_haut.woff') format('woff'),
+		 url('fonts/demihaut_haut/demihaut_haut.eot?#iefix') format('embedded-opentype'),
          url('fonts/demihaut_haut/demihaut_haut.ttf') format('truetype'),
          url('fonts/demihaut_haut/demihaut_haut.svg#DemiHautH') format('svg');
     font-weight: normal;
@@ -22,9 +20,8 @@
 
 @font-face {
 	font-family: 'DemiHaut';
-    src: url('fonts/demihaut_entier/demihaut_entier.eot');
-    src: url('fonts/demihaut_entier/demihaut_entier.eot?#iefix') format('embedded-opentype'),
-         url('fonts/demihaut_entier/demihaut_entier.woff') format('woff'),
+    src: url('fonts/demihaut_entier/demihaut_entier.woff') format('woff'),
+		 url('fonts/demihaut_entier/demihaut_entier.eot?#iefix') format('embedded-opentype'),
          url('fonts/demihaut_entier/demihaut_entier.ttf') format('truetype'),
          url('fonts/demihaut_entier/demihaut_entier.svg#DemiHaut') format('svg');
     font-weight: normal;
@@ -33,9 +30,8 @@
 
 @font-face {
 	font-family: 'DemiBasH';
-    src: url('fonts/demibas_haut/demibas_haut.eot');
-    src: url('fonts/demibas_haut/demibas_haut.eot?#iefix') format('embedded-opentype'),
-         url('fonts/demibas_haut/demibas_haut.woff') format('woff'),
+    src: url('fonts/demibas_haut/demibas_haut.woff') format('woff'),
+		 url('fonts/demibas_haut/demibas_haut.eot?#iefix') format('embedded-opentype'),
          url('fonts/demibas_haut/demibas_haut.ttf') format('truetype'),
          url('fonts/demibas_haut/demibas_haut.svg#DemiBasH') format('svg');
     font-weight: normal;
@@ -44,9 +40,8 @@
 
 @font-face {
 	font-family: 'DemiBasB';
-    src: url('fonts/demibas_bas/demibas_bas.eot');
-    src: url('fonts/demibas_bas/demibas_bas.eot?#iefix') format('embedded-opentype'),
-         url('fonts/demibas_bas/demibas_bas.woff') format('woff'),
+    src: url('fonts/demibas_bas/demibas_bas.woff') format('woff'),
+		 url('fonts/demibas_bas/demibas_bas.eot?#iefix') format('embedded-opentype'),
          url('fonts/demibas_bas/demibas_bas.ttf') format('truetype'),
          url('fonts/demibas_bas/demibas_bas.svg#DemiBasB') format('svg');
     font-weight: normal;
@@ -55,9 +50,8 @@
 
 @font-face {
 	font-family: 'DemiBas';
-    src: url('fonts/demibas_entier/demibas_entier.eot');
-    src: url('fonts/demibas_entier/demibas_entier.eot?#iefix') format('embedded-opentype'),
-         url('fonts/demibas_entier/demibas_entier.woff') format('woff'),
+    src: url('fonts/demibas_entier/demibas_entier.woff') format('woff'),
+		 url('fonts/demibas_entier/demibas_entier.eot?#iefix') format('embedded-opentype'),
          url('fonts/demibas_entier/demibas_entier.ttf') format('truetype'),
          url('fonts/demibas_entier/demibas_entier.svg#DemiBas') format('svg');
     font-weight: normal;
@@ -66,9 +60,8 @@
 
 @font-face {
     font-family: 'CentraleMinB';
-    src: url('fonts/centrale_min_bas/centrale_min_bas.eot');
-    src: url('fonts/centrale_min_bas/centrale_min_bas.eot?#iefix') format('embedded-opentype'),
-         url('fonts/centrale_min_bas/centrale_min_bas.woff') format('woff'),
+    src: url('fonts/centrale_min_bas/centrale_min_bas.woff') format('woff'),
+		 url('fonts/centrale_min_bas/centrale_min_bas.eot?#iefix') format('embedded-opentype'),
          url('fonts/centrale_min_bas/centrale_min_bas.ttf') format('truetype'),
          url('fonts/centrale_min_bas/centrale_min_bas.svg#CentraleMinB') format('svg');
     font-weight: normal;
@@ -78,9 +71,8 @@
 
 @font-face {
     font-family: 'CentraleMinC';
-    src: url('fonts/centrale_min_centre/centrale_min_centre.eot');
-    src: url('fonts/centrale_min_centre/centrale_min_centre.eot?#iefix') format('embedded-opentype'),
-         url('fonts/centrale_min_centre/centrale_min_centre.woff') format('woff'),
+    src: url('fonts/centrale_min_centre/centrale_min_centre.woff') format('woff'),
+		 url('fonts/centrale_min_centre/centrale_min_centre.eot?#iefix') format('embedded-opentype'),
          url('fonts/centrale_min_centre/centrale_min_centre.ttf') format('truetype'),
          url('fonts/centrale_min_centre/centrale_min_centre.svg#CentraleMinC') format('svg');
     font-weight: normal;
@@ -90,9 +82,8 @@
 
 @font-face {
     font-family: 'CentraleMinH';
-    src: url('fonts/centrale_min_haut/centrale_min_haut.eot');
-    src: url('fonts/centrale_min_haut/centrale_min_haut.eot?#iefix') format('embedded-opentype'),
-         url('fonts/centrale_min_haut/centrale_min_haut.woff') format('woff'),
+    src: url('fonts/centrale_min_haut/centrale_min_haut.woff') format('woff'),
+		 url('fonts/centrale_min_haut/centrale_min_haut.eot?#iefix') format('embedded-opentype'),
          url('fonts/centrale_min_haut/centrale_min_haut.ttf') format('truetype'),
          url('fonts/centrale_min_haut/centrale_min_haut.svg#CentraleMinH') format('svg');
     font-weight: normal;
@@ -107,6 +98,7 @@ body {
 	border:0;
 	padding:0;
 	margin:0;
+	font-size:3em;
 }
 
 div #main {
@@ -116,16 +108,6 @@ div #main {
 }
 
 img .loading {
-	border:0;
-	padding:0;
-	margin:0;
-}
-
-a {
-	color:#FFFFFF;
-	font-family:DemiHaut;
-	font-size:1.5em;
-	text-decoration:none;
 	border:0;
 	padding:0;
 	margin:0;

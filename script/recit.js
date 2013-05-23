@@ -1,6 +1,6 @@
 var blank = new Kinetic.Text( {
 	fontFamily : 'DemiHaut',
-	fontSize : textSize*2,
+	fontSize : entireSize,
 	fill : "#FFF",
 	text : "  "
 	} );
@@ -20,7 +20,7 @@ function getStoriesMenu() {
 	for(var index = 0; index < stories.length; index++) {
 		var title = new Kinetic.Text( {
 				fontFamily : 'DemiHaut',
-				fontSize : textSize*2,
+				fontSize : titleSize,
 				fill : "#FFF",
 				text : stories[index].title
 				} );
@@ -69,28 +69,20 @@ function getStoryLayout(title) {
 
 //affichage de toutes les phrases en même temps à l'écran
 function createStoryAlter(story) {
-	var storyGroup = new Kinetic.Group( {
-		x : 0,
-		y : 0
-	} );
-	for(var s=0; s < story.sentences.length ; s++) {
-		var sentenceGroup = new Kinetic.Group( {
-			x : 0,
-			y : 0
-		} );
+	var usableScreenHeight = screenHeight*0.8;
+	var usableWidth
+	var storyGroup = new Kinetic.Group();
+	var nbSentences = story.sentences.length;
+	for(var s=0; s < nbSentences ; s++) {
+		var sentenceGroup = new Kinetic.Group();
 		for(var w=0; w < story.sentences[s].words.length ; w++) {
 			var word = story.sentences[s].words[w];
-			if(word.active) {
-				alert("actif : " + word.value.getText() + " / " + word.nextValue.getText());
-			}
-			else {
-				alert("normal : " + word.value.getText() + " ");
-			}
-			sentenceGroup.add(word);
+			sentenceGroup.add(word.value);
 		}
 		storyGroup.add(sentenceGroup)
 	}
 	mainLayer.add(storyGroup);
+	mainLayer.draw();
 }
 
 function createStoryContinue(sentences) {
@@ -99,4 +91,9 @@ function createStoryContinue(sentences) {
 	//créer plusieurs phrases
 	//on boucle sur les phrases pour stocker mots
 	//créer mots actifs
+}
+
+function getRandomStory() {
+	var randomIndex = Math.floor((Math.random()*stories.length));
+	getStoryLayout(stories[randomIndex].title);
 }

@@ -41,66 +41,78 @@ function Sentence() {
 function Word(value)
 {
 	this.value = new Kinetic.Text( {
+		fontFamily : "DemiBas",
+		fontSize : entireSize,
 		fill : "#FFF",
-		text : value
+		text : value,
+		offset : { x : 0 , y : 0 }
 	} );
 }
 
 function ActiveWord(value, next, type)
 {
-	this.value = new Kinetic.Text( {
-		fill : "#FFF",
-		text : value
-	} );
-	this.nextValue = new Kinetic.Text( {
-		fill : "#FFF",
-		text : next
-	} );
-	
 	this.active = true;
-	
 	this.type = type;
-}
-
-/*function ActiveWord(value, newValue, type)
-{
-	if(this.type == Transition["shadow"])
-	{
-		this.value = new Word(value);
-		this.newValue = new Word(newValue);
-		this.newValue.setOpacity(0);
-		this.active = this.value;
-	}
-	else {
-		this.value = value;
-		this.newValue = newValue;
-	}
-}
-
-ActiveWord.prototype.transitionShadow = function () {
-	this.active.on('tap click', function() {
-		if(this.active == this.value) {
-			this.value.transitionTo( {
-				opacity : 0, duration : 2
+	this.value = new Kinetic.Group();
+	switch(this.type) {
+		case Transition["up"] : {
+			this.stillPart = new Kinetic.Text( {
+				fontFamily : "DemiHautB",
+				fontSize : demiSize/2,
+				fill : "#FFF",
+				text : value,
+				offset : { x : 0 , y : 0}
 			} );
-			this.newValue.transitionTo( {
-				opacity : 1, duration : 2
+			this.actualPart = new Kinetic.Text( {
+				fontFamily : "DemiHautH",
+				fontSize : demiSize/2,
+				fill : "#FFF",
+				text : value,
+				offset : { x : 0, y ; 0}
+				x : stillPart.getX(),
+				y : stillPart.getY() - stillPart.getHeight()
 			} );
-			this.active = this.newValue;
-			newValue.moveToTop();
+			this.nextPart = new Kinetic.Text( {
+				fontFamily : "DemiHautH",
+				fontSize : demiSize/2,
+				fill : "#FFF",
+				text : next,
+				offset : { x : 0, y : 0}
+			} );
+			break;
 		}
-		else {
-			this.value.transitionTo( {
-				opacity : 1, duration : 2
+
+		case Transition["down"] : {
+			this.stillPart = new Kinetic.Text( {
+				fontFamily : "DemiBasH",
+				fontSize : demiSize/2,
+				fill : "#FFF",
+				text : value,
+				offset : { x : 0 , y : 0}
 			} );
-			this.newValue.transitionTo( {
-				opacity : 0, duration : 2
+			this.actualPart = new Kinetic.Text( {
+				fontFamily : "DemiBasB",
+				fontSize : demiSize/2,
+				fill : "#FFF",
+				text : value,
+				offset : { x : 0 , y : 0},
+				x : stillPart.getX(),
+				y : stillPart.getY() + stillPart.getHeight()
 			} );
-			this.active = this.value;
-			value.moveToTop();
+			this.nextPart = new Kinetic.Text( {
+				fontFamily : "DemiBasB",
+				fontSize : demiSize/2,
+				fill : "#FFF",
+				text : next,
+				offset : { x : 0 , y : 0}
+			} );
+			break;
 		}
-	});
-}*/
+		this.value.add(stillPart);
+		this.value.add(actualPart);
+		this.value.add(nextPart);
+	}
+}
 
 //Getting all stories to display titles
 function storiesFromXML() {
@@ -143,10 +155,10 @@ function getStoryFromXML(story) {
 				var type = Transition["err"];
 				switch(tmpWords[w].getAttribute("font"))
 				{
-					case "coupable_haut": Transition["up"]; break;
-					case "coupable_bas" : Transition["down"]; break;
-					case "centrale" : Transition["central"]; break;
-					case "ombre" : Transition["shadow"]; break;
+					case "coupable_haut": type = Transition["up"]; break;
+					case "coupable_bas" : type = Transition["down"]; break;
+					case "centrale" : type = Transition["central"]; break;
+					case "ombre" : type = Transition["shadow"]; break;
 				}
 				tmpWord = new ActiveWord( tmpWords[w].textContent, next, type );
 			}
@@ -157,44 +169,4 @@ function getStoryFromXML(story) {
 		}
 		story.sentences[s] = tmpSentence;
 	}
-}
-
-function displaySentence(sentenceNode){
-	wordsList=sentenceNode.childNodes;
-	var sentenceArray=new Array();
-	for(i=0;i<wordsList.length;i++){
-		if(wordsList[i].hasAttributes()==false){
-			sentenceArray.push(wordsList[i].nodeValue);
-		}
-		else{
-			var wordWithTransition=getWordWithTransition(wordsList[i]);
-			sentenceArray.push(wordWithTransition);
-		}
-	}
-}
-
-function getWordWithTransition(wordNode){ // récupérer transition adéquate pour chaque procédé
-	transitionType=wordNode.getAttribute("font");
-	var wordWithTransition="";
-	switch (transitionType) {
-		case coupable_haut: 
-			
-		break; 
-		
-		case coupable_bas: 
-			
-		break; 
-		
-		case centrale: 
-			
-		break; 
-		case ombre: 
-			
-		break; 
-		
-		default: 
-			
-		break;
-	}
-	return wordWithTransition;
 }

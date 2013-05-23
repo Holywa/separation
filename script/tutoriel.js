@@ -22,7 +22,7 @@ function getTutorielMenu() {
     text: 'THIS ',
     fontSize: demihaut_font,
     fontFamily: 'DemiHaut',
-    fill: 'white'
+    fill: '#FFF'
   });
 
   var p1_2_a = new Kinetic.Text({
@@ -30,8 +30,8 @@ function getTutorielMenu() {
     y: lines,
     text: 'S^PARATION',
     fontSize: demihaut_part_font,
-    fontFamily: 'DemihautH',
-    fill: 'white'
+    fontFamily: 'DemiHautH',
+    fill: '#FFF'
   });
 
   var p1_2_b = new Kinetic.Text({
@@ -39,8 +39,8 @@ function getTutorielMenu() {
     y: lines,
     text: 'S^PARATION',
     fontSize: demihaut_part_font,
-    fontFamily: 'DemihautB',
-    fill: 'white'
+    fontFamily: 'DemiHautB',
+    fill: '#FFF'
   })
 
   var p1_2_c = new Kinetic.Text({
@@ -48,8 +48,8 @@ function getTutorielMenu() {
     y: lines,
     text: 'P^RC^PTION',
     fontSize: demihaut_part_font,
-    fontFamily: 'DemihautB',
-    fill: 'white'
+    fontFamily: 'DemiHautB',
+    fill: '#FFF'
   })
 
   var word_size_1 = (p1_1.getWidth() + p1_2_a.getWidth()) / 2;
@@ -81,8 +81,8 @@ function getTutorielMenu() {
     y: 2*lines,
     text: 'which crept',
     fontSize: demihaut_font,
-    fontFamily: 'Demihaut',
-    fill: 'white'
+    fontFamily: 'DemiHaut',
+    fill: '#FFF'
   });
 
   p2_1.setOffset({ x: p2_1.getWidth() / 2 });
@@ -97,11 +97,12 @@ function getTutorielMenu() {
     y: 3*lines,
     text: 'in the ',
     fontSize: demihaut_font,
-    fontFamily: 'Demihaut',
-    fill: 'white'
+    fontFamily: 'DemiHaut',
+    fill: '#FFF'
   });
 
   var imageObj1 = new Image();
+  imageObj1.src = 'imgs/shading.png';
   var p3_2_a = new Kinetic.Image({
     x: col,
     y: 3*lines + image_y,
@@ -110,9 +111,9 @@ function getTutorielMenu() {
     height: image_dimension * 283
   });
   imageObj1.onload = function() { p3_2_a };
-  imageObj1.src = 'imgs/shading.png';
 
   var imageObj2 = new Image();
+  imageObj2.src = 'imgs/slicing.png';
   var p3_2_b = new Kinetic.Image({
     x: col,
     y: 3*lines + image_y,
@@ -121,16 +122,15 @@ function getTutorielMenu() {
     height: image_dimension * 283,
     opacity: 0
   });
-  imageObj1.onload = function() { p3_2_b };
-  imageObj2.src = 'imgs/slicing.png';
+  imageObj2.onload = function() { p3_2_b };
 
   var p3_3 = new Kinetic.Text({
     x: col,
     y: 3*lines,
     text: ' of words',
     fontSize: demihaut_font,
-    fontFamily: 'Demihaut',
-    fill: 'white'
+    fontFamily: 'DemiHaut',
+    fill: '#FFF'
   });
 
   var word_size_3 = (p3_1.getWidth() + p3_2_a.getWidth() + p3_3.getWidth()) / 2;
@@ -154,7 +154,7 @@ function getTutorielMenu() {
     text: 'SHREDS ',
     fontSize: demihaut_font,
     fontFamily: 'CentraleMinH',
-    fill: 'white'
+    fill: '#FFF'
   });
 
   var p4_1_b = new Kinetic.Text({
@@ -163,7 +163,7 @@ function getTutorielMenu() {
     text: 'SHREDS ',
     fontSize: demihaut_font,
     fontFamily: 'CentraleMinC',
-    fill: 'white'
+    fill: '#FFF'
   });
 
   var p4_1_c = new Kinetic.Text({
@@ -172,7 +172,7 @@ function getTutorielMenu() {
     text: 'CHASES ',
     fontSize: demihaut_font,
     fontFamily: 'CentraleMinC',
-    fill: 'white'
+    fill: '#FFF'
   });
 
   var p4_1_d = new Kinetic.Text({
@@ -181,7 +181,7 @@ function getTutorielMenu() {
     text: 'SHREDS ',
     fontSize: demihaut_font,
     fontFamily: 'CentraleMinC',
-    fill: 'white'
+    fill: '#FFF'
   });
 
   var p4_2 = new Kinetic.Text({
@@ -189,8 +189,8 @@ function getTutorielMenu() {
     y: 4*lines,
     text: 'ME',
     fontSize: 60,
-    fontFamily: 'Demihaut',
-    fill: 'white' 
+    fontFamily: 'DemiHaut',
+    fill: '#FFF' 
   });
 
   var word_size_4 = (p4_1_a.getWidth() + p4_2.getWidth()) / 2;
@@ -292,14 +292,14 @@ function getTutorielMenu() {
 
       var tween3_2_a = new Kinetic.Tween({
         node: p3_2_a,
-        duration: 2,
+        duration: 1,
         opacity: p3_2_a.getOpacity() / 4
       });
       tween3_2_a.play();
 
       var tween3_2_b = new Kinetic.Tween({
         node: p3_2_b,
-        duration: 2,
+        duration: 1,
         opacity: p3_2_b.getOpacity() / 4
       });
       tween3_2_b.play();    
@@ -335,7 +335,7 @@ function getTutorielMenu() {
 
       var tween1_2_a = new Kinetic.Tween({
         node: p1_2_a,
-        duration: 2,
+        duration: 1,
         scaleX: 2,
         scaleY: 2,
         x: col - p1_2_a.getWidth() / 2,
@@ -345,7 +345,7 @@ function getTutorielMenu() {
 
       var tween1_2_b = new Kinetic.Tween({
         node: p1_2_b,
-        duration: 2,
+        duration: 1,
         scaleX: 2,
         scaleY: 2,
         x: col - p1_2_a.getWidth() / 2,
@@ -355,7 +355,7 @@ function getTutorielMenu() {
 
       var tween1_2_c = new Kinetic.Tween({
         node: p1_2_c,
-        duration: 2,
+        duration: 1,
         scaleX: 2,
         scaleY: 2,
         x: col - p1_2_a.getWidth() / 2,
@@ -369,14 +369,14 @@ function getTutorielMenu() {
 
       var tween3_2_a = new Kinetic.Tween({
         node: p3_2_a,
-        duration: 2,
+        duration: 1,
         opacity: p3_2_a.getOpacity() * 4
       });
       tween3_2_a.play();
 
       var tween3_2_b = new Kinetic.Tween({
         node: p3_2_b,
-        duration: 2,
+        duration: 1,
         opacity: p3_2_b.getOpacity() * 4
       });
       tween3_2_b.play();  
@@ -411,7 +411,7 @@ function getTutorielMenu() {
 
       var tween1_2_a = new Kinetic.Tween({
         node: p1_2_a,
-        duration: 2,
+        duration: 1,
         scaleX: 1,
         scaleY: 1,
         x: col,
@@ -421,7 +421,7 @@ function getTutorielMenu() {
 
       var tween1_2_b = new Kinetic.Tween({
         node: p1_2_b,
-        duration: 2,
+        duration: 1,
         scaleX: 1,
         scaleY: 1,
         x: col,
@@ -431,7 +431,7 @@ function getTutorielMenu() {
 
       var tween1_2_c = new Kinetic.Tween({
         node: p1_2_c,
-        duration: 2,
+        duration: 1,
         scaleX: 1,
         scaleY: 1,
         x: col,
@@ -537,21 +537,21 @@ function getTutorielMenu() {
 
       var tween1_2_a = new Kinetic.Tween({
         node: p1_2_a,
-        duration: 2,
+        duration: 1,
         opacity: 0.25
       });
       tween1_2_a.play();
 
       var tween1_2_b = new Kinetic.Tween({
         node: p1_2_b,
-        duration: 2,
+        duration: 1,
         opacity: 0.25
       });
       tween1_2_b.play();
 
       var tween1_2_c = new Kinetic.Tween({
         node: p1_2_c,
-        duration: 2,
+        duration: 1,
         opacity: 0.25
       });
       tween1_2_c.play();
@@ -588,7 +588,7 @@ function getTutorielMenu() {
         node: p3_2_a,
         scaleX: 2,
         scaleY: 2,
-        duration: 2,
+        duration: 1,
         x: col + p3_2_a.getWidth() / 2,
         y: 2*lines + p3_2_a.getHeight()
       });
@@ -598,7 +598,7 @@ function getTutorielMenu() {
         node: p3_2_b,
         scaleX: 2,
         scaleY: 2,
-        duration: 2,
+        duration: 1,
         x: col + p3_2_b.getWidth() / 2,
         y: 2*lines + p3_2_b.getHeight() 
       });
@@ -610,21 +610,21 @@ function getTutorielMenu() {
 
       var tween1_2_a = new Kinetic.Tween({
         node: p1_2_a,
-        duration: 2,
+        duration: 1,
         opacity: 1
       });
       tween1_2_a.play();
 
       var tween1_2_b = new Kinetic.Tween({
         node: p1_2_b,
-        duration: 2,
+        duration: 1,
         opacity: 1
       });
       tween1_2_b.play();
 
       var tween1_2_c = new Kinetic.Tween({
         node: p1_2_c,
-        duration: 2,
+        duration: 1,
         opacity: 1
       });
       tween1_2_c.play();
@@ -661,7 +661,7 @@ function getTutorielMenu() {
         node: p3_2_a,
         scaleX: 1,
         scaleY: 1,
-        duration: 2,
+        duration: 1,
         x: col,
         y: 3*lines + image_y 
       });
@@ -671,7 +671,7 @@ function getTutorielMenu() {
         node: p3_2_b,
         scaleX: 1,
         scaleY: 1,
-        duration: 2,
+        duration: 1,
         x: col,
         y: 3*lines + image_y  
       });

@@ -1,6 +1,5 @@
 function getConceptMenu() {
 	clearStage();
 	setHomeBtn();
-	
-	alert("concept");
+	alert("concept end");
 }
