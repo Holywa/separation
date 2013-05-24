@@ -103,13 +103,7 @@ Separation.horizontal_move = function(params){
   }  
 
   this.on = function(handler){
-    function detect(event){
-      event.preventDefault;
-
-      var touchPos = {
-        x: event.touches[0].pageX,
-        y: event.touches[0].pageY
-      }
+    function corpus(touchPos){
       x = touchPos.x;
 
       if(inRectangle(touchPos) == true){
@@ -123,7 +117,31 @@ Separation.horizontal_move = function(params){
       oldx = x;
     };
 
-    window.addEventListener("touchmove", detect, false);
+    // touch event
+    function detect_touch(event){
+      event.preventDefault;
+
+      var touchPos = {
+        x: event.touches[0].pageX,
+        y: event.touches[0].pageY
+      }
+      corpus(touchPos);
+    };
+
+    window.addEventListener("touchmove", detect_touch, false);
+
+    // mouse event
+    function detect_mouse(event){
+      if(event.which == 1){ // la souris est clickée
+        var touchPos = {
+          x: event.clientX,
+          y: event.clientY
+        }
+        corpus(touchPos);
+      }
+    };
+
+    window.addEventListener("mousemove", detect_mouse, false);
   }
 }
 
@@ -295,7 +313,7 @@ Separation.tear = function(params, type){
   }
 
   this.on = function(handler) {
-    function detect(event){
+    function detect_touch(event){
       event.preventDefault;
 
       if(event.touches[1]){
@@ -330,7 +348,15 @@ Separation.tear = function(params, type){
       }
     };
 
-    window.addEventListener("touchmove", detect, false);
+    window.addEventListener("touchmove", detect_touch, false);
+
+    function detect_mouse(event){
+      var detect_mouse = new Separation.cut(params, type);
+
+      detect_mouse.on(handler);
+    }
+
+    window.addEventListener("mousemove", detect_mouse, false);
   }
 };
 
@@ -364,5 +390,4 @@ Separation.onZone = function(params){
     window.addEventListener('touchmove', detect, false);
 
   }
-
 };

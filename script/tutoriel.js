@@ -151,7 +151,7 @@ function getTutorielMenu() {
   var p4_1_a = new Kinetic.Text({
     x: col,
     y: 4*lines,
-    text: 'SHREDS ',
+    text: 'shreds ',
     fontSize: demihaut_font,
     fontFamily: 'CentraleMinH',
     fill: '#FFF'
@@ -160,7 +160,7 @@ function getTutorielMenu() {
   var p4_1_b = new Kinetic.Text({
     x: col,
     y: 4*lines,
-    text: 'SHREDS ',
+    text: 'shreds ',
     fontSize: demihaut_font,
     fontFamily: 'CentraleMinC',
     fill: '#FFF'
@@ -169,7 +169,7 @@ function getTutorielMenu() {
   var p4_1_c = new Kinetic.Text({
     x: col,
     y: 4*lines,
-    text: 'CHASES ',
+    text: 'chases ',
     fontSize: demihaut_font,
     fontFamily: 'CentraleMinC',
     fill: '#FFF'
@@ -178,7 +178,7 @@ function getTutorielMenu() {
   var p4_1_d = new Kinetic.Text({
     x: col,
     y: 4*lines,
-    text: 'SHREDS ',
+    text: 'shreds ',
     fontSize: demihaut_font,
     fontFamily: 'CentraleMinC',
     fill: '#FFF'
@@ -187,7 +187,7 @@ function getTutorielMenu() {
   var p4_2 = new Kinetic.Text({
     x: col,
     y: 4*lines,
-    text: 'ME',
+    text: 'me',
     fontSize: demihaut_font,
     fontFamily: 'DemiHaut',
     fill: '#FFF' 
@@ -362,15 +362,15 @@ function getTutorielMenu() {
       }
     }
 
-    p1_2_a.on('tap', function(){
+    p1_2_a.on('tap click', function(){
       cutting();
     });
 
-    p1_2_b.on('tap', function(){
+    p1_2_b.on('tap click', function(){
       cutting();
     });
 
-    p1_2_c.on('tap', function(){
+    p1_2_c.on('tap click', function(){
       cutting();
     });
 
@@ -505,21 +505,22 @@ function getTutorielMenu() {
   }
 
   // tear
-  p4_1_a.on('tap', function(){
+  if(lock == 0 || lock == 3){
+    p4_1_a.on('tap', function(){
+    });
 
-  });
+    p4_1_b.on('tap', function(){
 
-  p4_1_b.on('tap', function(){
+    });
 
-  });
+    p4_1_c.on('tap', function(){
 
-  p4_1_c.on('tap', function(){
+    });
 
-  });
+    p4_1_d.on('tap', function(){
 
-  p4_1_d.on('tap', function(){
-
-  });
+    });
+  }
   
   stage.add(actionLayer);
 
