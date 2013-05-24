@@ -188,7 +188,7 @@ function getTutorielMenu() {
     x: col,
     y: 4*lines,
     text: 'ME',
-    fontSize: 60,
+    fontSize: demihaut_font,
     fontFamily: 'DemiHaut',
     fill: '#FFF' 
   });
@@ -198,254 +198,114 @@ function getTutorielMenu() {
   p4_1_a.setOffset({ x: word_size_4 });
   p4_1_b.setOffset({ x: word_size_4 });
   p4_1_c.setOffset({ x: word_size_4 });
+  p4_1_d.setOffset({ x: word_size_4 });
   p4_2.setOffset({ x: word_size_4 - p4_1_a.getWidth() });
 
   actionLayer.add(p4_1_a);
   actionLayer.add(p4_1_b);
   actionLayer.add(p4_1_c);
+  actionLayer.add(p4_1_d);
   actionLayer.add(p4_2);
 
   /*
    * zooming functions
    */
   // put in grey all words
+  function node_dark(node){
+    var tween = new Kinetic.Tween({
+      node: node,
+      duration: 1,
+      opacity: node.getOpacity() / 4
+    });
+    tween.play();
+  }
+
+  function node_light(node){
+    var tween = new Kinetic.Tween({
+      node: node,
+      duration: 1,
+      opacity: node.getOpacity() * 4
+    });
+    tween.play();
+  }
+
+  function node_zoom(node, x){
+    var tween = new Kinetic.Tween({
+      node: node,
+      duration: 1,
+      scaleX: 2,
+      scaleY: 2,
+      x: x,
+      y: 2*lines,
+    });
+    tween.play();
+  }
+
+  function node_unzoom(node, y){
+    var tween = new Kinetic.Tween({
+      node: node,
+      duration: 1,
+      scaleX: 1,
+      scaleY: 1,
+      x: col,
+      y: y
+    });
+    tween.play();
+  }
+
   var darkenize = function(){
-    var tween1_1 = new Kinetic.Tween({
-      node: p1_1,
-      duration: 2,
-      opacity: 0.25
-    });
-    tween1_1.play();
-
-    var tween2_1 = new Kinetic.Tween({
-      node: p2_1,
-      duration: 2,
-      opacity: 0.25
-    });
-    tween2_1.play();
-
-    var tween3_1 = new Kinetic.Tween({
-      node: p3_1,
-      duration: 2,
-      opacity: 0.25
-    });
-    tween3_1.play();
-
-    var tween3_3 = new Kinetic.Tween({
-      node: p3_3,
-      duration: 2,
-      opacity: 0.25
-    });
-    tween3_3.play();
-
-    var tween4_2 = new Kinetic.Tween({
-      node: p4_2,
-      duration: 2,
-      opacity: 0.25
-    });
-    tween4_2.play();
+    node_dark(p1_1);
+    node_dark(p2_1);
+    node_dark(p3_1);
+    node_dark(p3_3);
+    node_dark(p4_2);
   }
 
   var illuminate = function(){
-    var tween1_1 = new Kinetic.Tween({
-      node: p1_1,
-      duration: 2,
-      opacity: 1
-    });
-    tween1_1.play();
-
-    var tween2_1 = new Kinetic.Tween({
-      node: p2_1,
-      duration: 2,
-      opacity: 1
-    });
-    tween2_1.play();
-
-    var tween3_1 = new Kinetic.Tween({
-      node: p3_1,
-      duration: 2,
-      opacity: 1
-    });
-    tween3_1.play();
-
-    var tween3_3 = new Kinetic.Tween({
-      node: p3_3,
-      duration: 2,
-      opacity: 1
-    });
-    tween3_3.play();
-
-    var tween4_2 = new Kinetic.Tween({
-      node: p4_2,
-      duration: 2,
-      opacity: 1
-    });
-    tween4_2.play();
+    node_light(p1_1);
+    node_light(p2_1);
+    node_light(p3_1);
+    node_light(p3_3);
+    node_light(p4_2);
   }
 
-  var lock = 0;
+  var lock = 0; // permet de ne pas pouvoir jouer plusieurs animations en même temps
 
   // cut
   if(lock == 0 || lock == 1){
     var cut_activation = function(){
       darkenize();
 
-      var tween3_2_a = new Kinetic.Tween({
-        node: p3_2_a,
-        duration: 1,
-        opacity: p3_2_a.getOpacity() / 4
-      });
-      tween3_2_a.play();
+      node_dark(p3_2_a);
+      node_dark(p3_2_b);
+      /*node_dark(p4_1_a);
+      node_dark(p4_1_b);
+      node_dark(p4_1_c);
+      node_dark(p4_1_d);*/
 
-      var tween3_2_b = new Kinetic.Tween({
-        node: p3_2_b,
-        duration: 1,
-        opacity: p3_2_b.getOpacity() / 4
-      });
-      tween3_2_b.play();    
-
-      /*
-      var tween4_1_a = new Kinetic.Tween({
-      node: p4_1_a,
-      duration: 2,
-      opacity: 0.25
-      });
-      tween4_1_a.play();
-
-      var tween4_1_b = new Kinetic.Tween({
-      node: p4_1_b,
-      duration: 2,
-      opacity: 0.25
-      });
-      tween4_1_b.play();
-
-      var tween4_1_c = new Kinetic.Tween({
-      node: p4_1_c,
-      duration: 2,
-      opacity: 0.25
-      });
-      tween4_1_c.play();
-
-      var tween4_1_d = new Kinetic.Tween({
-      node: p4_1_d,
-      duration: 2,
-      opacity: 0.25
-      });
-      tween4_1_d.play();*/
-
-      var tween1_2_a = new Kinetic.Tween({
-        node: p1_2_a,
-        duration: 1,
-        scaleX: 2,
-        scaleY: 2,
-        x: col - p1_2_a.getWidth() / 2,
-        y: 2*lines,
-      });
-      tween1_2_a.play();
-
-      var tween1_2_b = new Kinetic.Tween({
-        node: p1_2_b,
-        duration: 1,
-        scaleX: 2,
-        scaleY: 2,
-        x: col - p1_2_a.getWidth() / 2,
-        y: 2*lines,
-      });
-      tween1_2_b.play();
-
-      var tween1_2_c = new Kinetic.Tween({
-        node: p1_2_c,
-        duration: 1,
-        scaleX: 2,
-        scaleY: 2,
-        x: col - p1_2_a.getWidth() / 2,
-        y: 2*lines,
-      });
-      tween1_2_c.play();
+      node_zoom(p1_2_a, col - p1_2_a.getWidth() / 2);
+      node_zoom(p1_2_b, col - p1_2_a.getWidth() / 2);
+      node_zoom(p1_2_c, col - p1_2_a.getWidth() / 2);
     }
 
     var cut_desactivation = function(){
       illuminate();
 
-      var tween3_2_a = new Kinetic.Tween({
-        node: p3_2_a,
-        duration: 1,
-        opacity: p3_2_a.getOpacity() * 4
-      });
-      tween3_2_a.play();
+      node_light(p3_2_a);
+      node_light(p3_2_b);
+      /*node_light(p4_1_a);
+      node_light(p4_1_b);
+      node_light(p4_1_c);
+      node_light(p4_1_d);*/
 
-      var tween3_2_b = new Kinetic.Tween({
-        node: p3_2_b,
-        duration: 1,
-        opacity: p3_2_b.getOpacity() * 4
-      });
-      tween3_2_b.play();  
-
-      /*var tween4_1_a = new Kinetic.Tween({
-        node: p4_1_a,
-        duration: 2,
-        opacity: 1
-      });
-      tween4_1_a.play();
-
-      var tween4_1_b = new Kinetic.Tween({
-        node: p4_1_b,
-        duration: 2,
-        opacity: 1
-      });
-      tween4_1_b.play();
-
-      var tween4_1_c = new Kinetic.Tween({
-        node: p4_1_c,
-        duration: 2,
-        opacity: 1
-      });
-      tween4_1_c.play();
-
-      var tween4_1_d = new Kinetic.Tween({
-        node: p4_1_d,
-        duration: 2,
-        opacity: 1
-      });
-      tween4_1_d.play();*/
-
-      var tween1_2_a = new Kinetic.Tween({
-        node: p1_2_a,
-        duration: 1,
-        scaleX: 1,
-        scaleY: 1,
-        x: col,
-        y: lines
-      });
-      tween1_2_a.play();
-
-      var tween1_2_b = new Kinetic.Tween({
-        node: p1_2_b,
-        duration: 1,
-        scaleX: 1,
-        scaleY: 1,
-        x: col,
-        y: lines
-      });
-      tween1_2_b.play();
-
-      var tween1_2_c = new Kinetic.Tween({
-        node: p1_2_c,
-        duration: 1,
-        scaleX: 1,
-        scaleY: 1,
-        x: col,
-        y: lines
-      });
-      tween1_2_c.play();
+      node_unzoom(p1_2_a, lines);
+      node_unzoom(p1_2_b, lines);
+      node_unzoom(p1_2_c, lines);
     }
 
-    var cut_activate = false;
-
     function cutting(){
-      if(cut_activate == false){
+      if(lock == 0){
         lock = 1;
-        cut_activate = true;
         cut_activation();
 
         var couper = new Separation.cut({
@@ -455,7 +315,7 @@ function getTutorielMenu() {
           height: p1_2_a.getHeight() * 4
         });
 
-        var sens = true;
+        var sens = true; // quel mot doit-on faire apparaitre
 
         function animation_cut(node1, node2){
           var tween1 = new Kinetic.Tween({
@@ -503,15 +363,15 @@ function getTutorielMenu() {
     }
 
     p1_2_a.on('tap', function(){
-      cutting()
+      cutting();
     });
 
     p1_2_b.on('tap', function(){
-      cutting()
+      cutting();
     });
 
     p1_2_c.on('tap', function(){
-      cutting()
+      cutting();
     });
 
     var cut_unZoom = new Separation.onZone({
@@ -522,8 +382,7 @@ function getTutorielMenu() {
     });
 
     cut_unZoom.on(function(){
-      if(cut_activate == true){
-        cut_activate = false;
+      if(lock == 1){
         cut_desactivation();
         lock = 0;
       }
@@ -535,166 +394,48 @@ function getTutorielMenu() {
     var rub_activation = function(){
       darkenize();
 
-      var tween1_2_a = new Kinetic.Tween({
-        node: p1_2_a,
-        duration: 1,
-        opacity: 0.25
-      });
-      tween1_2_a.play();
+      node_dark(p1_2_a);
+      node_dark(p1_2_b);
+      node_dark(p1_2_c);
+      /*node_dark(p4_1_a);
+      node_dark(p4_1_b);
+      node_dark(p4_1_c);
+      node_dark(p4_1_d);*/
 
-      var tween1_2_b = new Kinetic.Tween({
-        node: p1_2_b,
-        duration: 1,
-        opacity: 0.25
-      });
-      tween1_2_b.play();
-
-      var tween1_2_c = new Kinetic.Tween({
-        node: p1_2_c,
-        duration: 1,
-        opacity: 0.25
-      });
-      tween1_2_c.play();
-
-      /*var tween4_1_a = new Kinetic.Tween({
-        node: p4_1_a,
-        duration: 2,
-        opacity: 0.25
-      });
-      tween4_1_a.play();
-
-      var tween4_1_b = new Kinetic.Tween({
-        node: p4_1_b,
-        duration: 2,
-        opacity: 0.25
-      });
-      tween4_1_b.play();
-
-      var tween4_1_c = new Kinetic.Tween({
-        node: p4_1_c,
-        duration: 2,
-        opacity: 0.25
-      });
-      tween4_1_c.play();
-
-      var tween4_1_d = new Kinetic.Tween({
-        node: p4_1_d,
-        duration: 2,
-        opacity: 0.25
-      });
-      tween4_1_d.play();*/
-
-      var tween3_2_a = new Kinetic.Tween({
-        node: p3_2_a,
-        scaleX: 2,
-        scaleY: 2,
-        duration: 1,
-        x: col + p3_2_a.getWidth() / 2,
-        y: 2*lines + p3_2_a.getHeight()
-      });
-      tween3_2_a.play();
-
-      var tween3_2_b = new Kinetic.Tween({
-        node: p3_2_b,
-        scaleX: 2,
-        scaleY: 2,
-        duration: 1,
-        x: col + p3_2_b.getWidth() / 2,
-        y: 2*lines + p3_2_b.getHeight() 
-      });
-      tween3_2_b.play();
+      node_zoom(p3_2_a, col + p3_2_a.getWidth() / 2);
+      node_zoom(p3_2_b, col + p3_2_b.getWidth() / 2);
     }
 
     var rub_desactivation = function(){
       illuminate();
 
-      var tween1_2_a = new Kinetic.Tween({
-        node: p1_2_a,
-        duration: 1,
-        opacity: 1
-      });
-      tween1_2_a.play();
+      node_light(p1_2_a);
+      node_light(p1_2_b);
+      node_light(p1_2_c);
+      /*node_light(p4_1_a);
+      node_light(p4_1_b);
+      node_light(p4_1_c);
+      node_light(p4_1_d);*/
 
-      var tween1_2_b = new Kinetic.Tween({
-        node: p1_2_b,
-        duration: 1,
-        opacity: 1
-      });
-      tween1_2_b.play();
-
-      var tween1_2_c = new Kinetic.Tween({
-        node: p1_2_c,
-        duration: 1,
-        opacity: 1
-      });
-      tween1_2_c.play();
-
-      /*var tween4_1_a = new Kinetic.Tween({
-        node: p4_1_a,
-        duration: 2,
-        opacity: 1
-      });
-      tween4_1_a.play();
-
-      var tween4_1_b = new Kinetic.Tween({
-        node: p4_1_b,
-        duration: 2,
-        opacity: 1
-      });
-      tween4_1_b.play();
-
-      var tween4_1_c = new Kinetic.Tween({
-        node: p4_1_c,
-        duration: 2,
-        opacity: 1
-      });
-      tween4_1_c.play();
-
-      var tween4_1_d = new Kinetic.Tween({
-        node: p4_1_d,
-        duration: 2,
-        opacity: 1
-      });
-      tween4_1_d.play();*/
-
-      var tween3_2_a = new Kinetic.Tween({
-        node: p3_2_a,
-        scaleX: 1,
-        scaleY: 1,
-        duration: 1,
-        x: col,
-        y: 3*lines + image_y 
-      });
-      tween3_2_a.play();
-
-      var tween3_2_b = new Kinetic.Tween({
-        node: p3_2_b,
-        scaleX: 1,
-        scaleY: 1,
-        duration: 1,
-        x: col,
-        y: 3*lines + image_y  
-      });
-      tween3_2_b.play();
+      node_unzoom(p3_2_a, 3*lines + image_y);
+      node_unzoom(p3_2_b, 3*lines + image_y);
     }
 
-    var rub_activate = false;
-
     p3_2_a.on('tap', function(){
-      if(rub_activate == false){
+      if(lock == 0){
         lock = 2;
-        rub_activate = true;
         rub_activation();
 
         var frotter = new Separation.rub({
           x: col - p3_2_b.getWidth(),
-          y: 2*lines + p3_2_b.getHeight(),
+          y: 2*lines,
           width: p3_2_a.getWidth() * 2,
           height: p3_2_a.getHeight() * 2
         });
 
         var sens = true; // pour pouvoir inverser l'effet
-        var velocity = 0.2;
+        var velocity = 0.2; // vitesse d'effacement
+        var tempo = 0; // pour ne pas réinverser l'effet tout de suite
 
         var new_opacity = function(){
           var op = p3_2_a.getOpacity()
@@ -702,14 +443,26 @@ function getTutorielMenu() {
           if(sens == true){
             if(op >= velocity){ return (op - velocity); }
             else {
-              sens = false;
-              return 0;
+              if(tempo < 10){
+                tempo = tempo + 1;
+                return 0;
+              } else {
+                tempo = 0;
+                sens = false;
+                return 0; 
+              } 
             }
           } else {
             if(op <= (1 - velocity)){ return (op + velocity); }
             else {
-              sens = true;
-              return 1;
+              if(tempo < 10){
+                tempo = tempo + 1;
+                return 1;
+              } else {
+                tempo = 0;
+                sens = true;
+                return 1; 
+              } 
             }
           }
         }
@@ -738,14 +491,13 @@ function getTutorielMenu() {
 
     var rub_unZoom = new Separation.onZone({
       x: col - p3_2_b.getWidth(),
-      y: 2*lines + p3_2_b.getHeight(),
+      y: 2*lines,
       width: p3_2_a.getWidth() * 2,
       height: p3_2_a.getHeight() * 2
     });
 
     rub_unZoom.on(function(){
-      if(rub_activate == true){
-        rub_activate = false;
+      if(lock == 2){
         rub_desactivation();
         lock = 0;
       }
@@ -771,4 +523,4 @@ function getTutorielMenu() {
   
   stage.add(actionLayer);
 
-  }
+}
