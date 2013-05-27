@@ -40,13 +40,9 @@ function createForm(){ // window.prompt: fenetre extérieure
    }
 </SCRIPT>
 */
-} 
- 
- 
- 
- 
- 
-function loadXMLDoc(dname){
+}
+
+/*function loadXMLDoc(dname){
 
     if (window.XMLHttpRequest){
         xhttp=new XMLHttpRequest();
@@ -57,7 +53,7 @@ function loadXMLDoc(dname){
     xhttp.open("GET",dname,false);
     xhttp.send();
     return xhttp.responseXML;
-}
+}*/
 
 function loadXMLDoc1() {
 	if(navigator.appname == 'Microsoft Internet Explorer') {
@@ -74,10 +70,6 @@ function loadXMLDoc1() {
 		xmlFile = xmlhttp.responseXML;
 	}
 }
-
-
-
-
 
 function getXMLHttpRequest() {
     var xhr = null;
@@ -99,8 +91,6 @@ function getXMLHttpRequest() {
     
     return xhr;
 }
-
-
 
 function dump(arr,level) {
 	var dumped_text = "";
@@ -126,10 +116,6 @@ function dump(arr,level) {
 	}
 	return dumped_text;
 }
-
-
-
-
 
 function checkDeviceLabo() {
 	readjustSizes();

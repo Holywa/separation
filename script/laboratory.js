@@ -3,7 +3,9 @@ function getLaboratoryMenu() {
 	setHomeBtn();
 	
 	alert("laboratory");
-}var mainLayer;
+}
+
+var mainLayer;
 var actionLayer;
 var titleSize;
 var textSize;
@@ -14,9 +16,6 @@ var displayedWord;
 var wordChoosenH;
 var wordChoosenB;
 var wordsKineticGroup;
-
-
-
 
 function getLaboratoryMenu() {
 	clearStage(); 

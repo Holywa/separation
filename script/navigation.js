@@ -20,6 +20,10 @@ var centraleSize;
 
 var maxVisibleLines = 10;
 
+var en = {"tuto" : "Tutorial", "story" : "Tale of words", "labo" : "The word laboratory", "concept" : "Poetic concept", "lang" : "Français"};
+var fr = {"tuto" : "Tutoriel", "story" : "Le recit des mots", "labo" : "Le laboratoire des mots", "concept" : "Concept poetique", "lang" : "English"};
+var activeLang = fr;
+
 function readjustSizes() {
 	screenWidth = window.innerWidth;
 	screenHeight = window.innerHeight;
@@ -28,6 +32,12 @@ function readjustSizes() {
 	entireSize = 0.05*screenHeight;
 	demiSize = (entireSize*6)/11;
 	centraleSize = (entireSize*9)/11;
+	
+	/*var size_font = 4;
+	var demihaut_font = 16 * size_font;
+	var demihaut_part_font = 5 * size_font;
+	var decal_h = 1.5 * size_font;
+	var decal_b = 2 * size_font;*/
 }
 
 function checkDevice() {
@@ -60,8 +70,8 @@ function loadButtons() {
 			y : screenHeight,
 			listening : true,
 			image: homeImg,
-			width : screenHeight*0.10,
-			height : screenHeight*0.10
+			width : screenHeight*0.075,
+			height : screenHeight*0.075
 		});
 		homeBtn.setOffset(0,homeBtn.getHeight());
 		homeBtn.on("tap click", function() {
@@ -78,8 +88,8 @@ function loadButtons() {
 			y : screenHeight,
 			listening : true,
 			image: shuffleImg,
-			width : screenHeight*0.10,
-			height : screenHeight*0.10
+			width : screenHeight*0.075,
+			height : screenHeight*0.075
 		});
 		shuffleBtn.setOffset(shuffleBtn.getWidth(),shuffleBtn.getHeight());
 		shuffleBtn.on("tap click", function() {
@@ -96,8 +106,8 @@ function loadButtons() {
 			y : 0,
 			listening : true,
 			image: returnImg,
-			width : screenHeight*0.10,
-			height : screenHeight*0.10
+			width : screenHeight*0.075,
+			height : screenHeight*0.075
 		});
 	returnBtn.setOffset(0,0);
 	returnBtn.on("tap click", function() {
@@ -147,7 +157,7 @@ function initMainMenu() {
 	title.setOffset( title.getWidth()/2, 0 );
 	
 	tutorielH = new Kinetic.Text( {
-		text : "tutoriel",
+		text : activeLang["tuto"],
 		fontFamily : "DemiHautH",
 		fontSize : demiSize,
 		fill : "#FFF",
@@ -158,7 +168,7 @@ function initMainMenu() {
 	tutorielH.setOffset( tutorielH.getWidth()/2, tutorielH.getHeight()/2 );
 	
 	tutorielB = new Kinetic.Text( {
-		text : "tutoriel",
+		text : activeLang["tuto"],
 		fontFamily : "DemiHautB",
 		fontSize : demiSize,
 		fill : "#FFF",
@@ -181,7 +191,7 @@ function initMainMenu() {
 	} );
 	
 	recitH = new Kinetic.Text( {
-		text : "le  recit  des  mots",
+		text : activeLang["story"],
 		fontFamily : "DemiHautH",
 		fontSize : demiSize,
 		fill : "#FFF",
@@ -192,7 +202,7 @@ function initMainMenu() {
 	recitH.setOffset( recitH.getWidth()/2, recitH.getHeight()/2 );
 	
 	recitB = new Kinetic.Text( {
-		text : "le  recit  des  mots",
+		text : activeLang["story"],
 		fontFamily : "DemiHautB",
 		fontSize : demiSize,
 		fill : "#FFF",
@@ -215,7 +225,7 @@ function initMainMenu() {
 	} );
 	
 	laboratoireH = new Kinetic.Text( {
-		text : "le  laboratoire  des  mots",
+		text : activeLang["labo"],
 		fontFamily : "DemiHautH",
 		fontSize : demiSize,
 		fill : "#FFF",
@@ -225,7 +235,7 @@ function initMainMenu() {
 	} );
 	laboratoireH.setOffset( laboratoireH.getWidth()/2, laboratoireH.getHeight()/2 );
 	laboratoireB = new Kinetic.Text( {
-		text : "le  laboratoire  des  mots",
+		text : activeLang["labo"],
 		fontFamily : "DemiHautB",
 		fontSize : demiSize,
 		fill : "#FFF",
@@ -248,7 +258,7 @@ function initMainMenu() {
 	} );
 	
 	conceptH = new Kinetic.Text( {
-		text : "concept  poetique",
+		text : activeLang["concept"],
 		fontFamily : "DemiHautH",
 		fontSize : demiSize,
 		fill : "#FFF",
@@ -258,7 +268,7 @@ function initMainMenu() {
 	} );
 	conceptH.setOffset( conceptH.getWidth()/2, conceptH.getHeight()/2 );
 	conceptB = new Kinetic.Text( {
-		text : "concept  poetique",
+		text : activeLang["concept"],
 		fontFamily : "DemiHautB",
 		fontSize : demiSize,
 		fill : "#FFF",
@@ -280,11 +290,32 @@ function initMainMenu() {
 		fill : "red"
 	} );
 	
+	lang = new Kinetic.Text( {
+		text : activeLang["lang"],
+		fontFamily : "DemiHaut",
+		fontSize : entireSize,
+		fill : "#FFF",
+		align : "center",
+		x : 0,
+		y : screenHeight,
+		listening : true
+	} );
+	lang.setOffset(0, lang.getHeight());
+	
 	tutoriel.on("tap click", function() {
+		/*var langue = "fr";
+		if(activeLang == en) {
+			langue = "en";
+		}
+		getTutorielMenu(langue);*/
 		getTutorielMenu();
 	} );
 	recit.on("tap click", function() {
-		getStoriesMenu();
+		var langue = "fr";
+		if(activeLang == en) {
+			langue = "en";
+		}
+		getStoriesMenu(langue);
 	} );
 	laboratoire.on("tap click", function() {
 		getLaboratoryMenu();
@@ -292,8 +323,59 @@ function initMainMenu() {
 	concept.on("tap click", function() {
 		getConceptMenu();
 	} );
+	lang.on("tap", function() {
+		changeLanguage();
+	});
 	
 	getMainMenu();
+}
+
+function changeLanguage() {
+	if(activeLang == fr) {
+		activeLang = en;
+	}
+	else {
+		activeLang = fr;
+	}
+	tutorielH.setText(activeLang["tuto"]);
+	tutorielH.setPosition( { x : stage.getWidth()/2,
+		y : stage.getHeight()*0.275 } );
+	tutorielH.setOffset( tutorielH.getWidth()/2, tutorielH.getHeight()/2 );	
+		
+	tutorielB.setText(activeLang["tuto"]);
+	tutorielB.setOffset( tutorielB.getWidth()/2 , tutorielB.getHeight()/2 );
+	tutorielB.setPosition( stage.getWidth()/2 , tutorielH.getY()+ stage.getHeight()*0.025 );
+	
+	recitH.setText(activeLang["story"]);
+	recitH.setPosition( { x : stage.getWidth()/2,
+		y : stage.getHeight()*0.475 } );
+	recitH.setOffset( recitH.getWidth()/2, recitH.getHeight()/2 );
+	
+	recitB.setText(activeLang["story"]);
+	recitB.setOffset( recitB.getWidth()/2 , recitB.getHeight()/2 );
+	recitB.setPosition( stage.getWidth()/2 , recitH.getY()+ stage.getHeight()*0.025 );
+	
+	laboratoireH.setText(activeLang["labo"]);
+	laboratoireH.setPosition( { x : stage.getWidth()/2,
+		y : stage.getHeight()*0.675 } );
+	laboratoireH.setOffset( laboratoireH.getWidth()/2, laboratoireH.getHeight()/2 );
+	
+	laboratoireB.setText(activeLang["labo"]);
+	laboratoireB.setOffset( laboratoireB.getWidth()/2 , laboratoireB.getHeight()/2 );
+	laboratoireB.setPosition( stage.getWidth()/2 , laboratoireH.getY()+ stage.getHeight()*0.025 );
+	
+	conceptH.setText(activeLang["concept"]);
+	conceptH.setPosition( { x : stage.getWidth()/2,
+		y : stage.getHeight()*0.875 } );
+	conceptH.setOffset( conceptH.getWidth()/2, conceptH.getHeight()/2 );
+	
+	conceptB.setText(activeLang["concept"]);
+	conceptB.setOffset( conceptB.getWidth()/2 , conceptB.getHeight()/2 );
+	conceptB.setPosition( stage.getWidth()/2 , conceptH.getY()+ stage.getHeight()*0.025 );
+	
+	lang.setText(activeLang["lang"]);
+	
+	mainLayer.draw();
 }
 
 function getMainMenu() {
@@ -306,6 +388,7 @@ function getMainMenu() {
 	mainLayer.add(laboratoireB);
 	mainLayer.add(conceptH);
 	mainLayer.add(conceptB);
+	mainLayer.add(lang);
 	
 	actionLayer.add(tutoriel);
 	actionLayer.add(recit);

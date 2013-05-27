@@ -4,12 +4,15 @@ var stories = new Array();
 var alreadyReadXML = false;
 
 var xmlFile;
-var xmlPath = "./stories/test.xml";
+var frXmlPath = "./stories/fr_xml.xml";
+var enXmlPath = "./stories/en_xml.xml";
 
 var StoryType = {"alter" : 0, "continue" : 1};
 var Transition = {"up" : 0, "down" : 1, "central" : 2, "shadow" : 3, "err" : -1};
 
-function loadXMLDoc() {
+function loadXMLDoc(lang) {
+	var xmlPath;
+	if(lang == "fr") { xmlPath = frXmlPath; } else { xmlPath = enXmlPath; }
 	if(navigator.appname == 'Microsoft Internet Explorer') {
 		xmlFile = new ActiveXObject("Microsoft.XMLDOM");
 		xmlFile.async = false;
@@ -64,8 +67,10 @@ function ActiveWord(value, next, type)
 				fontSize : demiSize,
 				fill : "#FFF",
 				text : value,
-				offset : { x : 0 , y : 0}
+				x : 0
 			} );
+			this.stillPart.setY(this.stillPart.getHeight()*2);
+			this.stillPart.setOffset(0, this.stillPart.getHeight());
 			this.actualPart = new Kinetic.Text( {
 				fontFamily : "DemiHautH",
 				fontSize : demiSize,

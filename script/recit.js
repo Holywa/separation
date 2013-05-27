@@ -2,15 +2,18 @@ var blank = new Kinetic.Text( {
 	fontFamily : 'DemiHaut',
 	fontSize : entireSize,
 	fill : "#FFF",
-	text : "  "
+	text : "  ",
+	listening : false,
+	x : 0,
+	y : 0
 	} );
 	
-function getStoriesMenu() {
+function getStoriesMenu(lang) {
 	clearStage();
 	setHomeBtn();
 	
 	if(!alreadyReadXML) {
-		loadXMLDoc();
+		loadXMLDoc(lang);
 		storiesFromXML();
 	}
 	
@@ -69,29 +72,33 @@ function getStoryLayout(title) {
 
 //affichage de toutes les phrases en même temps à l'écran
 function createStoryAlter(story) {
+	mainLayer.add(blank);
+	
 	var usableHeight = screenHeight*0.8;
 	var usableWidth = screenWidth - (screenHeight*0.2);
+	
 	var storyGroup = new Kinetic.Group( {
 		x : screenHeight*0.1,
 		y : screenHeight*0.1,
 		listening : false
 	} );
+	
 	var heightLine = usableWidth/(maxVisibleLines*2);
+	
 	var nbSentences = story.sentences.length;
+	
 	if(nbSentences > maxVisibleLines) { storyGroup.setListening(true); }
+	
 	for(var s=0; s < nbSentences ; s++) {
 		var sentenceGroup = new Kinetic.Group();
-		if(s == 0) { sentenceGroup.setPosition(storyGroup.getX(), storyGroup.getY()); }
-		else { sentenceGroup.setPosition(storyGroup.getX(), storyGroup.getY()+(heightLine*s)+heightLine ); }
 		var lastWord;
+		
 		for(var w=0; w < story.sentences[s].words.length ; w++) {
+		
 			var word = story.sentences[s].words[w];
-			if(w == 0)
-				{ word.value.setPosition(sentenceGroup.getX(), sentenceGroup.getY()); }
-			else {
-					word.value.setPosition(lastWord.value.getX() + lastWord.value.getWidth() + blank.getWidth(), sentenceGroup.getY()); }
 			lastWord = word;
 			sentenceGroup.add(word.value);
+			
 			if(word.active) {
 				word.addHitZone();
 				mainLayer.add(word.hitZone);
