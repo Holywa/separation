@@ -59,33 +59,33 @@
 }
 
 @font-face {
-    font-family: 'CentraleMinB';
-    src: url('fonts/centrale_min_bas/centrale_min_bas.woff') format('woff'),
-		 url('fonts/centrale_min_bas/centrale_min_bas.eot?#iefix') format('embedded-opentype'),
-         url('fonts/centrale_min_bas/centrale_min_bas.ttf') format('truetype'),
-         url('fonts/centrale_min_bas/centrale_min_bas.svg#CentraleMinB') format('svg');
+    font-family: 'CentraleB';
+    src: url('fonts/centrale_bas/centrale_bas.woff') format('woff'),
+		 url('fonts/centrale_bas/centrale_bas.eot?#iefix') format('embedded-opentype'),
+         url('fonts/centrale_bas/centrale_bas.ttf') format('truetype'),
+         url('fonts/centrale_bas/centrale_bas.svg#CentraleB') format('svg');
     font-weight: normal;
     font-style: normal;
 
 }
 
 @font-face {
-    font-family: 'CentraleMinC';
-    src: url('fonts/centrale_min_centre/centrale_min_centre.woff') format('woff'),
-		 url('fonts/centrale_min_centre/centrale_min_centre.eot?#iefix') format('embedded-opentype'),
-         url('fonts/centrale_min_centre/centrale_min_centre.ttf') format('truetype'),
-         url('fonts/centrale_min_centre/centrale_min_centre.svg#CentraleMinC') format('svg');
+    font-family: 'CentraleC';
+    src: url('fonts/centrale_centre/centrale_centre.woff') format('woff'),
+		 url('fonts/centrale_centre/centrale_centre.eot?#iefix') format('embedded-opentype'),
+         url('fonts/centrale_centre/centrale_centre.ttf') format('truetype'),
+         url('fonts/centrale_centre/centrale_centre.svg#CentraleC') format('svg');
     font-weight: normal;
     font-style: normal;
 
 }
 
 @font-face {
-    font-family: 'CentraleMinH';
-    src: url('fonts/centrale_min_haut/centrale_min_haut.woff') format('woff'),
-		 url('fonts/centrale_min_haut/centrale_min_haut.eot?#iefix') format('embedded-opentype'),
-         url('fonts/centrale_min_haut/centrale_min_haut.ttf') format('truetype'),
-         url('fonts/centrale_min_haut/centrale_min_haut.svg#CentraleMinH') format('svg');
+    font-family: 'CentraleH';
+    src: url('fonts/centrale_haut/centrale_haut.woff') format('woff'),
+		 url('fonts/centrale_haut/centrale_haut.eot?#iefix') format('embedded-opentype'),
+         url('fonts/centrale_haut/centrale_haut.ttf') format('truetype'),
+         url('fonts/centrale_haut/centrale_haut.svg#CentraleH') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -93,7 +93,7 @@
 
 body {
 	background-color:#000000;
-	font-family:DemiBas,DemiHaut,DemiHautH,DemiHautB,DemiBasH,DemiBasB,CentraleMinH,CentraleMinC,CentraleMinB;
+	font-family:DemiBas,DemiHaut,DemiHautH,DemiHautB,DemiBasH,DemiBasB,CentraleH,CentraleC,CentraleB;
 	color:#FFFFFF;
 	border:0;
 	padding:0;

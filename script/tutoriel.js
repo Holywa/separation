@@ -152,7 +152,7 @@ function getTutorielMenu() {
     x: col,
     y: 4*lines,
     text: 'shreds ',
-    fontSize: demihaut_font,
+    fontSize: demihaut_part_font,
     fontFamily: 'CentraleMinH',
     fill: '#FFF'
   });
@@ -161,7 +161,7 @@ function getTutorielMenu() {
     x: col,
     y: 4*lines,
     text: 'shreds ',
-    fontSize: demihaut_font,
+    fontSize: demihaut_part_font,
     fontFamily: 'CentraleMinC',
     fill: '#FFF'
   });
@@ -170,7 +170,7 @@ function getTutorielMenu() {
     x: col,
     y: 4*lines,
     text: 'chases ',
-    fontSize: demihaut_font,
+    fontSize: demihaut_part_font,
     fontFamily: 'CentraleMinC',
     fill: '#FFF'
   });
@@ -179,7 +179,7 @@ function getTutorielMenu() {
     x: col,
     y: 4*lines,
     text: 'shreds ',
-    fontSize: demihaut_font,
+    fontSize: demihaut_part_font,
     fontFamily: 'CentraleMinC',
     fill: '#FFF'
   });
@@ -363,14 +363,17 @@ function getTutorielMenu() {
     }
 
     p1_2_a.on('tap click', function(){
+      var test = new Date();
       cutting();
     });
 
     p1_2_b.on('tap click', function(){
+      var test = new Date();
       cutting();
     });
 
     p1_2_c.on('tap click', function(){
+      var test = new Date();
       cutting();
     });
 
@@ -421,7 +424,7 @@ function getTutorielMenu() {
       node_unzoom(p3_2_b, 3*lines + image_y);
     }
 
-    p3_2_a.on('tap', function(){
+    p3_2_a.on('tap click', function(){
       if(lock == 0){
         lock = 2;
         rub_activation();
