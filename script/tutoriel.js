@@ -177,13 +177,13 @@ function getTutorielMenu() {
   });
 
   var p4_1_c = new Kinetic.Text({
-    x: col,
+    x: 1.5 * col,
     y: 4*lines,
-    text: 'SHREDS',
+    text: 'CHASES',
     fontSize: centrale_font,
     fontFamily: 'CentraleC',
     fill: '#FFF',
-    opacity: 0
+    scaleX: 0
   });
 
   var p4_1_d = new Kinetic.Text({
@@ -351,9 +351,8 @@ function getTutorielMenu() {
             tween2.finish(); 
 
             node1.setAttrs({
-              x: col - p1_2_a.getWidth() / 2,
-              y: 2 * lines,
-              offsetX: - col - p1_2_c.getWidth() / 2
+              y: lines,
+              offsetX: - col - p1_2_c.getWidth() 
             });
           }, 2000);       
         }
@@ -514,9 +513,9 @@ function getTutorielMenu() {
 
         var dechirer = new Separation.tear({
           x: col - p4_1_a.getWidth(),
-          y: 2*lines + p4_1_a.getHeight(),
+          y: 2*lines - p4_1_a.getHeight() * 1.25,
           width: p4_1_a.getWidth() * 2,
-          height: p4_1_a.getHeight() * 6
+          height: p4_1_a.getHeight() * 6 *1.5
         });
 
         var sens  = true;
@@ -524,17 +523,19 @@ function getTutorielMenu() {
         function animation_tear(node1, node2){
           var tween1 = new Kinetic.Tween({
             node: node1,
-            duration: 2,
+            duration: 3,
             easing: Kinetic.Easings.StrongEaseInOut,
-            x: 0
+            x: col / 2,
+            scaleX: 0
           })
           tween1.play();
 
           var tween2 = new Kinetic.Tween({
             node: node2,
-            duration: 2,
+            duration: 3,
             easing: Kinetic.Easings.StrongEaseInOut,
-            x: 2
+            x: col,
+            scaleX: 1
           })
           setTimeout(function(){
             tween2.play();
@@ -545,9 +546,7 @@ function getTutorielMenu() {
             tween2.finish(); 
 
             node1.setAttrs({
-              x: col - p1_2_a.getWidth() / 2,
-              y: 2 * lines,
-              offsetX: - col - p1_2_c.getWidth() / 2
+              x: 1.5 * col
             });
           }, 2000);
         }

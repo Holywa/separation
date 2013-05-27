@@ -508,18 +508,20 @@ Separation.tear = function(params, type){
  * renvoie vrai si le toucher est dans le rectangle, et faux sinon
  */
 Separation.onZone = function(params){
+  var tolerance = stage.getWidth() / 20;
+
   function inRectangle(touchPos){
     if(
-      ((touchPos.x > params.x) && (touchPos.x < (params.x + params.width))) &&
-      ((touchPos.y > params.y) && (touchPos.y < (params.y + params.height)))
+      ((touchPos.x > (params.x - tolerance)) && (touchPos.x < (params.x + params.width + tolerance))) &&
+      ((touchPos.y > (params.y - tolerance)) && (touchPos.y < (params.y + params.height + tolerance)))
     ){
       return true;
     } else { return false; }
   }
 
   this.on = function(handler){
-    function detect(event){
-      touchPos = {
+    function detect_touch(event){
+      var touchPos = {
         x: event.touches[0].pageX,
         y: event.touches[0].pageY
       }
@@ -528,7 +530,20 @@ Separation.onZone = function(params){
 
     }
 
-    window.addEventListener('touchmove', detect, false);
+    window.addEventListener('touchmove', detect_touch, false);
+
+    function detect_mouse(event){
+      if(event.which == 1){ // la souris est clickée
+        var touchPos = {
+          x: event.clientX,
+          y: event.clientY
+        }
+        
+        if(!inRectangle(touchPos)){ handler() };
+      }
+    };
+
+    window.addEventListener("mousemove", detect_mouse, false);
 
   }
 };
