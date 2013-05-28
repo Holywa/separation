@@ -109,7 +109,7 @@ function getTutorielMenu() {
   });
 
   var imageObj1 = new Image();
-  imageObj1.src = 'imgs/shading.png';
+  imageObj1.src = 'imgs/stories/shading.png';
   var p3_2_a = new Kinetic.Image({
     x: col,
     y: 3*lines + image_y,
@@ -120,7 +120,7 @@ function getTutorielMenu() {
   imageObj1.onload = function() { p3_2_a };
 
   var imageObj2 = new Image();
-  imageObj2.src = 'imgs/slicing.png';
+  imageObj2.src = 'imgs/stories/slicing.png';
   var p3_2_b = new Kinetic.Image({
     x: col,
     y: 3*lines + image_y,

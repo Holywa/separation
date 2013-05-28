@@ -63,7 +63,7 @@ function checkDevice() {
 
 function loadButtons() {
 	var homeImg = new Image();
-	homeImg.src = "imgs/icon.png";
+	homeImg.src = "imgs/btns/icon.png";
 	homeImg.onload = function() {
 		homeBtn = new Kinetic.Image({
 			x : 0,
@@ -74,14 +74,14 @@ function loadButtons() {
 			height : screenHeight*0.075
 		});
 		homeBtn.setOffset(0,homeBtn.getHeight());
-		homeBtn.on("tap click", function() {
+		homeBtn.on("tap", function() {
 			clearStage();
 			getMainMenu();
 		} );
 	};
 
 	var shuffleImg = new Image();
-	shuffleImg.src = "imgs/shuffle.png";
+	shuffleImg.src = "imgs/btns/shuffle.png";
 	shuffleImg.onload = function() {
 		shuffleBtn = new Kinetic.Image({
 			x : screenWidth,
@@ -92,14 +92,14 @@ function loadButtons() {
 			height : screenHeight*0.075
 		});
 		shuffleBtn.setOffset(shuffleBtn.getWidth(),shuffleBtn.getHeight());
-		shuffleBtn.on("tap click", function() {
+		shuffleBtn.on("tap", function() {
 			clearStage();
 			getRandomStory();
 		} );
 	};
 	
 	var returnImg = new Image();
-	returnImg.src = "imgs/arrow.png";
+	returnImg.src = "imgs/btns/arrow.png";
 	returnImg.onload = function() {
 		returnBtn = new Kinetic.Image({ 
 			x : 0,
@@ -110,7 +110,7 @@ function loadButtons() {
 			height : screenHeight*0.075
 		});
 	returnBtn.setOffset(0,0);
-	returnBtn.on("tap click", function() {
+	returnBtn.on("tap", function() {
 		clearStage();
 		getStoriesMenu();
 		} );
@@ -147,7 +147,7 @@ function initMainMenu() {
 
 	title = new Kinetic.Text( {
 		text : "La Séparation",
-		fontFamily : "Century Gothic",
+		fontFamily : "DemiBas",
 		fontSize : titleSize,
 		fill : "#FFF",
 		align : "center",
@@ -317,10 +317,10 @@ function initMainMenu() {
 		}
 		getStoriesMenu(langue);
 	} );
-	laboratoire.on("tap click", function() {
+	laboratoire.on("tap", function() {
 		getLaboratoryMenu();
 	} );
-	concept.on("tap click", function() {
+	concept.on("tap", function() {
 		getConceptMenu();
 	} );
 	lang.on("tap", function() {
