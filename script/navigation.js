@@ -303,12 +303,11 @@ function initMainMenu() {
 	lang.setOffset(0, lang.getHeight());
 	
 	tutoriel.on("tap click", function() {
-		/*var langue = "fr";
+		var langue = "fr";
 		if(activeLang == en) {
 			langue = "en";
 		}
-		getTutorielMenu(langue);*/
-		getTutorielMenu();
+		getTutorielMenu(langue);
 	} );
 	recit.on("tap click", function() {
 		var langue = "fr";
