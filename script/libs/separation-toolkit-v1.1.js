@@ -510,3 +510,85 @@ Separation.onZone = function(params){
     window.addEventListener('touchmove', detect_touch, false);
   }
 };
+
+
+Separation.cut_animation = function(node1, node2, group, actionLayer, stage){
+  var params1 = {
+    x: node1.getX(),
+    y: node1.getY(),
+    offsetX: node1.getOffsetX(), 
+    offsetY: node1.getOffsetY()
+  };
+
+  var params2 = {
+    x: node2.getX(),
+    y: node2.getY(),
+    offsetX: node2.getOffsetX(), 
+    offsetY: node2.getOffsetY()
+  };
+
+  var couper = new Separation.cut({
+    x: node1.getX() - node1.offsetX,
+    y: node1.getY() - node1.offsetY,
+    width: node1.getWidth() * node1.getScaleX(),
+    height: node1.getHeight() * node1.getScaleY() * 2
+  });
+
+  var rect = new Kinetic.Rect({
+    x: node1.getX() - params1.offsetX + group.getX(),
+    y: node1.getY() - params1.offsetY,
+    width: node1.getWidth() * node1.getScaleX() * group.getScaleX(),
+    height: node1.getHeight() * node1.getScaleY() * group.getScaleY() * 2,
+    stroke: 'green',
+    opacity:1
+  });
+  actionLayer.add(rect);
+  stage.add(actionLayer);
+
+  var sens = true; // quel mot doit-on faire apparaitre
+
+  function animation_cut(node1, node2){
+    var tween1 = new Kinetic.Tween({
+      node: node1,
+      duration: 2,
+      easing: Kinetic.Easings.StrongEaseInOut,
+      y: 2 * window.getHeight()
+    })
+    tween1.play();     
+
+    var tween2 = new Kinetic.Tween({
+      node: node2,
+      duration: 2,
+      easing: Kinetic.Easings.StrongEaseInOut,
+      x: params1.x,
+      offsetX: params1.offsetX
+    })
+    setTimeout(function(){
+      tween2.play();
+    }, 400)  
+
+    setTimeout(function(){
+      tween1.finish();
+      tween2.finish(); 
+
+      node1.setAttrs({
+        x: params2.x,
+        offsetX: params2.offsetX,
+        y: params2.y,
+        offsetY: params2.offsetY
+      });
+    }, 2000);       
+  }
+
+  this.start = function(){
+    couper.on(function(){
+      if(sens == true){
+        animation_cut(node1, node2);
+        sens = false;
+      } else {
+        animation_cut(node2, node1);
+        sens = true;
+      }
+    });
+  }
+}

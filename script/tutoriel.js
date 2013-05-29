@@ -352,57 +352,11 @@ function getTutorielMenu(langage) {
       if(lock == 0){
         lock = 1;
         cut_activation();
-
-        var couper = new Separation.cut({
-          x: col - p_cut_b.getWidth(),
-          y: 2*lines + p_cut_b.getHeight(),
-          width: p_cut_a.getWidth() * 2,
-          height: p_cut_a.getHeight() * 4
-        });
-
-        var sens = true; // quel mot doit-on faire apparaitre
-
-        function animation_cut(node1, node2){
-          var tween1 = new Kinetic.Tween({
-            node: node1,
-            duration: 2,
-            easing: Kinetic.Easings.StrongEaseInOut,
-            y: 7 * col
-          })
-          tween1.play();     
-
-          var tween2 = new Kinetic.Tween({
-            node: node2,
-            duration: 2,
-            easing: Kinetic.Easings.StrongEaseInOut,
-            offsetX: word_size_1 - p1_1.getWidth()
-          })
-          setTimeout(function(){
-            tween2.play();
-          }, 400)  
-
-          setTimeout(function(){
-            tween1.finish();
-            tween2.finish(); 
-
-            node1.setAttrs({
-              y: lines,
-              offsetX: - col - p_cut_c.getWidth() 
-            });
-          }, 2000);       
-        }
-
-        couper.on(function(){
-          if(lock == 1){
-            if(sens == true){
-              animation_cut(p_cut_b, p_cut_c);
-              sens = false;
-            } else {
-              animation_cut(p_cut_c, p_cut_b);
-              sens = true;
-            }
-          }
-        });
+        setTimeout(function(){
+          var anim = new Separation.cut_animation(p_cut_b, p_cut_c, cut_group, actionLayer, stage);
+          anim.start();
+        }, 2000);
+        
       }
     });
 
