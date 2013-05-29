@@ -1,10 +1,3 @@
-function getLaboratoryMenu() {
-	clearStage();
-	setHomeBtn();
-	
-	alert("laboratory");
-}
-
 var mainLayer;
 var actionLayer;
 var titleSize;
@@ -18,7 +11,8 @@ var wordChoosenB;
 var wordsKineticGroup;
 
 function getLaboratoryMenu() {
-	clearStage(); 
+	clearStage();
+	setHomeBtn();
 	
 	displayedWord = prompt("gimme your text");
 

@@ -4,8 +4,6 @@ var blank = new Kinetic.Text( {
 	fill : "#FFF",
 	text : "  ",
 	listening : false,
-	x : 0,
-	y : 0
 	} );
 	
 function getStoriesMenu(lang) {
@@ -72,37 +70,40 @@ function getStoryLayout(title) {
 
 //affichage de toutes les phrases en même temps à l'écran
 function createStoryAlter(story) {
-	mainLayer.add(blank);
+	//mainLayer.add(blank);
 	
-	var usableHeight = screenHeight*0.8;
-	var usableWidth = screenWidth - (screenHeight*0.2);
+	var usableHeight = screenHeight - returnBtn.getHeight();
+	var usableWidth = screenWidth - returnBtn.getWidth();
 	
 	var storyGroup = new Kinetic.Group( {
-		x : screenHeight*0.1,
-		y : screenHeight*0.1,
 		listening : false
 	} );
 	
-	var heightLine = usableWidth/(maxVisibleLines*2);
+	var heightLine = usableHeight/maxVisibleLines;
 	
 	var nbSentences = story.sentences.length;
 	
-	if(nbSentences > maxVisibleLines) { storyGroup.setListening(true); }
+	if(nbSentences > maxVisibleLines) { 
+		storyGroup.setListening(true);
+	}
 	
 	for(var s=0; s < nbSentences ; s++) {
 		var sentenceGroup = new Kinetic.Group();
 		var lastWord;
 		
 		for(var w=0; w < story.sentences[s].words.length ; w++) {
-		
 			var word = story.sentences[s].words[w];
-			lastWord = word;
-			sentenceGroup.add(word.value);
-			
-			if(word.active) {
-				word.addHitZone();
-				mainLayer.add(word.hitZone);
+			if(w == 0) {
+				word.value.setX(0);
 			}
+			else
+			{
+				word.value.setX(lastWord.value.getX() + blank.getWidth());
+			}
+			word.value.setY(s*heightLine);
+			lastWord = word;
+			mainLayer.add(word.value);
+			sentenceGroup.add(word.value);
 		}
 		storyGroup.add(sentenceGroup);
 	}
