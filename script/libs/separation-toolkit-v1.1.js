@@ -567,7 +567,7 @@ Separation.scroll = function(params, type){
  * renvoie vrai si le toucher est dans le rectangle, et faux sinon
  */
 Separation.onZone = function(params){
-  var tolerance = stage.getWidth() / 20;
+  var tolerance = stage.getWidth() / 10;
 
   function inRectangle(touchPos){
     if(

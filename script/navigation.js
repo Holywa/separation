@@ -524,14 +524,14 @@ function initMainMenu() {
 		getConceptMenu();
 	} );
 	fr_w.on("tap", function() {
-		changeLanguage(fr);
 		fr_w.setOpacity(opacite);
 		en_w.setOpacity(opacite/3);
+		changeLanguage(fr);		
 	});
 	en_w.on("tap", function(){
-		changeLanguage(en);
 		en_w.setOpacity(opacite);
 		fr_w.setOpacity(opacite/3);
+		changeLanguage(en);
 	});
 	
 	getMainMenu();
