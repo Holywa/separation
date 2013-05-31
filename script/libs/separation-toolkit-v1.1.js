@@ -651,13 +651,109 @@ function word_demihaut(params){
     y: params.y,
     offsetY: - 0.7*params.fontSize,
     width: this.haut.getWidth(),
-    height: this.haut.getHeight() + this.bas_a.getHeight()
+    height: this.haut.getHeight() + this.bas_a.getHeight() - 0.1 * params.fontSize
   });
 
   this.group.add(this.haut);
   this.group.add(this.bas_a);
   this.group.add(this.bas_b);
 };
+
+
+/*
+ *  Ombre word constructor
+ */
+function word_ombre(params){
+  var imageObj1 = new Image();
+  imageObj1.src = params.img1;
+  var imageObj2 = new Image();
+  imageObj2.src = params.img2;
+  
+  this.img_a = new Kinetic.Image({
+    image: imageObj1,
+    width: params.width,
+    height: params.height
+  });
+  imageObj1.onload = function() { this.img_a };
+  
+  this.img_b = new Kinetic.Image({
+    image: imageObj2,
+    width: params.width,
+    height: params.height,
+    opacity: 0
+  });
+  imageObj2.onload = function() { this.img_b };
+
+  this.group = new Kinetic.Group({
+    x: params.x,
+    y: params.y,
+    width: params.width,
+    height: params.height
+  });
+
+  this.group.add(this.img_a);
+  this.group.add(this.img_b);
+ };
+
+
+/*
+ *  Centrale word constructor
+ */
+function word_centrale(params){
+  this.haut = new Kinetic.Text({
+    text: params.mot1,
+    fontSize:  params.fontSize,
+    fontFamily: 'CentraleH',
+    fill: params.fill
+  });
+
+  this.center_a = new Kinetic.Text({
+    text: params.mot1,
+    fontSize:  params.fontSize,
+    fontFamily: 'CentraleC',
+    fill: params.fill
+  });
+
+  this.center_b = new Kinetic.Text({
+    text: params.mot2,
+    fontSize:  params.fontSize,
+    fontFamily: 'CentraleC',
+    fill: params.fill,
+    scaleX: 0
+  });
+
+  this.bas = new Kinetic.Text({
+    text: params.mot1,
+    fontSize:  params.fontSize,
+    fontFamily: 'CentraleB',
+    fill: params.fill
+  });
+
+  this.center_a.setOffset({ 
+    y: - this.haut.getHeight() + 0.5 * params.fontSize 
+  });
+  this.center_b.setOffset({ 
+    x: - stage.getWidth() / 4,
+    y: - this.haut.getHeight() + 0.5 * params.fontSize
+  });
+  this.bas.setOffset({ 
+    y: - this.haut.getHeight() - this.center_a.getHeight() + 1.1 * params.fontSize 
+  });
+
+  this.group = new Kinetic.Group({
+    x: params.x,
+    y: params.y,
+    offsetY: - 0.95*params.fontSize,
+    width: this.haut.getWidth(),
+    height: this.haut.getHeight() + this.center_a.getHeight() + this.bas.getHeight() - 1.1*params.fontSize
+  });
+
+  this.group.add(this.haut);
+  this.group.add(this.center_a);
+  this.group.add(this.center_b);
+  this.group.add(this.bas);
+};
+
 
 
 /////////////////////////////////////////////////////////////////////
@@ -676,6 +772,7 @@ function node_set_opacity(node, opacity){
 };
 
 function node_dark(node){ node_set_opacity(node, 0.25); };
+
 function node_light(node){ node_set_opacity(node, 1); };
 
 /*
@@ -693,9 +790,9 @@ function node_set_zoom(node, x, y, zoom){
   tween.play(); 
 };
 
-function node_zoom(node, x, y){ node_set_zoom(node, x, y, 2); }
+function node_zoom(node, x, y){ node_set_zoom(node, x, y, 2); };
 
-function node_unzoom(node, x, y){ node_set_zoom(node, x, y, 1); }
+function node_unzoom(node, x, y){ node_set_zoom(node, x, y, 1); };
 
 function zooming_center(node, zoom){
   var x = 0.5 * (stage.getWidth() - node.getWidth()*zoom + node.getOffsetX());
@@ -709,14 +806,14 @@ function zooming_center(node, zoom){
  */
 function node_position(node){
   params = {
-    x: node.getX(),
-    y: node.getY(),
+    x: node.getX() - node.getOffsetX(),
+    y: node.getY() - node.getOffsetY(),
     width: node.getWidth() * node.getScaleX(),
     height: node.getHeight() * node.getScaleY()
   };
 
   return params;
-}
+};
 
 
 /////////////////////////////////////////////////////////////////////
@@ -750,7 +847,6 @@ Separation.cut_animation = function(cut_word){
   };
 
   var sens = true; // quel mot doit-on faire apparaitre
-  var can_play = true;
 
   function animation_cut(node1, node2){
     var tween1 = new Kinetic.Tween({
@@ -785,8 +881,8 @@ Separation.cut_animation = function(cut_word){
     }, 2000);       
   }
 
-  this.play = function(){
-    if(can_play == true){
+  this.start = function(lock){
+    if(lock == true){
       couper.on(function(){
         if(sens == true){
           animation_cut(cut_word.bas_a, cut_word.bas_b);
@@ -798,8 +894,136 @@ Separation.cut_animation = function(cut_word){
       });
     }
   }
+}
 
-  this.stop = function(){
-    can_play = false;
+/*
+ *  Animation associated to rub movement
+ */
+Separation.rub_animation = function(rub_word){
+  var shape_position = node_position(rub_word.group);
+
+  var frotter = new Separation.rub({
+    x: shape_position.x,
+    y: shape_position.y,
+    width: shape_position.width,
+    height: shape_position.height
+  });
+
+  var sens = true; // quel mot doit-on faire apparaitre
+
+  var velocity = 0.2; // vitesse d'effacement
+  var tempo = 0; // pour ne pas réinverser l'effet tout de suite
+
+  var new_opacity = function(){
+    var op = rub_word.img_a.getOpacity()
+
+    if(sens == true){
+      if(op >= velocity){ return (op - velocity); }
+      else {
+        if(tempo < 10){
+          tempo = tempo + 1;
+          return 0;
+        } else {
+          tempo = 0;
+          sens = false;
+          return 0; 
+        } 
+      }
+    } else {
+      if(op <= (1 - velocity)){ return (op + velocity); }
+      else {
+        if(tempo < 10){
+          tempo = tempo + 1;
+          return 1;
+        } else {
+          tempo = 0;
+          sens = true;
+          return 1; 
+        } 
+      }
+    }
+  }
+
+  this.start = function(lock){
+    if(lock == true){
+      frotter.on(function(){
+        var new_op = new_opacity();
+
+        var tween_a = new Kinetic.Tween({
+          node: rub_word.img_a,
+          duration: 0,
+          opacity: new_op
+        });
+        tween_a.play();
+
+        var tween_b = new Kinetic.Tween({
+          node: rub_word.img_b,
+          duration: 0,
+          opacity: 1 - new_op
+        });
+        tween_b.play();
+      });  
+    }
+  } 
+};
+
+/*
+ *  Animation associated to tear movement
+ */
+Separation.tear_animation = function(tear_word){
+  var shape_position = node_position(tear_word.group);
+
+  var dechirer = new Separation.tear({
+    x: shape_position.x,
+    y: shape_position.y,
+    width: shape_position.width,
+    height: shape_position.height
+  });
+
+  var sens = true; // quel mot doit-on faire apparaitre
+
+  function animation_tear(node1, node2){
+    var tween1 = new Kinetic.Tween({
+      node: node1,
+      duration: 3,
+      easing: Kinetic.Easings.StrongEaseInOut,
+      offsetX: stage.getWidth() / 4,
+      scaleX: 0
+    })
+    tween1.play();
+
+    var tween2 = new Kinetic.Tween({
+      node: node2,
+      duration: 3,
+      easing: Kinetic.Easings.StrongEaseInOut,
+      offsetX: 0,
+      scaleX: 1
+    })
+    setTimeout(function(){
+      tween2.play();
+    }, 400)
+
+    setTimeout(function(){
+      tween1.finish();
+      tween2.finish(); 
+
+      node1.setAttrs({
+        offsetX: - stage.getWidth()/4
+      });
+    }, 2000);
+  }
+
+  this.start = function(lock){
+    if(lock == true){
+      dechirer.on(function(){
+        if(sens == true){
+          animation_tear(tear_word.center_a, tear_word.center_b);
+          sens = false;
+        } else {
+          animation_tear(tear_word.center_b, tear_word.center_a);
+          sens = true;
+        }
+      });
+    }
   }
 }
