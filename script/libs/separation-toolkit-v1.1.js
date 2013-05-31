@@ -91,6 +91,10 @@ function Logo(){
   this.getHeight = function(){ return (12*border + 0.1*y);}
 };
 
+/////////////////////////////////////////////////////////////////////
+//                              Gestes                             //
+/////////////////////////////////////////////////////////////////////
+
 /*
  * détecter des mouvements horizontaux
  *
@@ -567,12 +571,10 @@ Separation.scroll = function(params, type){
  * renvoie vrai si le toucher est dans le rectangle, et faux sinon
  */
 Separation.onZone = function(params){
-  var tolerance = stage.getWidth() / 10;
-
   function inRectangle(touchPos){
     if(
-      ((touchPos.x > (params.x - tolerance)) && (touchPos.x < (params.x + params.width + tolerance))) &&
-      ((touchPos.y > (params.y - tolerance)) && (touchPos.y < (params.y + params.height + tolerance)))
+      ((touchPos.x > (params.x)) && (touchPos.x < (params.x + params.width))) &&
+      ((touchPos.y > (params.y)) && (touchPos.y < (params.y + params.height)))
     ){
       return true;
     } else { return false; }
@@ -593,48 +595,169 @@ Separation.onZone = function(params){
   }
 };
 
+Separation.onCorner = function(){
+  var lines = stage.getHeight() / 6;
+  var cols = stage.getWidth() / 6;
 
-Separation.cut_animation = function(node1, node2, group, actionLayer, stage){
+  var detect = new Separation.onZone({
+    x: cols,
+    y: lines,
+    width: 4*cols,
+    height: 4*lines
+  });
+
+  this.on = function(handler){
+    detect.on(handler);
+  }
+}
+
+
+/////////////////////////////////////////////////////////////////////
+//                           Words Types                           //
+/////////////////////////////////////////////////////////////////////
+/*
+ *  Demihaut word constructor
+ */
+function word_demihaut(params){
+  this.haut = new Kinetic.Text({
+    text: params.mot1,
+    fontSize:  params.fontSize,
+    fontFamily: 'DemiHautH',
+    fill: params.fill
+  });
+
+  this.bas_a = new Kinetic.Text({
+    text: params.mot1,
+    fontSize:  params.fontSize,
+    fontFamily: 'DemiHautB',
+    fill: params.fill
+  });
+
+  this.bas_b = new Kinetic.Text({
+    text: params.mot2,
+    fontSize:  params.fontSize,
+    fontFamily: 'DemiHautB',
+    fill: params.fill
+  });
+
+  this.bas_a.setOffset({ y: - this.bas_a.getHeight() + 0.1 * params.fontSize });
+  this.bas_b.setOffset({ 
+    x: params.offsetMot2, 
+    y: - this.bas_a.getHeight() + 0.1 * params.fontSize 
+  });
+
+  this.group = new Kinetic.Group({
+    x: params.x,
+    y: params.y,
+    offsetY: - 0.7*params.fontSize,
+    width: this.haut.getWidth(),
+    height: this.haut.getHeight() + this.bas_a.getHeight()
+  });
+
+  this.group.add(this.haut);
+  this.group.add(this.bas_a);
+  this.group.add(this.bas_b);
+};
+
+
+/////////////////////////////////////////////////////////////////////
+//                        Play with nodes                          //
+/////////////////////////////////////////////////////////////////////
+/*
+ *  Tweens for opacity settings
+ */
+function node_set_opacity(node, opacity){
+  var tween = new Kinetic.Tween({
+    node: node,
+    duration: 1,
+    opacity: opacity
+  });
+  tween.play();
+};
+
+function node_dark(node){ node_set_opacity(node, 0.25); };
+function node_light(node){ node_set_opacity(node, 1); };
+
+/*
+ *  Tweens for zooming
+ */
+function node_set_zoom(node, x, y, zoom){
+  var tween = new Kinetic.Tween({
+    node: node,
+    duration: 1,
+    scaleX: zoom,
+    scaleY: zoom,
+    x: x,
+    y: y
+  });
+  tween.play(); 
+};
+
+function node_zoom(node, x, y){ node_set_zoom(node, x, y, 2); }
+
+function node_unzoom(node, x, y){ node_set_zoom(node, x, y, 1); }
+
+function zooming_center(node, zoom){
+  var x = 0.5 * (stage.getWidth() - node.getWidth()*zoom + node.getOffsetX());
+  var y = 0.5 * (stage.getHeight() - node.getHeight()*zoom + node.getOffsetY());
+
+  node_set_zoom(node, x, y, zoom);
+};
+
+/*
+ * Get position and size of a node after scaling
+ */
+function node_position(node){
+  params = {
+    x: node.getX(),
+    y: node.getY(),
+    width: node.getWidth() * node.getScaleX(),
+    height: node.getHeight() * node.getScaleY()
+  };
+
+  return params;
+}
+
+
+/////////////////////////////////////////////////////////////////////
+//                            Animations                           //
+/////////////////////////////////////////////////////////////////////
+/*
+ * Animation associated to cut movement
+ */
+Separation.cut_animation = function(cut_word){
+  var shape_position = node_position(cut_word.group);
+
+  var couper = new Separation.cut({
+    x: shape_position.x,
+    y: shape_position.y,
+    width: shape_position.width,
+    height: shape_position.height
+  });
+
   var params1 = {
-    x: node1.getX(),
-    y: node1.getY(),
-    offsetX: node1.getOffsetX(), 
-    offsetY: node1.getOffsetY()
+    x: cut_word.bas_a.getX(),
+    y: cut_word.bas_a.getY(),
+    offsetX: cut_word.bas_a.getOffsetX(), 
+    offsetY: cut_word.bas_a.getOffsetY()
   };
 
   var params2 = {
-    x: node2.getX(),
-    y: node2.getY(),
-    offsetX: node2.getOffsetX(), 
-    offsetY: node2.getOffsetY()
+    x: cut_word.bas_b.getX(),
+    y: cut_word.bas_b.getY(),
+    offsetX: cut_word.bas_b.getOffsetX(), 
+    offsetY: cut_word.bas_b.getOffsetY()
   };
 
-  var couper = new Separation.cut({
-    x: node1.getX() - node1.offsetX,
-    y: node1.getY() - node1.offsetY,
-    width: node1.getWidth() * node1.getScaleX(),
-    height: node1.getHeight() * node1.getScaleY() * 2
-  });
-
-  var rect = new Kinetic.Rect({
-    x: node1.getX() - params1.offsetX + group.getX(),
-    y: node1.getY() - params1.offsetY,
-    width: node1.getWidth() * node1.getScaleX() * group.getScaleX(),
-    height: node1.getHeight() * node1.getScaleY() * group.getScaleY() * 2,
-    stroke: 'green',
-    opacity:1
-  });
-  actionLayer.add(rect);
-  stage.add(actionLayer);
-
   var sens = true; // quel mot doit-on faire apparaitre
+  var can_play = true;
 
   function animation_cut(node1, node2){
     var tween1 = new Kinetic.Tween({
       node: node1,
       duration: 2,
       easing: Kinetic.Easings.StrongEaseInOut,
-      y: 2 * window.getHeight()
+      y: 2 * stage.getHeight()
     })
     tween1.play();     
 
@@ -662,15 +785,21 @@ Separation.cut_animation = function(node1, node2, group, actionLayer, stage){
     }, 2000);       
   }
 
-  this.start = function(){
-    couper.on(function(){
-      if(sens == true){
-        animation_cut(node1, node2);
-        sens = false;
-      } else {
-        animation_cut(node2, node1);
-        sens = true;
-      }
-    });
+  this.play = function(){
+    if(can_play == true){
+      couper.on(function(){
+        if(sens == true){
+          animation_cut(cut_word.bas_a, cut_word.bas_b);
+          sens = false;
+        } else {
+          animation_cut(cut_word.bas_b, cut_word.bas_a);
+          sens = true;
+        }
+      });
+    }
+  }
+
+  this.stop = function(){
+    can_play = false;
   }
 }

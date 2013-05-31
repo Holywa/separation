@@ -55,8 +55,8 @@ function checkDevice() {
 	
 	loadButtons();
 	
-	introductionStage();
-	//initMainMenu();
+	//introductionStage();
+	initMainMenu();
 	
 	stage.add(mainLayer);
 	stage.add(actionLayer);
@@ -356,8 +356,7 @@ function initMainMenu() {
 		x : tutorielH.getX()-(tutorielH.getWidth()*0.5)+(tutorielH.getWidth()*0.25),
 		y : tutorielH.getY(),
 		offset : tutorielH.getOffset(),
-		opacity : 0,
-		fill : "red"
+		opacity : 0
 	} );
 	
 	recitH = new Kinetic.Text( {
@@ -390,8 +389,7 @@ function initMainMenu() {
 		x : recitH.getX()-(recitH.getWidth()*0.5)+(recitH.getWidth()*0.25),
 		y : recitH.getY(),
 		offset : recitH.getOffset(),
-		opacity : 0,
-		fill : "red"
+		opacity : 0
 	} );
 	
 	laboratoireH = new Kinetic.Text( {
@@ -423,8 +421,7 @@ function initMainMenu() {
 		x : laboratoireH.getX()-(laboratoireH.getWidth()*0.5)+(laboratoireH.getWidth()*0.25),
 		y : laboratoireH.getY(),
 		offset : laboratoireH.getOffset(),
-		opacity : 0,
-		fill : "red"
+		opacity : 0
 	} );
 	
 	conceptH = new Kinetic.Text( {
@@ -458,8 +455,7 @@ function initMainMenu() {
 		x : conceptH.getX()-(conceptH.getWidth()*0.5)+(conceptH.getWidth()*0.25),
 		y : conceptH.getY(),
 		offset : conceptH.getOffset(),
-		opacity : 0,
-		fill : "red"
+		opacity : 0
 	} );
 	
 	fr_w = new Kinetic.Text( {
@@ -579,6 +575,11 @@ function getMainMenu() {
 	mainLayer.add(fr_w);
 	mainLayer.add(en_w);
 	mainLayer.add(trait);
+
+	actionLayer.add(tutoriel);
+	actionLayer.add(recit);
+	actionLayer.add(laboratoire);
+	actionLayer.add(concept);
 
 	mainLayer.draw();
 	actionLayer.draw();

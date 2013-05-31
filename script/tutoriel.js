@@ -11,8 +11,6 @@ function getTutorielMenu(langage) {
   var demihaut_font = 16 * size_font;
   var demihaut_part_font = 5 * size_font;
   var centrale_font = 4.2 * size_font;
-  var decal_h = 1.5 * size_font;
-  var decal_b = 2 * size_font;
   var image_y = 1.25 * size_font;
   var image_dimension = 0.05 * size_font; 
   var decal_c_h = 0.4 * size_font;
@@ -75,54 +73,22 @@ function getTutorielMenu(langage) {
     fill: '#FFF'
   });
 
-  var p_cut_a = new Kinetic.Text({
+  var cut_word = new word_demihaut({
     x: col,
     y: lines,
-    text: 'S^PARATION',
+    mot1: 'S^PARATION',
+    mot2: 'P^RC^PTION',
     fontSize: demihaut_part_font,
-    fontFamily: 'DemiHautH',
-    fill: '#FFF'
+    fill: '#FFF',
+    offsetMot2: - stage.getWidth()*2
   });
 
-  var p_cut_b = new Kinetic.Text({
-    x: col,
-    y: lines,
-    text: 'S^PARATION',
-    fontSize: demihaut_part_font,
-    fontFamily: 'DemiHautB',
-    fill: '#FFF'
-  })
-
-  var p_cut_c = new Kinetic.Text({
-    x: col,
-    y: lines,
-    text: 'P^RC^PTION',
-    fontSize: demihaut_part_font,
-    fontFamily: 'DemiHautB',
-    fill: '#FFF'
-  })
-
-  var word_size_1 = (p1_1.getWidth() + p_cut_a.getWidth()) / 2;
+  var word_size_1 = (p1_1.getWidth() + cut_word.group.getWidth()) / 2;
 
   p1_1.setOffset({ x: word_size_1 });
-  p_cut_a.setOffset({ 
-    x: word_size_1 - p1_1.getWidth(),
-    y: - p_cut_a.getHeight() + decal_h
-  });
-  p_cut_b.setOffset({ 
-    x: word_size_1 - p1_1.getWidth(),
-    y: - p_cut_b.getHeight() * 2 + decal_b
-  });
-  p_cut_c.setOffset({ 
-    x: - col - p_cut_c.getWidth() / 2, 
-    y: - p_cut_c.getHeight() * 2 + decal_b
-  });
+  cut_word.group.setX(cut_word.group.getX() - word_size_1 + p1_1.getWidth());
 
-  var cut_group = new Kinetic.Group();
-  cut_group.add(p_cut_a);
-  cut_group.add(p_cut_b);
-  cut_group.add(p_cut_c);
-  actionLayer.add(cut_group);
+  actionLayer.add(cut_word.group);
 
   /*
    * ligne 2 et 3
@@ -299,78 +265,43 @@ function getTutorielMenu(langage) {
   actionLayer.add(normal_words);
 
   /*
-   * zooming functions
+   * Animation functions
    */
-  // put in grey all words
-  function node_set_opacity(node, opacity){
-    var tween = new Kinetic.Tween({
-      node: node,
-      duration: 1,
-      opacity: opacity
-    });
-    tween.play();
-  }
-
-  function node_dark(node){ node_set_opacity(node, 0.25); }
-  function node_light(node){ node_set_opacity(node, 1); }
-
-  function node_set_zoom(node, x, y, zoom){
-    var tween = new Kinetic.Tween({
-      node: node,
-      duration: 1,
-      scaleX: zoom,
-      scaleY: zoom,
-      x: x,
-      y: y
-    });
-    tween.play(); 
-  }
-
-  function node_zoom(node, x, y){ node_set_zoom(node, x, y, 2); }
-
-  function node_unzoom(node, x, y){ node_set_zoom(node, x, y, 1); }
-
   var lock = 0; // permet de ne pas pouvoir jouer plusieurs animations en même temps
 
   // cut
   if(lock == 0 || lock == 1){
     var cut_activation = function(){
       node_dark(normal_words);
-      node_zoom(cut_group, - stage.getWidth() / 1.65, - stage.getHeight() / 100);
+      zooming_center(cut_word.group, 2);
       node_set_opacity(rub_group, 0.25 * rub_group.getOpacity());
       node_dark(tear_group); 
     }
 
     var cut_desactivation = function(){
       node_light(normal_words);
-      node_unzoom(cut_group, 0, 0);
+      node_unzoom(cut_word.group, col - word_size_1 + p1_1.getWidth(), lines);
       node_set_opacity(rub_group, 4 * rub_group.getOpacity());
       node_light(tear_group);      
     }
 
-    cut_group.on('tap', function(){
+    cut_word.group.on('tap', function(){
       if(lock == 0){
         lock = 1;
         cut_activation();
-        setTimeout(function(){
-          var anim = new Separation.cut_animation(p_cut_b, p_cut_c, cut_group, actionLayer, stage);
-          anim.start();
+        setTimeout(function(){ // attente pour récupérer les bons zooms
+          anim = new Separation.cut_animation(cut_word);
+          if(lock == 1){anim.play();}
+          else{anim.stop();}
+          
+
+          var cut_unZoom = new Separation.onCorner();
+          cut_unZoom.on(function(){
+            cut_desactivation();
+            anim.stop();
+            lock = 0;
+          });
         }, 2000);
-        
-      }
-    });
-
-    var cut_unZoom = new Separation.onZone({
-      x: col - p_cut_b.getWidth(),
-      y: 2*lines + p_cut_b.getHeight(),
-      width: p_cut_a.getWidth() * 2,
-      height: p_cut_a.getHeight() * 4
-    });
-
-    cut_unZoom.on(function(){
-      if(lock == 1){
-        cut_desactivation();
-        lock = 0;
       }
     });
   }
@@ -379,14 +310,14 @@ function getTutorielMenu(langage) {
   if(lock == 0 || lock == 2){
     var rub_activation = function(){
       node_dark(normal_words);
-      node_dark(cut_group);
+      node_dark(cut_word.group);
       node_zoom(rub_group, rub_zoom_x, rub_zoom_y);
       node_dark(tear_group);
     }
 
     var rub_desactivation = function(){
       node_light(normal_words);
-      node_light(cut_group);
+      node_light(cut_word.group);
       node_unzoom(rub_group, 0, 0);
       node_light(tear_group);
     }
@@ -478,14 +409,14 @@ function getTutorielMenu(langage) {
   if(lock == 0 || lock == 3){
     var tear_activation = function(){
       node_dark(normal_words);
-      node_dark(cut_group);
+      node_dark(cut_word.group);
       node_set_opacity(rub_group, 0.25 * rub_group.getOpacity());
       node_zoom(tear_group, tear_zoom_x, - stage.getHeight());
     }
 
     var tear_desactivation = function(){
       node_light(normal_words);
-      node_light(cut_group);
+      node_light(cut_word.group);
       node_set_opacity(rub_group, 4 * rub_group.getOpacity());
       node_unzoom(tear_group, 0, 0);
     }
