@@ -10,6 +10,88 @@
 var Separation = {};
 
 /*
+ * Logo de la Separation à utiliser comme on veut
+ *
+ * l'ajouter comme un node normal en appelant "layer.add(logo.overall)"
+ * on peut modifier tous les attributs via logo.overall qui est un groupe
+ */
+function Logo(){
+  border = 20;
+  radius = 6 * border;
+  x = 6 * border;
+  y = 6 * border;
+
+  function draw(){
+    arc_haut = new Kinetic.Spline({
+      points: [{
+        x: x - radius,
+        y: y - Math.sin(Math.PI - 0.1) * radius
+      }, {
+        x: x + Math.cos(3 * Math.PI / 4) * radius,
+        y: y - Math.sin(3 * Math.PI / 4) * radius 
+      }, {
+        x: x,
+        y: y - radius
+      }, {
+        x: x + Math.cos(Math.PI / 4) * radius,
+        y: y - Math.sin(Math.PI / 4) * radius 
+      }, {
+        x: x + radius,
+        y: y - Math.sin(0.1) * radius
+      }],
+      stroke: '#FFF',
+      strokeWidth: border,
+      lineCap: 'square',
+      tension: 0.4
+    });
+
+    arc_bas = new Kinetic.Spline({
+      points: [{
+        x: x - radius,
+        y: 1.2*y - Math.sin(Math.PI + 0.1) * radius
+      }, {
+        x: x + Math.cos(3 * Math.PI / 4) * radius,
+        y: 1.2*y + Math.sin(3 * Math.PI / 4) * radius 
+      }, {
+        x: x,
+        y: 1.2*y + radius
+      }, {
+        x: x + Math.cos(Math.PI / 4) * radius,
+        y: 1.2*y + Math.sin(Math.PI / 4) *radius 
+      }, {
+        x: x + radius,
+        y: 1.2*y - Math.sin(-0.1) * radius
+      }],
+      stroke: '#FFF',
+      strokeWidth: border,
+      lineCap: 'square',
+      tension: 0.4
+    });
+
+    line = new Kinetic.Line({
+      points: [x - 4.5*border, 1.05*y, x + 4.5*border, 1.05*y],
+      stroke: "#FFF",
+      strokeWidth: border,
+    });
+
+    logo_group = new Kinetic.Group();
+    logo_group.add(arc_haut);
+    logo_group.add(arc_bas);
+    logo_group.add(line);
+  }
+  
+  draw();
+
+  this.arc_haut = arc_haut;
+  this.arc_bas = arc_bas;
+  this.line = line;
+  this.overall = logo_group;
+
+  this.getWidth = function(){ return 12 * border; }
+  this.getHeight = function(){ return (12*border + 0.1*y);}
+};
+
+/*
  * détecter des mouvements horizontaux
  *
  * @param {Object} paramètres pour dessiner le rectangle : taille du rectangle, placement du rectangle

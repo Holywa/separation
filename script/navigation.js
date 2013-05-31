@@ -20,8 +20,8 @@ var centraleSize;
 
 var maxVisibleLines = 10;
 
-var en = {"tuto" : "Tutorial", "story" : "Tale of words", "labo" : "The word laboratory", "concept" : "Poetic concept", "lang" : "Français"};
-var fr = {"tuto" : "Tutoriel", "story" : "Le recit des mots", "labo" : "Le laboratoire des mots", "concept" : "Concept poetique", "lang" : "English"};
+var en = {"tuto" : "help", "story" : "story", "labo" : "labo", "concept" : "about", "lang" : "fr"};
+var fr = {"tuto" : "aide", "story" : "recit", "labo" : "labo", "concept" : "a propos", "lang" : "en"};
 var activeLang = fr;
 
 function readjustSizes() {
@@ -55,7 +55,8 @@ function checkDevice() {
 	
 	loadButtons();
 	
-	initMainMenu();
+	introductionStage();
+	//initMainMenu();
 	
 	stage.add(mainLayer);
 	stage.add(actionLayer);
@@ -140,21 +141,188 @@ function clearStage() {
 	actionLayer.draw();
 }
 
+function introductionStage(){
+	mainLayer.removeChildren();
+	actionLayer.removeChildren();
+  	
+	logo = new Logo();
+	zoom_logo = 1/3 * stage.getHeight() / logo.getHeight();
+	logo.overall.setAttrs({
+		scaleX: zoom_logo,
+		scaleY: zoom_logo,
+		x: (stage.getWidth() - logo.getWidth()*zoom_logo) / 2,
+		y: (stage.getHeight() - logo.getHeight()*zoom_logo) / 2
+	});
+	rect_logo = new Kinetic.Rect({
+		x: (stage.getWidth() - logo.getWidth()*zoom_logo) / 2,
+		y: (stage.getHeight() - logo.getHeight()*zoom_logo) / 2,
+		width: logo.getWidth(),
+		height: logo.getHeight()
+	})
+
+	separation_size_font = stage.getHeight() / 16;
+	separ_haut = new Kinetic.Text({
+		x: stage.getWidth() / 2,
+    	y: stage.getHeight() / 2,
+    	text: 'la separation',
+    	fontSize: separation_size_font,
+    	fontFamily: 'DemiHautH',
+    	fill: '#FFF',
+    	opacity: 0
+	});
+	separ_haut.setOffset({ 
+    	x: separ_haut.getWidth() / 2,
+    	y: separ_haut.getHeight()
+  	});
+
+	separ_bas = new Kinetic.Text({
+    	x: stage.getWidth() / 2,
+    	y: stage.getHeight() / 2,
+    	text: 'la separation',
+    	fontSize: separation_size_font,
+    	fontFamily: 'DemiHautB',
+    	fill: '#FFF', 
+    	opacity: 0
+  	});
+  	separ_bas.setOffset({ 
+    	x: separ_bas.getWidth() / 2,
+    	y: - separ_bas.getHeight() + separation_size_font
+  	});
+
+  	function logo_anim(){
+  		tween1 = new Kinetic.Tween({
+      		node: logo.overall,
+      		duration: 2,
+      		easing: Kinetic.Easings.StrongEaseInOut,
+      		rotation: Math.PI / 2,
+      		x: logo.overall.getX() + logo.getWidth()
+    	})
+    	tween1.play();	
+
+    	setTimeout(function(){
+    		tween1.finish();
+
+    		tween2 = new Kinetic.Tween({
+    			node: logo.arc_haut,
+    			duration: 6,
+    			easing: Kinetic.Easings.StrongEaseInOut,
+    			y: - stage.getWidth() * 2
+    		})
+    		tween2.play();
+
+    		tween3 = new Kinetic.Tween({
+    			node: logo.arc_bas,
+    			duration: 6,
+    			easing: Kinetic.Easings.StrongEaseInOut,
+    			y: stage.getWidth() * 2
+    		})
+    		tween3.play();
+
+    		tween4 = new Kinetic.Tween({
+    			node: logo.line,
+    			duration: 2,
+    			easing: Kinetic.Easings.StrongEaseInOut,
+    			opacity: 0
+    		})
+    		tween4.play();	
+    	}, 2000);
+  	}
+
+  	function separ_anim(){
+  		tween4.finish();
+
+  		tween5 = new Kinetic.Tween({
+  			node: separ_haut,
+  			duration: 2,
+  			easing: Kinetic.Easings.StrongEaseInOut,
+  			opacity: 1
+  		})
+  		tween5.play();
+
+  		tween6 = new Kinetic.Tween({
+  			node: separ_bas,
+  			duration: 2,
+  			easing: Kinetic.Easings.StrongEaseInOut,
+  			opacity: 1
+  		})
+  		tween6.play();
+  	}
+
+  	declenched = false;
+
+  	function cut_animation(){
+  		tween7 = new Kinetic.Tween({
+  			node: separ_bas,
+  			duration: 4,
+  			easing: Kinetic.Easings.StrongEaseInOut,
+  			y: - separ_bas.getHeight(),
+  			opacity: 0
+  		})
+  		tween7.play();
+
+  		tween8 = new Kinetic.Tween({
+  			node: separ_haut,
+  			duration: 4,
+  			easing: Kinetic.Easings.StrongEaseInOut,
+  			y: stage.getHeight() + separ_haut.getHeight(),
+  			opacity: 0
+  		})
+  		tween8.play();	
+
+  		setTimeout(function(){
+  			initMainMenu();
+  		}, 4000);
+  	}
+
+  	function separ_cut(){
+  		cut = new Separation.cut({
+  			x: separ_haut.getX() - separ_haut.getOffsetX(),
+  			y:	separ_haut.getY() - separ_haut.getOffsetY(),
+  			width: separ_haut.getWidth(),
+  			height: separ_haut.getHeight() * 2
+  		})
+
+  		cut.on(function(){
+  			declenched = true;
+
+  			cut_animation();
+  		});
+  	}
+
+	rect_logo.on('tap click', function(){
+		logo_anim();
+
+    	setTimeout(function(){
+    		separ_anim();
+    	}, 4000)
+
+		setTimeout(function(){
+			separ_cut();
+		}, 6000);
+
+		setTimeout(function(){
+			if(declenched == false){ 
+				cut_animation();
+				declenched = true;
+			}
+		}, 16000);
+	})	
+
+	mainLayer.add(logo.overall);
+	mainLayer.add(separ_haut);
+	mainLayer.add(separ_bas);
+	mainLayer.add(rect_logo);
+	
+	mainLayer.draw();
+	actionLayer.draw();
+}
+
 //Creating the main menu
 function initMainMenu() {
 	mainLayer.removeChildren();
 	actionLayer.removeChildren();
 
-	title = new Kinetic.Text( {
-		text : "La Séparation",
-		fontFamily : "DemiBas",
-		fontSize : titleSize,
-		fill : "#FFF",
-		align : "center",
-		x : stage.getWidth()/2,
-		y : stage.getHeight()*0.05
-	} );
-	title.setOffset( title.getWidth()/2, 0 );
+	opacite = 0.5;
 	
 	tutorielH = new Kinetic.Text( {
 		text : activeLang["tuto"],
@@ -163,7 +331,8 @@ function initMainMenu() {
 		fill : "#FFF",
 		align : "center",
 		x : stage.getWidth()/2,
-		y : stage.getHeight()*0.275
+		y : stage.getHeight()*0.75,
+		opacity: opacite
 	} );
 	tutorielH.setOffset( tutorielH.getWidth()/2, tutorielH.getHeight()/2 );
 	
@@ -176,7 +345,8 @@ function initMainMenu() {
 		offset : { x :tutorielH.getWidth()/2,
 					y : tutorielH.getHeight()/2 },
 		x : stage.getWidth()/2,
-		y : tutorielH.getY()+stage.getHeight()*0.025
+		y : tutorielH.getY()+stage.getHeight()*0.025,
+		opacity: opacite
 	} );
 	
 	tutoriel = new Kinetic.Rect( {
@@ -193,24 +363,24 @@ function initMainMenu() {
 	recitH = new Kinetic.Text( {
 		text : activeLang["story"],
 		fontFamily : "DemiHautH",
-		fontSize : demiSize,
+		fontSize : 4 * demiSize,
 		fill : "#FFF",
 		align : "center",
-		x : stage.getWidth()/2,
-		y : stage.getHeight()*0.475
+		x : stage.getWidth()/5,
+		y : stage.getHeight()/2
 	} );
 	recitH.setOffset( recitH.getWidth()/2, recitH.getHeight()/2 );
 	
 	recitB = new Kinetic.Text( {
 		text : activeLang["story"],
 		fontFamily : "DemiHautB",
-		fontSize : demiSize,
+		fontSize : 4 * demiSize,
 		fill : "#FFF",
 		align : "center",
 		offset : { x :recitH.getWidth()/2,
 					y : recitH.getHeight()/2 },
-		x : stage.getWidth()/2,
-		y : recitH.getY()+stage.getHeight()*0.025
+		x : stage.getWidth()/5,
+		y : recitH.getY()+stage.getHeight()*0.110
 	} );
 	
 	recit = new Kinetic.Rect( {
@@ -227,23 +397,23 @@ function initMainMenu() {
 	laboratoireH = new Kinetic.Text( {
 		text : activeLang["labo"],
 		fontFamily : "DemiHautH",
-		fontSize : demiSize,
+		fontSize : 4 * demiSize,
 		fill : "#FFF",
 		align : "center",
-		x : stage.getWidth()/2,
-		y : stage.getHeight()*0.675
+		x : stage.getWidth() / 5 * 4,
+		y : stage.getHeight()/2
 	} );
 	laboratoireH.setOffset( laboratoireH.getWidth()/2, laboratoireH.getHeight()/2 );
 	laboratoireB = new Kinetic.Text( {
 		text : activeLang["labo"],
 		fontFamily : "DemiHautB",
-		fontSize : demiSize,
+		fontSize : 4 * demiSize,
 		fill : "#FFF",
 		align : "center",
 		offset : { x :laboratoireH.getWidth()/2,
 					y : laboratoireH.getHeight()/2 },
-		x : stage.getWidth()/2,
-		y : laboratoireH.getY() + stage.getHeight()*0.025
+		x : stage.getWidth()/5 * 4,
+		y : laboratoireH.getY() + stage.getHeight()*0.110
 	} );
 	
 	laboratoire = new Kinetic.Rect( {
@@ -264,7 +434,8 @@ function initMainMenu() {
 		fill : "#FFF",
 		align : "center",
 		x : stage.getWidth()/2,
-		y : stage.getHeight()*0.875
+		y : stage.getHeight()*0.85,
+		opacity: opacite
 	} );
 	conceptH.setOffset( conceptH.getWidth()/2, conceptH.getHeight()/2 );
 	conceptB = new Kinetic.Text( {
@@ -276,7 +447,8 @@ function initMainMenu() {
 		offset : { x :conceptH.getWidth()/2,
 					y : conceptH.getHeight()/2 },
 		x : stage.getWidth()/2,
-		y : conceptH.getY()+ stage.getHeight()*0.025
+		y : conceptH.getY()+ stage.getHeight()*0.025,
+		opacity: opacite
 	} );
 	
 	concept = new Kinetic.Rect( {
@@ -290,18 +462,47 @@ function initMainMenu() {
 		fill : "red"
 	} );
 	
-	lang = new Kinetic.Text( {
-		text : activeLang["lang"],
+	fr_w = new Kinetic.Text( {
+		text : 'fr',
 		fontFamily : "DemiHaut",
-		fontSize : entireSize,
+		fontSize : 1.2 * entireSize,
 		fill : "#FFF",
 		align : "center",
-		x : 0,
-		y : screenHeight,
-		listening : true
+		x : stage.getWidth() / 2,
+		y : stage.getHeight() * 0.2,
+		listening : true,
+		opacity: opacite
 	} );
-	lang.setOffset(0, lang.getHeight());
 	
+	en_w = new Kinetic.Text( {
+		text : 'en',
+		fontFamily : "DemiHaut",
+		fontSize : 1.2 * entireSize,
+		fill : "#FFF",
+		align : "center",
+		x : stage.getWidth() / 2,
+		y : stage.getHeight() * 0.2,
+		listening : true,
+		opacity: opacite / 3
+	} );
+
+	trait = new Kinetic.Text( {
+		text : '|',
+		fontFamily : "DemiHaut",
+		fontSize : 1.2 * entireSize,
+		fill : "#FFF",
+		align : "center",
+		x : stage.getWidth() / 2,
+		y : stage.getHeight() * 0.2,
+		opacity: opacite
+	} );
+
+	lang_size = fr_w.getWidth() + en_w.getWidth() + trait.getWidth();
+	fr_w.setOffset(lang_size / 2, 0);
+	trait.setOffset(lang_size / 2 - fr_w.getWidth(), 0);
+	en_w.setOffset(lang_size / 2 - fr_w.getWidth() - trait.getWidth(), 0);
+
+
 	tutoriel.on("tap click", function() {
 		var langue = "fr";
 		if(activeLang == en) {
@@ -322,63 +523,51 @@ function initMainMenu() {
 	concept.on("tap", function() {
 		getConceptMenu();
 	} );
-	lang.on("tap", function() {
-		changeLanguage();
+	fr_w.on("tap", function() {
+		changeLanguage(fr);
+		fr_w.setOpacity(opacite);
+		en_w.setOpacity(opacite/3);
+	});
+	en_w.on("tap", function(){
+		changeLanguage(en);
+		en_w.setOpacity(opacite);
+		fr_w.setOpacity(opacite/3);
 	});
 	
 	getMainMenu();
 }
 
-function changeLanguage() {
-	if(activeLang == fr) {
-		activeLang = en;
-	}
-	else {
+function changeLanguage(lang) {
+	if(lang == fr) {
 		activeLang = fr;
 	}
+	else {
+		activeLang = en;
+	}
 	tutorielH.setText(activeLang["tuto"]);
-	tutorielH.setPosition( { x : stage.getWidth()/2,
-		y : stage.getHeight()*0.275 } );
 	tutorielH.setOffset( tutorielH.getWidth()/2, tutorielH.getHeight()/2 );	
 		
 	tutorielB.setText(activeLang["tuto"]);
 	tutorielB.setOffset( tutorielB.getWidth()/2 , tutorielB.getHeight()/2 );
-	tutorielB.setPosition( stage.getWidth()/2 , tutorielH.getY()+ stage.getHeight()*0.025 );
-	
+
 	recitH.setText(activeLang["story"]);
-	recitH.setPosition( { x : stage.getWidth()/2,
-		y : stage.getHeight()*0.475 } );
-	recitH.setOffset( recitH.getWidth()/2, recitH.getHeight()/2 );
 	
 	recitB.setText(activeLang["story"]);
-	recitB.setOffset( recitB.getWidth()/2 , recitB.getHeight()/2 );
-	recitB.setPosition( stage.getWidth()/2 , recitH.getY()+ stage.getHeight()*0.025 );
-	
+
 	laboratoireH.setText(activeLang["labo"]);
-	laboratoireH.setPosition( { x : stage.getWidth()/2,
-		y : stage.getHeight()*0.675 } );
-	laboratoireH.setOffset( laboratoireH.getWidth()/2, laboratoireH.getHeight()/2 );
-	
+
 	laboratoireB.setText(activeLang["labo"]);
-	laboratoireB.setOffset( laboratoireB.getWidth()/2 , laboratoireB.getHeight()/2 );
-	laboratoireB.setPosition( stage.getWidth()/2 , laboratoireH.getY()+ stage.getHeight()*0.025 );
-	
+
 	conceptH.setText(activeLang["concept"]);
-	conceptH.setPosition( { x : stage.getWidth()/2,
-		y : stage.getHeight()*0.875 } );
 	conceptH.setOffset( conceptH.getWidth()/2, conceptH.getHeight()/2 );
 	
 	conceptB.setText(activeLang["concept"]);
 	conceptB.setOffset( conceptB.getWidth()/2 , conceptB.getHeight()/2 );
-	conceptB.setPosition( stage.getWidth()/2 , conceptH.getY()+ stage.getHeight()*0.025 );
-	
-	lang.setText(activeLang["lang"]);
-	
+
 	mainLayer.draw();
 }
 
 function getMainMenu() {
-	mainLayer.add(title);
 	mainLayer.add(tutorielH);
 	mainLayer.add(tutorielB);
 	mainLayer.add(recitH);
@@ -387,13 +576,10 @@ function getMainMenu() {
 	mainLayer.add(laboratoireB);
 	mainLayer.add(conceptH);
 	mainLayer.add(conceptB);
-	mainLayer.add(lang);
-	
-	actionLayer.add(tutoriel);
-	actionLayer.add(recit);
-	actionLayer.add(laboratoire);
-	actionLayer.add(concept);
-	
+	mainLayer.add(fr_w);
+	mainLayer.add(en_w);
+	mainLayer.add(trait);
+
 	mainLayer.draw();
 	actionLayer.draw();
 }
