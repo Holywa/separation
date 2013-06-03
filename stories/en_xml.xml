@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<stories>
+	<story type="alter">
+		<title>Email</title>
+		<sentences>
+			<sentence>
+				<word font="coupable_haut" next="LIBERTY">E-POETRY</word>
+				<word font="ombre" next="LONDON">CONDOM</word>
+				<word font="coupable_bas" next="CHOR^S">^UROP^</word>
+				<word font="coupable_bas" next="CURR^NCY">^UROP^AN</word>
+				<word font="coupable_bas" next="CYB^RS^X">CURR^NCY</word>
+				<word font="coupable_bas" next="ENGLISH">FR^NCH</word>
+				<word font="coupable_bas" next="FR^NCH">ENGLISH</word>
+				<word font="coupable_bas" next="DISNEY">BIG-BEN</word>
+				<word font="coupable_haut" next="boycott">big-ben</word>
+			</sentence>
+		</sentences>
+	</story>
+</stories>

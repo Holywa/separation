@@ -33,11 +33,12 @@ function readjustSizes() {
 	demiSize = (entireSize*6)/11;
 	centraleSize = (entireSize*9)/11;
 	
-	/*var size_font = 4;
-	var demihaut_font = 16 * size_font;
-	var demihaut_part_font = 5 * size_font;
-	var decal_h = 1.5 * size_font;
-	var decal_b = 2 * size_font;*/
+	/*var entireSize = 3;
+	var demiSize = 16 * entireSize;
+	var demipart_font = 5 * entireSize;
+	var centraleSize = 4.2 * entireSize;
+	var image_y = 1.25 * entireSize;
+	var image_dimension = 0.05 * entireSize;*/
 }
 
 function checkDevice() {
@@ -75,7 +76,7 @@ function loadButtons() {
 			height : screenHeight*0.075
 		});
 		homeBtn.setOffset(0,homeBtn.getHeight());
-		homeBtn.on("tap", function() {
+		homeBtn.on("tap click", function() {
 			clearStage();
 			getMainMenu();
 		} );
@@ -93,7 +94,7 @@ function loadButtons() {
 			height : screenHeight*0.075
 		});
 		shuffleBtn.setOffset(shuffleBtn.getWidth(),shuffleBtn.getHeight());
-		shuffleBtn.on("tap", function() {
+		shuffleBtn.on("tap click", function() {
 			clearStage();
 			getRandomStory();
 		} );
@@ -111,7 +112,7 @@ function loadButtons() {
 			height : screenHeight*0.075
 		});
 	returnBtn.setOffset(0,0);
-	returnBtn.on("tap", function() {
+	returnBtn.on("tap click", function() {
 		clearStage();
 		getStoriesMenu();
 		} );
@@ -513,18 +514,18 @@ function initMainMenu() {
 		}
 		getStoriesMenu(langue);
 	} );
-	laboratoire.on("tap", function() {
+	laboratoire.on("tap click", function() {
 		getLaboratoryMenu();
 	} );
-	concept.on("tap", function() {
+	concept.on("tap click", function() {
 		getConceptMenu();
 	} );
-	fr_w.on("tap", function() {
+	fr_w.on("tap click", function() {
 		fr_w.setOpacity(opacite);
 		en_w.setOpacity(opacite/3);
 		changeLanguage(fr);		
 	});
-	en_w.on("tap", function(){
+	en_w.on("tap click", function(){
 		en_w.setOpacity(opacite);
 		fr_w.setOpacity(opacite/3);
 		changeLanguage(en);

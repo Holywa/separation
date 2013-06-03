@@ -93,16 +93,10 @@ function createStoryAlter(story) {
 		
 		for(var w=0; w < story.sentences[s].words.length ; w++) {
 			var word = story.sentences[s].words[w];
-			if(w == 0) {
-				word.value.setX(0);
-			}
-			else
-			{
-				word.value.setX(lastWord.value.getX() + blank.getWidth());
-			}
-			word.value.setY(s*heightLine);
+			if(w == 0) { } //premier mot de la phrase
+			else { }
+			
 			lastWord = word;
-			mainLayer.add(word.value);
 			sentenceGroup.add(word.value);
 		}
 		storyGroup.add(sentenceGroup);

@@ -56,149 +56,50 @@ function ActiveWord(value, next, type)
 {
 	this.active = true;
 	this.type = type;
-	this.value = new Kinetic.Group();
-	this.stillPart;
-	this.stillPart1;
-	this.stillPart2;
-	this.actualPart;
-	this.nextPart;
+	this.value;
 	switch(this.type) {
 		case Transition["up"] :
-			this.stillPart = new Kinetic.Text( {
-				fontFamily : "DemiHautB",
-				fontSize : demiSize,
-				fill : "#FFF",
-				text : value
-			} );
-			this.actualPart = new Kinetic.Text( {
-				fontFamily : "DemiHautH",
-				fontSize : demiSize,
-				fill : "#FFF",
-				text : value
-			} );
-			this.nextPart = new Kinetic.Text( {
-				fontFamily : "DemiHautH",
-				fontSize : demiSize,
-				fill : "#FFF",
-				text : next
-			} );
-			this.value.add(this.stillPart);
+			this.value = new word_demihaut({
+				x: 0,
+				y: 0,
+				mot1: 'value',
+				mot2: 'next',
+				fontSize: demihaut_part_font,
+				fill: '#FFF',
+				offsetMot2: - stage.getWidth()*2
+			  });
 			break;
 		case Transition["down"] : 
-			this.stillPart = new Kinetic.Text( {
-				fontFamily : "DemiBasH",
-				fontSize : demiSize,
-				fill : "#FFF",
-				text : value,
-				offset : { x : 0 , y : 0 },
-				position : { x: 0, y : 0 }
-			} );
-			this.actualPart = new Kinetic.Text( {
-				fontFamily : "DemiBasB",
-				fontSize : demiSize,
-				fill : "#FFF",
-				text : value,
-				offset : { x : 0 , y : 0},
-				x : this.stillPart.getX(),
-				y : this.stillPart.getY() + this.stillPart.getHeight()
-			} );
-			this.nextPart = new Kinetic.Text( {
-				fontFamily : "DemiBasB",
-				fontSize : demiSize,
-				fill : "#FFF",
-				text : next,
-				offset : { x : 0 , y : 0 }
-			} );
-			this.value.add(this.stillPart);
+			this.value = new word_demibas({
+				x: 0,
+				y: 0,
+				mot1: 'value',
+				mot2: 'next',
+				fontSize: demihaut_part_font,
+				fill: '#FFF',
+				offsetMot2: - stage.getWidth()*2
+			  });
 			break;
 		case Transition["central"] : 
-			this.stillPart1 = new Kinetic.Text( {
-				fontFamily : "CentraleH",
-				fontSize : centraleSize,
-				fill : "#FFF",
-				text : value,
-				offset : { x : 0 , y : 0 },
-				position : { x: 0, y : 0 }
-			} );
-			this.actualPart = new Kinetic.Text( {
-				fontFamily : "CentraleC",
-				fontSize : centraleSize,
-				fill : "#FFF",
-				text : value,
-				offset : { x : 0 , y : 0},
-				x : this.stillPart1.getX(),
-				y : this.stillPart1.getY() + this.stillPart1.getHeight()
-			} );
-			this.stillPart2 = new Kinetic.Text( {
-				fontFamily : "CentraleB",
-				fontSize : centraleSize,
-				fill : "#FFF",
-				text : value,
-				offset : { x : 0, y : this.stillPart1 },
-				position : { x: 0, y : this.stillPart1*3 }
-			} );
-			this.nextPart = new Kinetic.Text( {
-				fontFamily : "CentraleC",
-				fontSize : centraleSize,
-				fill : "#FFF",
-				text : next,
-				offset : { x : 0 , y : 0 }
-			} );
-			this.stillPart = new Kinetic.Group();
-			this.stillPart.add(this.stillPart1);
-			this.stillPart.add(this.actualPart);
-			this.stillPart.add(this.stillPart2);
-			this.value.add(this.stillPart);
+			word_centrale({
+				x: 0,
+				y: 0,
+				mot1: value,
+				mot2: next,
+				fontSize: demihaut_part_font,
+				fill: '#FFF',
+				offsetMot2: - stage.getWidth()*2
+			  });
 			break;
 		case Transition["shadow"]:
-			var actualImg = new Image();
-			actualImg.src = actual;
-			actualImg.onload = function() {
-				this.actualPart = new Kinetic.Image({
-					offset : { x : 0 , y : 0 },
-					position : { x : 0 , y : 0 },
-					listening : true,
-					image: actualImg
-				});
-			};
-			var nextImg = new Image();
-			nextImg.src = actual;
-			nextImg.onload = function() {
-				this.nextPart = new Kinetic.Image({
-					offset : { x : 0 , y : 0 },
-					position : { x : 0 , y : 0 },
-					listening : true,
-					image: nextImg
-				});
-			};
-			break;
-	}
-	this.value.add(this.actualPart);
-}
-
-ActiveWord.prototype.addHitZone = function () {
-	switch(this.type) {
-		case Transition["up"] : 
-			this.hitZone = new Kinetic.Rect( {
-				listening : true,
-				width : this.stillPart.getWidth()*1.5,
-				height : this.stillPart.getHeight() + this.actualPart.getHeight(),
-				offset : { x : this.stillPart.getOffsetX(), y : this.stillPart.getOffsetY()-this.stillPart.getHeight() },
-				position : this.stillPart.getPosition(),
-				opacity : 0.5,
-				fill : "red"
-			} );
-			break;
-		case Transition["down"] : 
-			this.hitZone = new Kinetic.Rect( {
-				listening : true,
-				width : this.stillPart.getWidth()*1.5,
-				height : this.stillPart.getHeight() + this.actualPart.getHeight(),
-				offset : this.stillPart.getOffset(),
-				position : this.stillPart.getPosition(),
-				opacity : 0.5,
-				fill : "red"
-			} );
+			this.value = new word_ombre({
+				x: 0,
+				y: 0,
+				img1: value,
+				img2: next,
+				width: img_width,
+				height: img_height
+			  });
 			break;
 	}
 }
