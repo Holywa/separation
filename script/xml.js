@@ -58,48 +58,133 @@ function ActiveWord(value, next, type)
 	this.type = type;
 	this.value;
 	switch(this.type) {
+	
 		case Transition["up"] :
 			this.value = new word_demihaut({
 				x: 0,
 				y: 0,
 				mot1: 'value',
 				mot2: 'next',
-				fontSize: demihaut_part_font,
+				fontSize: demiSize/2,
 				fill: '#FFF',
 				offsetMot2: - stage.getWidth()*2
 			  });
+			this.value.group.on('tap', function(){
+				if(lock == 0){
+					lock = 1;
+					//TODO A REFAIRE
+					//cut_activation();
+					setTimeout(function(){ // attente pour récupérer les bons zooms
+						var anim = new Separation.cut_animation(cut_word);
+						var can_play = ((lock == 1) ? true : false);
+						anim.start(can_play);          
+
+						var cut_unZoom = new Separation.onCorner();
+						cut_unZoom.on(function(){
+							//TODO A REFAIRE
+							//cut_desactivation();
+							lock = 0;
+						});
+					}, 2000);
+				}
+			});
 			break;
+			
 		case Transition["down"] : 
 			this.value = new word_demibas({
 				x: 0,
 				y: 0,
 				mot1: 'value',
 				mot2: 'next',
-				fontSize: demihaut_part_font,
+				fontSize: demiSize/2,
 				fill: '#FFF',
 				offsetMot2: - stage.getWidth()*2
 			  });
+			  this.value.group.on('tap', function(){
+				if(lock == 0){
+					lock = 1;
+					//TODO A REFAIRE
+					//cut_activation();
+					setTimeout(function(){ // attente pour récupérer les bons zooms
+						var anim = new Separation.cut_animation(cut_word);
+						var can_play = ((lock == 1) ? true : false);
+						anim.start(can_play);          
+
+						var cut_unZoom = new Separation.onCorner();
+						cut_unZoom.on(function(){
+							//TODO A REFAIRE
+							//cut_desactivation();
+							lock = 0;
+							});
+						}, 2000);
+					}
+				});
 			break;
+			
 		case Transition["central"] : 
-			word_centrale({
+			this.value = new word_centrale({
 				x: 0,
 				y: 0,
 				mot1: value,
 				mot2: next,
-				fontSize: demihaut_part_font,
+				fontSize: centraleSize/3,
 				fill: '#FFF',
 				offsetMot2: - stage.getWidth()*2
 			  });
+			  
+			this.value.group.on('tap', function(){
+				if(lock == 0){
+					lock = 3;
+					//TODO A REFAIRE ACTIVATION
+					//tear_activation();
+
+					setTimeout(function(){ // attente pour récupérer les bons zooms
+						var anim = new Separation.tear_animation(tear_word);
+						var can_play = ((lock == 3) ? true : false);
+						anim.start(((lock == 3) ? true : false));          
+
+						var tear_unZoom = new Separation.onCorner();
+						tear_unZoom.on(function(){
+							//TODO A REFAIRE DESACTIVATION
+							//tear_desactivation();
+							can_play = false;
+							lock = 0;
+						});
+					}, 2000);
+				}
+			});
+			
 			break;
+			
 		case Transition["shadow"]:
+			var tmpImg = "imgs/" + value + ".png";
+			var tmpNext = "imgs/" + next + ".png";
 			this.value = new word_ombre({
 				x: 0,
 				y: 0,
-				img1: value,
-				img2: next,
-				width: img_width,
-				height: img_height
+				img1: tmpImg,
+				img2: tmpNext,
 			  });
+			
+			this.value.group.on('tap', function(){
+				if(lock == 0){
+					lock = 2;
+					//TODO REFAIRE ACTIVATION
+					//rub_activation();
+					setTimeout(function(){
+						var anim = new Separation.rub_animation(this.value);
+						var can_play = ((lock == 2) ? true : false);
+						anim.start(can_play);          
+
+						var rub_unZoom = new Separation.onCorner();
+						rub_unZoom.on(function(){
+							//TODO REFAIRE DEACTIVATION
+							//rub_desactivation();
+							lock = 0;
+						});
+					}, 2000); 
+				}
+			});
 			break;
 	}
 }

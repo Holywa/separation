@@ -18,7 +18,7 @@ var demiSize;
 var entireSize;
 var centraleSize;
 
-var maxVisibleLines = 10;
+var maxVisibleLines = 5;
 
 var en = {"tuto" : "help", "story" : "story", "labo" : "labo", "concept" : "about", "lang" : "fr"};
 var fr = {"tuto" : "aide", "story" : "recit", "labo" : "labo", "concept" : "a propos", "lang" : "en"};
@@ -32,13 +32,6 @@ function readjustSizes() {
 	entireSize = 0.05*screenHeight;
 	demiSize = (entireSize*6)/11;
 	centraleSize = (entireSize*9)/11;
-	
-	/*var entireSize = 3;
-	var demiSize = 16 * entireSize;
-	var demipart_font = 5 * entireSize;
-	var centraleSize = 4.2 * entireSize;
-	var image_y = 1.25 * entireSize;
-	var image_dimension = 0.05 * entireSize;*/
 }
 
 function checkDevice() {
@@ -56,11 +49,30 @@ function checkDevice() {
 	
 	loadButtons();
 	
+	initImages();
+	
 	//introductionStage();
 	initMainMenu();
 	
 	stage.add(mainLayer);
 	stage.add(actionLayer);
+}
+
+function initImages() {
+	var hand_tuto_img = new Image();
+	hand_tuto_img.src = "imgs/hand_tuto.png";
+	hand_tuto_img.onload = function() {
+		hand_tuto = new Kinetic.Image({
+			x : 0,
+			y : - screenHeight,
+			listening : true,
+			image: hand_tuto_img,
+			offset: { x : 0 , y : 0}
+			width : screenHeight*0.075,
+			height : screenHeight*0.075
+		});
+	};
+	//TODO: load images du tutoriel
 }
 
 function loadButtons() {

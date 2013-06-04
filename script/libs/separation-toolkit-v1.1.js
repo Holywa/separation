@@ -681,11 +681,11 @@ function word_demibas(params){
     fill: params.fill
   });
 
-  this.haut_a.setOffset({ y: - this.haut_a.getHeight() + 0.1 * params.fontSize });
   this.haut_b.setOffset({ 
-    x: params.offsetMot2, 
-    y: - this.bas_a.getHeight() + 0.1 * params.fontSize 
-  });
+    x: params.offsetMot2 });
+  this.bas.setOffset({
+	y : - this.bas.getHeight() + 0.1 * params.fontSize
+   });
 
   this.group = new Kinetic.Group({
     x: params.x,
