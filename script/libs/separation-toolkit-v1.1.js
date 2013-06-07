@@ -659,6 +659,47 @@ function word_demihaut(params){
   this.group.add(this.bas_b);
 };
 
+function word_demibas(params){
+  this.bas = new Kinetic.Text({
+    text: params.mot1,
+    fontSize:  params.fontSize,
+    fontFamily: 'DemiBasB',
+    fill: params.fill
+  });
+
+  this.haut_a = new Kinetic.Text({
+    text: params.mot1,
+    fontSize:  params.fontSize,
+    fontFamily: 'DemiBasH',
+    fill: params.fill
+  });
+
+  this.haut_b = new Kinetic.Text({
+    text: params.mot2,
+    fontSize:  params.fontSize,
+    fontFamily: 'DemiBasH',
+    fill: params.fill
+  });
+
+  this.haut_b.setOffset({ 
+    x: params.offsetMot2 });
+  this.bas.setOffset({
+	y : - this.bas.getHeight() + 0.1 * params.fontSize
+   });
+
+  this.group = new Kinetic.Group({
+    x: params.x,
+    y: params.y,
+    offsetY: - 0.7*params.fontSize,
+    width: this.bas.getWidth(),
+    height: this.bas.getHeight() + this.haut_a.getHeight() - 0.1 * params.fontSize
+  });
+
+  this.group.add(this.bas);
+  this.group.add(this.haut_a);
+  this.group.add(this.haut_b);
+};
+
 
 /*
  *  Ombre word constructor

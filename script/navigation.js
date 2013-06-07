@@ -32,7 +32,7 @@ function readjustSizes() {
 	entireSize = 0.05*screenHeight;
 	demiSize = (entireSize*6)/11;
 	centraleSize = (entireSize*9)/11;
-	
+
 	/*var size_font = 4;
 	var demihaut_font = 16 * size_font;
 	var demihaut_part_font = 5 * size_font;
@@ -55,11 +55,30 @@ function checkDevice() {
 	
 	loadButtons();
 	
-	introductionStage();
-	//initMainMenu();
+	initImages();
+	
+	//introductionStage();
+	initMainMenu();
 	
 	stage.add(mainLayer);
 	stage.add(actionLayer);
+}
+
+function initImages() {
+	var hand_tuto_img = new Image();
+	hand_tuto_img.src = "imgs/hand_tuto.png";
+	hand_tuto_img.onload = function() {
+		hand_tuto = new Kinetic.Image({
+			x : 0,
+			y : - screenHeight,
+			listening : true,
+			image: hand_tuto_img,
+			offset: { x : 0 , y : 0}
+			width : screenHeight*0.075,
+			height : screenHeight*0.075
+		});
+	};
+	//TODO: load images du tutoriel
 }
 
 function loadButtons() {
@@ -75,7 +94,7 @@ function loadButtons() {
 			height : screenHeight*0.075
 		});
 		homeBtn.setOffset(0,homeBtn.getHeight());
-		homeBtn.on("tap", function() {
+		homeBtn.on("tap click", function() {
 			clearStage();
 			getMainMenu();
 		} );
@@ -93,7 +112,7 @@ function loadButtons() {
 			height : screenHeight*0.075
 		});
 		shuffleBtn.setOffset(shuffleBtn.getWidth(),shuffleBtn.getHeight());
-		shuffleBtn.on("tap", function() {
+		shuffleBtn.on("tap click", function() {
 			clearStage();
 			getRandomStory();
 		} );
@@ -111,7 +130,7 @@ function loadButtons() {
 			height : screenHeight*0.075
 		});
 	returnBtn.setOffset(0,0);
-	returnBtn.on("tap", function() {
+	returnBtn.on("tap click", function() {
 		clearStage();
 		getStoriesMenu();
 		} );
@@ -513,18 +532,18 @@ function initMainMenu() {
 		}
 		getStoriesMenu(langue);
 	} );
-	laboratoire.on("tap", function() {
+	laboratoire.on("tap click", function() {
 		getLaboratoryMenu();
 	} );
-	concept.on("tap", function() {
+	concept.on("tap click", function() {
 		getConceptMenu();
 	} );
-	fr_w.on("tap", function() {
+	fr_w.on("tap click", function() {
 		fr_w.setOpacity(opacite);
 		en_w.setOpacity(opacite/3);
 		changeLanguage(fr);		
 	});
-	en_w.on("tap", function(){
+	en_w.on("tap click", function(){
 		en_w.setOpacity(opacite);
 		fr_w.setOpacity(opacite/3);
 		changeLanguage(en);

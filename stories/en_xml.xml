@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<stories>
+	<story type="alter">
+		<title>Email</title>
+		<sentences>
+			<sentence>
+				<word>Dear Serge,</word>
+			</sentence>
+			<sentence>
+				<word>On Sunday, you will arrive in</word>
+				<word font="ombre" next="CONDOM">LONDON</word>
+				<word>. Please be careful.</word>
+				<word font="ombre" next="CONDOM">LONDON</word>
+				<word>requires precautions.</word>
+			</sentence>
+			<sentence>
+				<word>The British have a positive view of</word>
+				<word font="coupable_bas" next="CHOR^S">^UROP^</word>
+				<word>and</word>
+				<word font="coupable_bas" next="BULLSHIT">^UROP^AN</word>
+				<word>,</word>
+			</sentence>
+			<sentence>
+				<word>but as you know, they refuse the single </word>
+				<word font="coupable_bas" next="CYB^RS^X">CURR^NCY</word>
+				<word>.</word>
+			</sentence>
+			<sentence>
+				<word>Yet are the</word>
+				<word font="coupable_bas" next="FR^NCH">ENGLISH</word>
+				<word>and the</word>
+				<word font="coupable_bas" next="ENGLISH">FR^NCH</word>
+				<word>so different?</word>
+			</sentence>
+			<sentence>
+				<word>Don't forget to pay a visit to our National historic landmarks such as</word>
+				<word font="coupable_bas" next="DISNEY">BIG-BEN</word>
+				<!--<word font="coupable_haut" next="boycott">big-ben</word>-->
+			</sentence>
+			<sentence>
+				<word>landmarks of our cultural heritage like the</word>
+				<word next="disco">Globe</word>
+			</sentence>
+			<sentence>
+				<word>and of course enjoy the majestic austerity of the</word>
+				<!--<word next="debt">city</word>
+				<word next="sex">city</word>-->
+				<word next="beer">city</word>
+			</sentence>
+			<sentence>
+				<word>Finally, welcome to</word>
+				<word font="coupable_haut" next="LIBERTY">EPOETRY</word>
+				<word>but don't forget,</word>
+				<word font="coupable_haut" next="opium">e-poetry</word>
+				<word>can show two faces!</word>
+			</sentence>
+			<sentence>
+				<word>Best wishes,</word>
+			</sentence>
+			<sentence>
+				<word font="coupable_bas" next="MAGIC">MARIA</word>
+			</sentence>
+		</sentences>
+	</story>
+</stories>
