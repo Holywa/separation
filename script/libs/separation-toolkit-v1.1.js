@@ -16,79 +16,33 @@ var Separation = {};
  * on peut modifier tous les attributs via logo.overall qui est un groupe
  */
 function Logo(){
-  border = 20;
-  radius = 6 * border;
-  x = 6 * border;
-  y = 6 * border;
-
-  function draw(){
-    arc_haut = new Kinetic.Spline({
-      points: [{
-        x: x - radius,
-        y: y - Math.sin(Math.PI - 0.1) * radius
-      }, {
-        x: x + Math.cos(3 * Math.PI / 4) * radius,
-        y: y - Math.sin(3 * Math.PI / 4) * radius 
-      }, {
-        x: x,
-        y: y - radius
-      }, {
-        x: x + Math.cos(Math.PI / 4) * radius,
-        y: y - Math.sin(Math.PI / 4) * radius 
-      }, {
-        x: x + radius,
-        y: y - Math.sin(0.1) * radius
-      }],
-      stroke: '#FFF',
-      strokeWidth: border,
-      lineCap: 'square',
-      tension: 0.4
-    });
-
-    arc_bas = new Kinetic.Spline({
-      points: [{
-        x: x - radius,
-        y: 1.2*y - Math.sin(Math.PI + 0.1) * radius
-      }, {
-        x: x + Math.cos(3 * Math.PI / 4) * radius,
-        y: 1.2*y + Math.sin(3 * Math.PI / 4) * radius 
-      }, {
-        x: x,
-        y: 1.2*y + radius
-      }, {
-        x: x + Math.cos(Math.PI / 4) * radius,
-        y: 1.2*y + Math.sin(Math.PI / 4) *radius 
-      }, {
-        x: x + radius,
-        y: 1.2*y - Math.sin(-0.1) * radius
-      }],
-      stroke: '#FFF',
-      strokeWidth: border,
-      lineCap: 'square',
-      tension: 0.4
-    });
-
-    line = new Kinetic.Line({
-      points: [x - 4.5*border, 1.05*y, x + 4.5*border, 1.05*y],
-      stroke: "#FFF",
-      strokeWidth: border,
-    });
-
-    logo_group = new Kinetic.Group();
-    logo_group.add(arc_haut);
-    logo_group.add(arc_bas);
-    logo_group.add(line);
-  }
+  var imageObj1 = new Image();
+  imageObj1.src = 'imgs/btns/sep_p1.png';
+  var imageObj2 = new Image();
+  imageObj2.src = 'imgs/btns/sep_p2.png';
+  var imageObj3 = new Image();
+  imageObj3.src = 'imgs/btns/sep_p3.png';
   
-  draw();
+  this.img_1 = new Kinetic.Image({ image: imageObj1 });
+  imageObj1.onload = function() { this.img_1 };
+  
+  this.img_2 = new Kinetic.Image({ image: imageObj2 });
+  imageObj2.onload = function() { this.img_2 };
 
-  this.arc_haut = arc_haut;
-  this.arc_bas = arc_bas;
-  this.line = line;
-  this.overall = logo_group;
+  this.img_3 = new Kinetic.Image({ image: imageObj3 });
+  imageObj1.onload = function() { this.img_3 };
 
-  this.getWidth = function(){ return 12 * border; }
-  this.getHeight = function(){ return (12*border + 0.1*y);}
+  this.overall = new Kinetic.Group({
+    x: 0,
+    y: 0,
+    width: this.img_1.getWidth(),
+    height: this.img_1.getHeight(),
+    rotation: - Math.PI / 2
+  });
+
+  this.overall.add(this.img_1);
+  this.overall.add(this.img_2);
+  this.overall.add(this.img_3);
 };
 
 /////////////////////////////////////////////////////////////////////
@@ -657,6 +611,47 @@ function word_demihaut(params){
   this.group.add(this.haut);
   this.group.add(this.bas_a);
   this.group.add(this.bas_b);
+};
+
+function word_demibas(params){
+  this.bas = new Kinetic.Text({
+    text: params.mot1,
+    fontSize:  params.fontSize,
+    fontFamily: 'DemiBasB',
+    fill: params.fill
+  });
+
+  this.haut_a = new Kinetic.Text({
+    text: params.mot1,
+    fontSize:  params.fontSize,
+    fontFamily: 'DemiBasH',
+    fill: params.fill
+  });
+
+  this.haut_b = new Kinetic.Text({
+    text: params.mot2,
+    fontSize:  params.fontSize,
+    fontFamily: 'DemiBasH',
+    fill: params.fill
+  });
+
+  this.haut_b.setOffset({ 
+    x: params.offsetMot2 });
+  this.bas.setOffset({
+	y : - this.bas.getHeight() + 0.1 * params.fontSize
+   });
+
+  this.group = new Kinetic.Group({
+    x: params.x,
+    y: params.y,
+    offsetY: - 0.7*params.fontSize,
+    width: this.bas.getWidth(),
+    height: this.bas.getHeight() + this.haut_a.getHeight() - 0.1 * params.fontSize
+  });
+
+  this.group.add(this.bas);
+  this.group.add(this.haut_a);
+  this.group.add(this.haut_b);
 };
 
 

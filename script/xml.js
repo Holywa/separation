@@ -56,149 +56,135 @@ function ActiveWord(value, next, type)
 {
 	this.active = true;
 	this.type = type;
-	this.value = new Kinetic.Group();
-	this.stillPart;
-	this.stillPart1;
-	this.stillPart2;
-	this.actualPart;
-	this.nextPart;
+	this.value;
 	switch(this.type) {
+	
 		case Transition["up"] :
-			this.stillPart = new Kinetic.Text( {
-				fontFamily : "DemiHautB",
-				fontSize : demiSize,
-				fill : "#FFF",
-				text : value
-			} );
-			this.actualPart = new Kinetic.Text( {
-				fontFamily : "DemiHautH",
-				fontSize : demiSize,
-				fill : "#FFF",
-				text : value
-			} );
-			this.nextPart = new Kinetic.Text( {
-				fontFamily : "DemiHautH",
-				fontSize : demiSize,
-				fill : "#FFF",
-				text : next
-			} );
-			this.value.add(this.stillPart);
-			break;
-		case Transition["down"] : 
-			this.stillPart = new Kinetic.Text( {
-				fontFamily : "DemiBasH",
-				fontSize : demiSize,
-				fill : "#FFF",
-				text : value,
-				offset : { x : 0 , y : 0 },
-				position : { x: 0, y : 0 }
-			} );
-			this.actualPart = new Kinetic.Text( {
-				fontFamily : "DemiBasB",
-				fontSize : demiSize,
-				fill : "#FFF",
-				text : value,
-				offset : { x : 0 , y : 0},
-				x : this.stillPart.getX(),
-				y : this.stillPart.getY() + this.stillPart.getHeight()
-			} );
-			this.nextPart = new Kinetic.Text( {
-				fontFamily : "DemiBasB",
-				fontSize : demiSize,
-				fill : "#FFF",
-				text : next,
-				offset : { x : 0 , y : 0 }
-			} );
-			this.value.add(this.stillPart);
-			break;
-		case Transition["central"] : 
-			this.stillPart1 = new Kinetic.Text( {
-				fontFamily : "CentraleH",
-				fontSize : centraleSize,
-				fill : "#FFF",
-				text : value,
-				offset : { x : 0 , y : 0 },
-				position : { x: 0, y : 0 }
-			} );
-			this.actualPart = new Kinetic.Text( {
-				fontFamily : "CentraleC",
-				fontSize : centraleSize,
-				fill : "#FFF",
-				text : value,
-				offset : { x : 0 , y : 0},
-				x : this.stillPart1.getX(),
-				y : this.stillPart1.getY() + this.stillPart1.getHeight()
-			} );
-			this.stillPart2 = new Kinetic.Text( {
-				fontFamily : "CentraleB",
-				fontSize : centraleSize,
-				fill : "#FFF",
-				text : value,
-				offset : { x : 0, y : this.stillPart1 },
-				position : { x: 0, y : this.stillPart1*3 }
-			} );
-			this.nextPart = new Kinetic.Text( {
-				fontFamily : "CentraleC",
-				fontSize : centraleSize,
-				fill : "#FFF",
-				text : next,
-				offset : { x : 0 , y : 0 }
-			} );
-			this.stillPart = new Kinetic.Group();
-			this.stillPart.add(this.stillPart1);
-			this.stillPart.add(this.actualPart);
-			this.stillPart.add(this.stillPart2);
-			this.value.add(this.stillPart);
-			break;
-		case Transition["shadow"]:
-			var actualImg = new Image();
-			actualImg.src = actual;
-			actualImg.onload = function() {
-				this.actualPart = new Kinetic.Image({
-					offset : { x : 0 , y : 0 },
-					position : { x : 0 , y : 0 },
-					listening : true,
-					image: actualImg
-				});
-			};
-			var nextImg = new Image();
-			nextImg.src = actual;
-			nextImg.onload = function() {
-				this.nextPart = new Kinetic.Image({
-					offset : { x : 0 , y : 0 },
-					position : { x : 0 , y : 0 },
-					listening : true,
-					image: nextImg
-				});
-			};
-			break;
-	}
-	this.value.add(this.actualPart);
-}
+			this.value = new word_demihaut({
+				x: 0,
+				y: 0,
+				mot1: 'value',
+				mot2: 'next',
+				fontSize: demiSize/2,
+				fill: '#FFF',
+				offsetMot2: - stage.getWidth()*2
+			  });
+			this.value.group.on('tap', function(){
+				if(lock == 0){
+					lock = 1;
+					//TODO A REFAIRE
+					//cut_activation();
+					setTimeout(function(){ // attente pour récupérer les bons zooms
+						var anim = new Separation.cut_animation(cut_word);
+						var can_play = ((lock == 1) ? true : false);
+						anim.start(can_play);          
 
-ActiveWord.prototype.addHitZone = function () {
-	switch(this.type) {
-		case Transition["up"] : 
-			this.hitZone = new Kinetic.Rect( {
-				listening : true,
-				width : this.stillPart.getWidth()*1.5,
-				height : this.stillPart.getHeight() + this.actualPart.getHeight(),
-				offset : { x : this.stillPart.getOffsetX(), y : this.stillPart.getOffsetY()-this.stillPart.getHeight() },
-				position : this.stillPart.getPosition(),
-				opacity : 0.5,
-				fill : "red"
-			} );
+						var cut_unZoom = new Separation.onCorner();
+						cut_unZoom.on(function(){
+							//TODO A REFAIRE
+							//cut_desactivation();
+							lock = 0;
+						});
+					}, 2000);
+				}
+			});
 			break;
+			
 		case Transition["down"] : 
-			this.hitZone = new Kinetic.Rect( {
-				listening : true,
-				width : this.stillPart.getWidth()*1.5,
-				height : this.stillPart.getHeight() + this.actualPart.getHeight(),
-				offset : this.stillPart.getOffset(),
-				position : this.stillPart.getPosition(),
-				opacity : 0.5,
-				fill : "red"
-			} );
+			this.value = new word_demibas({
+				x: 0,
+				y: 0,
+				mot1: 'value',
+				mot2: 'next',
+				fontSize: demiSize/2,
+				fill: '#FFF',
+				offsetMot2: - stage.getWidth()*2
+			  });
+			  this.value.group.on('tap', function(){
+				if(lock == 0){
+					lock = 1;
+					//TODO A REFAIRE
+					//cut_activation();
+					setTimeout(function(){ // attente pour récupérer les bons zooms
+						var anim = new Separation.cut_animation(cut_word);
+						var can_play = ((lock == 1) ? true : false);
+						anim.start(can_play);          
+
+						var cut_unZoom = new Separation.onCorner();
+						cut_unZoom.on(function(){
+							//TODO A REFAIRE
+							//cut_desactivation();
+							lock = 0;
+							});
+						}, 2000);
+					}
+				});
+			break;
+			
+		case Transition["central"] : 
+			this.value = new word_centrale({
+				x: 0,
+				y: 0,
+				mot1: value,
+				mot2: next,
+				fontSize: centraleSize/3,
+				fill: '#FFF',
+				offsetMot2: - stage.getWidth()*2
+			  });
+			  
+			this.value.group.on('tap', function(){
+				if(lock == 0){
+					lock = 3;
+					//TODO A REFAIRE ACTIVATION
+					//tear_activation();
+
+					setTimeout(function(){ // attente pour récupérer les bons zooms
+						var anim = new Separation.tear_animation(tear_word);
+						var can_play = ((lock == 3) ? true : false);
+						anim.start(((lock == 3) ? true : false));          
+
+						var tear_unZoom = new Separation.onCorner();
+						tear_unZoom.on(function(){
+							//TODO A REFAIRE DESACTIVATION
+							//tear_desactivation();
+							can_play = false;
+							lock = 0;
+						});
+					}, 2000);
+				}
+			});
+			
+			break;
+			
+		case Transition["shadow"]:
+			var tmpImg = "imgs/" + value + ".png";
+			var tmpNext = "imgs/" + next + ".png";
+			this.value = new word_ombre({
+				x: 0,
+				y: 0,
+				img1: tmpImg,
+				img2: tmpNext,
+			  });
+			
+			this.value.group.on('tap', function(){
+				if(lock == 0){
+					lock = 2;
+					//TODO REFAIRE ACTIVATION
+					//rub_activation();
+					setTimeout(function(){
+						var anim = new Separation.rub_animation(this.value);
+						var can_play = ((lock == 2) ? true : false);
+						anim.start(can_play);          
+
+						var rub_unZoom = new Separation.onCorner();
+						rub_unZoom.on(function(){
+							//TODO REFAIRE DEACTIVATION
+							//rub_desactivation();
+							lock = 0;
+						});
+					}, 2000); 
+				}
+			});
 			break;
 	}
 }

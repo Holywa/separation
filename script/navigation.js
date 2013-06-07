@@ -32,12 +32,6 @@ function readjustSizes() {
 	entireSize = 0.05*screenHeight;
 	demiSize = (entireSize*6)/11;
 	centraleSize = (entireSize*9)/11;
-	
-	/*var size_font = 4;
-	var demihaut_font = 16 * size_font;
-	var demihaut_part_font = 5 * size_font;
-	var decal_h = 1.5 * size_font;
-	var decal_b = 2 * size_font;*/
 }
 
 function checkDevice() {
@@ -55,11 +49,30 @@ function checkDevice() {
 	
 	loadButtons();
 	
+	//initImages();
+	
 	introductionStage();
 	//initMainMenu();
 	
 	stage.add(mainLayer);
 	stage.add(actionLayer);
+}
+
+function initImages() {
+	var hand_tuto_img = new Image();
+	hand_tuto_img.src = "imgs/hand_tuto.png";
+	hand_tuto_img.onload = function() {
+		hand_tuto = new Kinetic.Image({
+			x : 0,
+			y : - screenHeight,
+			listening : true,
+			image: hand_tuto_img,
+			offset: { x : 0 , y : 0},
+			width : screenHeight*0.075,
+			height : screenHeight*0.075
+		});
+	};
+	//TODO: load images du tutoriel
 }
 
 function loadButtons() {
@@ -75,7 +88,7 @@ function loadButtons() {
 			height : screenHeight*0.075
 		});
 		homeBtn.setOffset(0,homeBtn.getHeight());
-		homeBtn.on("tap", function() {
+		homeBtn.on("tap click", function() {
 			clearStage();
 			getMainMenu();
 		} );
@@ -93,7 +106,7 @@ function loadButtons() {
 			height : screenHeight*0.075
 		});
 		shuffleBtn.setOffset(shuffleBtn.getWidth(),shuffleBtn.getHeight());
-		shuffleBtn.on("tap", function() {
+		shuffleBtn.on("tap click", function() {
 			clearStage();
 			getRandomStory();
 		} );
@@ -111,7 +124,7 @@ function loadButtons() {
 			height : screenHeight*0.075
 		});
 	returnBtn.setOffset(0,0);
-	returnBtn.on("tap", function() {
+	returnBtn.on("tap click", function() {
 		clearStage();
 		getStoriesMenu();
 		} );
@@ -146,19 +159,13 @@ function introductionStage(){
 	actionLayer.removeChildren();
   	
 	logo = new Logo();
-	zoom_logo = 1/3 * stage.getHeight() / logo.getHeight();
+	zoom_logo = 2/5 * stage.getHeight() / logo.overall.getHeight();
 	logo.overall.setAttrs({
 		scaleX: zoom_logo,
 		scaleY: zoom_logo,
-		x: (stage.getWidth() - logo.getWidth()*zoom_logo) / 2,
-		y: (stage.getHeight() - logo.getHeight()*zoom_logo) / 2
+		x: (stage.getWidth() - logo.overall.getWidth()*zoom_logo) / 2,
+		y: (stage.getHeight() - logo.overall.getHeight()*zoom_logo) / 2
 	});
-	rect_logo = new Kinetic.Rect({
-		x: (stage.getWidth() - logo.getWidth()*zoom_logo) / 2,
-		y: (stage.getHeight() - logo.getHeight()*zoom_logo) / 2,
-		width: logo.getWidth(),
-		height: logo.getHeight()
-	})
 
 	separation_size_font = stage.getHeight() / 16;
 	separ_haut = new Kinetic.Text({
@@ -194,8 +201,7 @@ function introductionStage(){
       		node: logo.overall,
       		duration: 2,
       		easing: Kinetic.Easings.StrongEaseInOut,
-      		rotation: Math.PI / 2,
-      		x: logo.overall.getX() + logo.getWidth()
+      		rotation: 0
     	})
     	tween1.play();	
 
@@ -203,23 +209,23 @@ function introductionStage(){
     		tween1.finish();
 
     		tween2 = new Kinetic.Tween({
-    			node: logo.arc_haut,
+    			node: logo.img_1,
     			duration: 6,
     			easing: Kinetic.Easings.StrongEaseInOut,
-    			y: - stage.getWidth() * 2
+    			x: - stage.getWidth() * 2
     		})
     		tween2.play();
 
     		tween3 = new Kinetic.Tween({
-    			node: logo.arc_bas,
+    			node: logo.img_3,
     			duration: 6,
     			easing: Kinetic.Easings.StrongEaseInOut,
-    			y: stage.getWidth() * 2
+    			x: stage.getWidth() * 2
     		})
     		tween3.play();
 
     		tween4 = new Kinetic.Tween({
-    			node: logo.line,
+    			node: logo.img_2,
     			duration: 2,
     			easing: Kinetic.Easings.StrongEaseInOut,
     			opacity: 0
@@ -229,8 +235,6 @@ function introductionStage(){
   	}
 
   	function separ_anim(){
-  		tween4.finish();
-
   		tween5 = new Kinetic.Tween({
   			node: separ_haut,
   			duration: 2,
@@ -289,7 +293,7 @@ function introductionStage(){
   		});
   	}
 
-	rect_logo.on('tap click', function(){
+	logo.overall.on('tap click', function(){
 		logo_anim();
 
     	setTimeout(function(){
@@ -311,7 +315,7 @@ function introductionStage(){
 	mainLayer.add(logo.overall);
 	mainLayer.add(separ_haut);
 	mainLayer.add(separ_bas);
-	mainLayer.add(rect_logo);
+	mainLayer.add(logo.overall);
 	
 	mainLayer.draw();
 	actionLayer.draw();
@@ -513,18 +517,18 @@ function initMainMenu() {
 		}
 		getStoriesMenu(langue);
 	} );
-	laboratoire.on("tap", function() {
+	laboratoire.on("tap click", function() {
 		getLaboratoryMenu();
 	} );
-	concept.on("tap", function() {
+	concept.on("tap click", function() {
 		getConceptMenu();
 	} );
-	fr_w.on("tap", function() {
+	fr_w.on("tap click", function() {
 		fr_w.setOpacity(opacite);
 		en_w.setOpacity(opacite/3);
 		changeLanguage(fr);		
 	});
-	en_w.on("tap", function(){
+	en_w.on("tap click", function(){
 		en_w.setOpacity(opacite);
 		fr_w.setOpacity(opacite/3);
 		changeLanguage(en);

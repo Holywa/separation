@@ -75,11 +75,16 @@ function createStoryAlter(story) {
 	var usableHeight = screenHeight - returnBtn.getHeight();
 	var usableWidth = screenWidth - returnBtn.getWidth();
 	
-	var storyGroup = new Kinetic.Group( {
+	var storyLayer = new Kinetic.Layer( {
+		height : usableHeight,
+		width : usableWidth,
+		x : returnBtn.getHeight(),
+		y : returnBtn.getWidth(),
 		listening : false
 	} );
 	
-	var heightLine = usableHeight/maxVisibleLines;
+	var heightLine = usableHeight/(maxVisibleLines + 2);
+	var middleCol = usableWidth/2;
 	
 	var nbSentences = story.sentences.length;
 	
@@ -88,27 +93,41 @@ function createStoryAlter(story) {
 	}
 	
 	for(var s=0; s < nbSentences ; s++) {
-		var sentenceGroup = new Kinetic.Group();
 		var lastWord;
 		
 		for(var w=0; w < story.sentences[s].words.length ; w++) {
 			var word = story.sentences[s].words[w];
-			if(w == 0) {
-				word.value.setX(0);
+			if(w == 0) { 
+				if(word.active)
+					word.value.group.setX( 0 );
+				else word.value.setX( 0 );
+			} //premier mot de la phrase
+			else { 
+				var valueX;
+				if(lastWord.active)
+					valueX = lastWord.value.group.getX();
+				else
+					valueX = lastWord.value.getX();
+					
+				if( (word.value.group.getWidth() + valueX) > usableWidth ) {
+					
+					alert("nouvelle ligne");
+				}				
+					
+				if(word.active)
+					word.value.group.setX( valueX + blank.getWidth() );
+				else
+					word.value.setX( valueX + blank.getWidth() );
 			}
-			else
-			{
-				word.value.setX(lastWord.value.getX() + blank.getWidth());
-			}
-			word.value.setY(s*heightLine);
+			word.value.group.setY( (s+1)*heightLine );
 			lastWord = word;
-			mainLayer.add(word.value);
-			sentenceGroup.add(word.value);
 		}
-		storyGroup.add(sentenceGroup);
+		var sentenceGroup = new Kinetic.Group( {
+			offset : { x : 0 , y : 0 }
+		} );
+		storyLayer.add(sentenceGroup);
 	}
-	mainLayer.add(storyGroup);
-	mainLayer.draw();
+	stage.add(storyLayer);
 }
 
 function createStoryContinue(sentences) {
