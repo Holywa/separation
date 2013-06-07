@@ -190,6 +190,7 @@ function getTutorielMenu(langage) {
    */
   var lock = 0; // permet de ne pas pouvoir jouer plusieurs animations en même temps
 
+
   // cut
   if(lock == 0 || lock == 1){
     var cut_activation = function(){
@@ -283,13 +284,11 @@ function getTutorielMenu(langage) {
 
         setTimeout(function(){ // attente pour récupérer les bons zooms
           var anim = new Separation.tear_animation(tear_word);
-          var can_play = ((lock == 3) ? true : false);
           anim.start(((lock == 3) ? true : false));          
 
           var tear_unZoom = new Separation.onCorner();
           tear_unZoom.on(function(){
             tear_desactivation();
-            can_play = false;
             lock = 0;
           });
         }, 2000);

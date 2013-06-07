@@ -609,7 +609,7 @@ Separation.onCorner = function(){
   this.on = function(handler){
     detect.on(handler);
   }
-}
+};
 
 
 /////////////////////////////////////////////////////////////////////
@@ -710,7 +710,7 @@ function word_centrale(params){
   this.center_a = new Kinetic.Text({
     text: params.mot1,
     fontSize:  params.fontSize,
-    fontFamily: 'CentraleC',
+    fontFamily: 'CentraleC', 
     fill: params.fill
   });
 
@@ -882,8 +882,11 @@ Separation.cut_animation = function(cut_word){
   }
 
   this.start = function(lock){
-    if(lock == true){
-      couper.on(function(){
+    couper.on(function(){
+      var play = lock;
+      //alert(play);
+
+      if(lock == true){
         if(sens == true){
           animation_cut(cut_word.bas_a, cut_word.bas_b);
           sens = false;
@@ -891,8 +894,8 @@ Separation.cut_animation = function(cut_word){
           animation_cut(cut_word.bas_b, cut_word.bas_a);
           sens = true;
         }
-      });
-    }
+      }
+    });
   }
 }
 
@@ -911,7 +914,7 @@ Separation.rub_animation = function(rub_word){
 
   var sens = true; // quel mot doit-on faire apparaitre
 
-  var velocity = 0.2; // vitesse d'effacement
+  var velocity = 0.25; // vitesse d'effacement
   var tempo = 0; // pour ne pas réinverser l'effet tout de suite
 
   var new_opacity = function(){
@@ -973,7 +976,7 @@ Separation.rub_animation = function(rub_word){
 Separation.tear_animation = function(tear_word){
   var shape_position = node_position(tear_word.group);
 
-  var dechirer = new Separation.tear({
+  var dechirer = new Separation.cut({
     x: shape_position.x,
     y: shape_position.y,
     width: shape_position.width,

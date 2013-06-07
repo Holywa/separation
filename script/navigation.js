@@ -55,8 +55,8 @@ function checkDevice() {
 	
 	loadButtons();
 	
-	//introductionStage();
-	initMainMenu();
+	introductionStage();
+	//initMainMenu();
 	
 	stage.add(mainLayer);
 	stage.add(actionLayer);
