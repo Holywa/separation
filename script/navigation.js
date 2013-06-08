@@ -27,19 +27,11 @@ var activeLang = fr;
 function readjustSizes() {
 	screenWidth = window.innerWidth;
 	screenHeight = window.innerHeight;
-<<<<<<< HEAD
-
-	titleSize = 0.10*screenHeight;
-	entireSize = 0.05*screenHeight;
-	demiSize = (entireSize*6)/11;
-	centraleSize = (entireSize*9)/11;
-=======
 	
 	titleSize = 0.1*screenHeight;
 	entireSize = 0.1*screenHeight;
 	demiSize = (0.1*screenHeight)*(6/11);
 	centraleSize = (0.1*screenHeight)*(9/11);
->>>>>>> 8c0c77b3629bcb3496bde1fa90791b58441fe5c9
 }
 
 function checkDevice() {
