@@ -70,18 +70,21 @@ function getStoryLayout(title) {
 
 //affichage de toutes les phrases en même temps à l'écran
 function createStoryAlter(story) {
-	//mainLayer.add(blank);
+	var usableHeight = screenHeight - (returnBtn.getHeight()*3);
+	var usableWidth = screenWidth - (returnBtn.getWidth()*3);
 	
-	var usableHeight = screenHeight - returnBtn.getHeight();
-	var usableWidth = screenWidth - returnBtn.getWidth();
-	
-	var storyLayer = new Kinetic.Layer( {
-		height : usableHeight,
-		width : usableWidth,
-		x : returnBtn.getHeight(),
-		y : returnBtn.getWidth(),
-		listening : false
-	} );
+	var lineStart = returnBtn.getWidth()*1.5;
+	  
+	var storyGroup = new Kinetic.Group({
+        clipFunc: function(canvas) {
+            var context = canvas.getContext();
+            context.rect(returnBtn.getHeight()*1.5,
+						 lineStart,
+						 usableWidth,
+						 usableHeight);
+        },
+        listening: false
+      });
 	
 	var heightLine = usableHeight/(maxVisibleLines + 2);
 	var middleCol = usableWidth/2;
@@ -92,42 +95,48 @@ function createStoryAlter(story) {
 		storyGroup.setListening(true);
 	}
 	
+	var lines = 0;
+	
 	for(var s=0; s < nbSentences ; s++) {
 		var lastWord;
+		var lW;
 		
 		for(var w=0; w < story.sentences[s].words.length ; w++) {
-			var word = story.sentences[s].words[w];
-			if(w == 0) { 
-				if(word.active)
-					word.value.group.setX( 0 );
-				else word.value.setX( 0 );
-			} //premier mot de la phrase
+			var tmpWord = story.sentences[s].words[w];
+			var word;
+			if(tmpWord.active) { word = tmpWord.value.group; }
+			else { word = tmpWord.value; }
+			if(w == 0) { //premier mot de la phrase 
+				word.setX( lineStart );
+			} 
 			else { 
-				var valueX;
-				if(lastWord.active)
-					valueX = lastWord.value.group.getX();
-				else
-					valueX = lastWord.value.getX();
-					
-				if( (word.value.group.getWidth() + valueX) > usableWidth ) {
-					
-					alert("nouvelle ligne");
-				}				
-					
-				if(word.active)
-					word.value.group.setX( valueX + blank.getWidth() );
-				else
-					word.value.setX( valueX + blank.getWidth() );
+				if(lastWord.active) { 
+					lW = lastWord.value.group; 
+				}
+				else { lW = lastWord.value; }
+				
+				//traiter cas shadow à resizer correctement avec height lW
+				if((lW.getX() + lW.getWidth() + word.getWidth() + returnBtn.getWidth()) > usableWidth) { 
+					lines++;
+					word.setX( lineStart );
+				}
+				else {	
+					word.setX( lW.getX() + lW.getWidth() + blank.getWidth() ); 
+					}
 			}
-			word.value.group.setY( (s+1)*heightLine );
-			lastWord = word;
+			
+			word.setY( (lines+1)*heightLine );
+			
+			lastWord = tmpWord;
+			
+			storyGroup.add(word);
 		}
-		var sentenceGroup = new Kinetic.Group( {
-			offset : { x : 0 , y : 0 }
-		} );
-		storyLayer.add(sentenceGroup);
+		
+		lines++;
+		
 	}
-	stage.add(storyLayer);
+	mainLayer.add(storyGroup);
+	mainLayer.draw();
 }
 
 function createStoryContinue(sentences) {
