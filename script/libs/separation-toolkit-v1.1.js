@@ -73,22 +73,30 @@ function Logo(){
       stroke: "#FFF",
       strokeWidth: border,
     });
-
-    logo_group = new Kinetic.Group();
-    logo_group.add(arc_haut);
-    logo_group.add(arc_bas);
-    logo_group.add(line);
   }
-  
+
+  this.getWidth = function(){ return 12 * border; }
+  this.getHeight = function(){ return (12*border + 0.1*y);}
+
   draw();
+
+  logo_group = new Kinetic.Group({
+    width: this.getWidth,
+    height: this.getHeight
+  });
+  logo_group.add(arc_haut);
+  logo_group.add(arc_bas);
+  logo_group.add(line);
+  
+  logo_group.setOffset({
+    x: this.getWidth()/2,
+    y: this.getHeight()/2
+  });
 
   this.arc_haut = arc_haut;
   this.arc_bas = arc_bas;
   this.line = line;
   this.overall = logo_group;
-
-  this.getWidth = function(){ return 12 * border; }
-  this.getHeight = function(){ return (12*border + 0.1*y);}
 };
 
 /////////////////////////////////////////////////////////////////////
@@ -597,12 +605,12 @@ Separation.onZone = function(params){
 
 Separation.onCorner = function(){
   var lines = stage.getHeight() / 6;
-  var cols = stage.getWidth() / 6;
+  var cols = stage.getWidth() / 10;
 
   var detect = new Separation.onZone({
     x: cols,
     y: lines,
-    width: 4*cols,
+    width: 8*cols,
     height: 4*lines
   });
 
@@ -888,6 +896,7 @@ Separation.cut_animation = function(cut_word){
   };
 
   var sens = true; // quel mot doit-on faire apparaitre
+  var enable = false;
 
   function animation_cut(node1, node2){
     var tween1 = new Kinetic.Tween({
@@ -922,12 +931,13 @@ Separation.cut_animation = function(cut_word){
     }, 2000);       
   }
 
-  this.start = function(lock){
-    couper.on(function(){
-      var play = lock;
-      //alert(play);
+  this.start = function(){ enable = true; };
 
-      if(lock == true){
+  this.stop = function(){ enable = false; };
+
+  this.play = function(){
+    couper.on(function(){
+      if(enable == true){
         if(sens == true){
           animation_cut(cut_word.bas_a, cut_word.bas_b);
           sens = false;
@@ -954,6 +964,7 @@ Separation.rub_animation = function(rub_word){
   });
 
   var sens = true; // quel mot doit-on faire apparaitre
+  var enable = false;
 
   var velocity = 0.25; // vitesse d'effacement
   var tempo = 0; // pour ne pas réinverser l'effet tout de suite
@@ -988,9 +999,13 @@ Separation.rub_animation = function(rub_word){
     }
   }
 
-  this.start = function(lock){
-    if(lock == true){
-      frotter.on(function(){
+  this.start = function(){ enable = true; }
+
+  this.stop = function(){ enable = false; };
+
+  this.play = function(){
+    frotter.on(function(){
+      if(enable == true){
         var new_op = new_opacity();
 
         var tween_a = new Kinetic.Tween({
@@ -1006,8 +1021,8 @@ Separation.rub_animation = function(rub_word){
           opacity: 1 - new_op
         });
         tween_b.play();
-      });  
-    }
+      }
+    });  
   } 
 };
 
@@ -1025,6 +1040,7 @@ Separation.tear_animation = function(tear_word){
   });
 
   var sens = true; // quel mot doit-on faire apparaitre
+  var enable = false;
 
   function animation_tear(node1, node2){
     var tween1 = new Kinetic.Tween({
@@ -1057,9 +1073,13 @@ Separation.tear_animation = function(tear_word){
     }, 2000);
   }
 
-  this.start = function(lock){
-    if(lock == true){
-      dechirer.on(function(){
+  this.start = function(){ enable = true; };
+
+  this.stop = function(){ enable = false; };
+
+  this.play = function(lock){
+    dechirer.on(function(){
+      if(enable == true){
         if(sens == true){
           animation_tear(tear_word.center_a, tear_word.center_b);
           sens = false;
@@ -1067,7 +1087,7 @@ Separation.tear_animation = function(tear_word){
           animation_tear(tear_word.center_b, tear_word.center_a);
           sens = true;
         }
-      });
-    }
+      }
+    });
   }
 }

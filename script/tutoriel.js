@@ -7,7 +7,7 @@ function getTutorielMenu(langage) {
   var lines = stage.getHeight() / 6;
   var col = stage.getWidth() / 2;
 
-  var size_font = 5;
+  var size_font = 0.010*screenHeight;
   var demihaut_font = 16 * size_font;
   var demihaut_part_font = 5 * size_font;
   var centrale_font = 4.2 * size_font;
@@ -193,11 +193,18 @@ function getTutorielMenu(langage) {
 
   // cut
   if(lock == 0 || lock == 1){
+    var anim;
+
     var cut_activation = function(){
       node_dark(normal_words);
       zooming_center(cut_word.group, 2);
       node_set_opacity(rub_word.group, 0.25 * rub_word.group.getOpacity());
       node_dark(tear_word.group); 
+
+      setTimeout(function(){ // attente pour récupérer les bons zooms
+        anim = new Separation.cut_animation(cut_word);
+        anim.start();          
+      }, 2000);
     }
 
     var cut_desactivation = function(){
@@ -205,6 +212,7 @@ function getTutorielMenu(langage) {
       node_unzoom(cut_word.group, col - word_size_1 + p1_1.getWidth(), lines);
       node_set_opacity(rub_word.group, 4 * rub_word.group.getOpacity());
       node_light(tear_word.group);      
+      anim.stop();
     }
 
     cut_word.group.on('tap', function(){
@@ -212,9 +220,7 @@ function getTutorielMenu(langage) {
         lock = 1;
         cut_activation();
         setTimeout(function(){ // attente pour récupérer les bons zooms
-          var anim = new Separation.cut_animation(cut_word);
-          var can_play = ((lock == 1) ? true : false);
-          anim.start(can_play);          
+          anim.play();          
 
           var cut_unZoom = new Separation.onCorner();
           cut_unZoom.on(function(){
@@ -228,11 +234,18 @@ function getTutorielMenu(langage) {
 
   // rub
   if(lock == 0 || lock == 2){
+    var anim;
+
     var rub_activation = function(){
       node_dark(normal_words);
       node_dark(cut_word.group);
       zooming_center(rub_word.group, 2);
       node_dark(tear_word.group);
+
+      setTimeout(function(){ // attente pour récupérer les bons zooms
+        anim = new Separation.rub_animation(rub_word);
+        anim.start();          
+      }, 2000);
     }
 
     var rub_desactivation = function(){
@@ -240,6 +253,7 @@ function getTutorielMenu(langage) {
       node_light(cut_word.group);
       node_unzoom(rub_word.group, img_x - rub_x, img_y);
       node_light(tear_word.group);
+      anim.stop();
     }
 
     rub_word.group.on('tap', function(){
@@ -247,9 +261,7 @@ function getTutorielMenu(langage) {
         lock = 2;
         rub_activation();
         setTimeout(function(){
-          var anim = new Separation.rub_animation(rub_word);
-          var can_play = ((lock == 2) ? true : false);
-          anim.start(can_play);          
+          anim.play();
 
           var rub_unZoom = new Separation.onCorner();
           rub_unZoom.on(function(){
@@ -263,11 +275,18 @@ function getTutorielMenu(langage) {
 
   // tear
   if(lock == 0 || lock == 3){
+    var anim;
+    
     var tear_activation = function(){
       node_dark(normal_words);
       node_dark(cut_word.group);
       node_set_opacity(rub_word.group, 0.25 * rub_word.group.getOpacity());
       zooming_center(tear_word.group, 2);
+
+      setTimeout(function(){
+        anim = new Separation.tear_animation(tear_word);
+        anim.start();
+      }, 2000)
     }
 
     var tear_desactivation = function(){
@@ -283,8 +302,7 @@ function getTutorielMenu(langage) {
         tear_activation();
 
         setTimeout(function(){ // attente pour récupérer les bons zooms
-          var anim = new Separation.tear_animation(tear_word);
-          anim.start(((lock == 3) ? true : false));          
+          anim.play();       
 
           var tear_unZoom = new Separation.onCorner();
           tear_unZoom.on(function(){
