@@ -44,6 +44,8 @@ function Sentence() {
 function Word(value)
 {
 	this.value = new Kinetic.Text( {
+		x : 0,
+		y : 0,
 		fontFamily : "DemiBas",
 		fontSize : entireSize,
 		fill : "#FFF",
@@ -63,13 +65,13 @@ function ActiveWord(value, next, type)
 			this.value = new word_demihaut({
 				x: 0,
 				y: 0,
-				mot1: 'value',
-				mot2: 'next',
+				mot1: value,
+				mot2: next,
 				fontSize: demiSize/2,
 				fill: '#FFF',
 				offsetMot2: - stage.getWidth()*2
 			  });
-			this.value.group.on('tap', function(){
+			/*this.value.group.on('tap', function(){
 				if(lock == 0){
 					lock = 1;
 					//TODO A REFAIRE
@@ -87,20 +89,20 @@ function ActiveWord(value, next, type)
 						});
 					}, 2000);
 				}
-			});
+			});*/
 			break;
 			
 		case Transition["down"] : 
 			this.value = new word_demibas({
 				x: 0,
 				y: 0,
-				mot1: 'value',
-				mot2: 'next',
+				mot1: value,
+				mot2: next,
 				fontSize: demiSize/2,
 				fill: '#FFF',
 				offsetMot2: - stage.getWidth()*2
 			  });
-			  this.value.group.on('tap', function(){
+			  /*this.value.group.on('tap', function(){
 				if(lock == 0){
 					lock = 1;
 					//TODO A REFAIRE
@@ -118,7 +120,7 @@ function ActiveWord(value, next, type)
 							});
 						}, 2000);
 					}
-				});
+				});*/
 			break;
 			
 		case Transition["central"] : 
@@ -132,7 +134,7 @@ function ActiveWord(value, next, type)
 				offsetMot2: - stage.getWidth()*2
 			  });
 			  
-			this.value.group.on('tap', function(){
+			/*this.value.group.on('tap', function(){
 				if(lock == 0){
 					lock = 3;
 					//TODO A REFAIRE ACTIVATION
@@ -152,13 +154,13 @@ function ActiveWord(value, next, type)
 						});
 					}, 2000);
 				}
-			});
+			});*/
 			
 			break;
 			
 		case Transition["shadow"]:
-			var tmpImg = "imgs/" + value + ".png";
-			var tmpNext = "imgs/" + next + ".png";
+			var tmpImg = "imgs/stories/" + value + ".png";
+			var tmpNext = "imgs/stories/" + next + ".png";
 			this.value = new word_ombre({
 				x: 0,
 				y: 0,
@@ -166,7 +168,7 @@ function ActiveWord(value, next, type)
 				img2: tmpNext,
 			  });
 			
-			this.value.group.on('tap', function(){
+			/*this.value.group.on('tap', function(){
 				if(lock == 0){
 					lock = 2;
 					//TODO REFAIRE ACTIVATION
@@ -184,7 +186,7 @@ function ActiveWord(value, next, type)
 						});
 					}, 2000); 
 				}
-			});
+			});*/
 			break;
 	}
 }
@@ -217,12 +219,13 @@ function getRightStory(title) {
 	return null;
 }
 
+//fix problem with sequence
 //Create entire sentences and words from story in memory
 function getStoryFromXML(story) {
-	tmpSen = story.storyNode.getElementsByTagName("sentence");
+	var tmpSen = story.storyNode.getElementsByTagName("sentence");
 	for(var s = 0 ; s < tmpSen.length ; s++) {
-		tmpWords = tmpSen[s].getElementsByTagName("word");
-		tmpSentence = new Sentence();
+		var tmpWords = tmpSen[s].getElementsByTagName("word");
+		var tmpSentence = new Sentence();
 		for(var w = 0; w < tmpWords.length ; w++) {
 			var tmpWord;
 			if(tmpWords[w].attributes.length > 0) {

@@ -18,7 +18,7 @@ var demiSize;
 var entireSize;
 var centraleSize;
 
-var maxVisibleLines = 10;
+var maxVisibleLines = 5;
 
 var en = {"tuto" : "help", "story" : "story", "labo" : "labo", "concept" : "about", "lang" : "fr"};
 var fr = {"tuto" : "aide", "story" : "recit", "labo" : "labo", "concept" : "a propos", "lang" : "en"};
@@ -28,10 +28,10 @@ function readjustSizes() {
 	screenWidth = window.innerWidth;
 	screenHeight = window.innerHeight;
 	
-	titleSize = 0.10*screenHeight;
-	entireSize = 0.05*screenHeight;
-	demiSize = (entireSize*6)/11;
-	centraleSize = (entireSize*9)/11;
+	titleSize = 0.1*screenHeight;
+	entireSize = 0.1*screenHeight;
+	demiSize = (0.1*screenHeight)*(6/11);
+	centraleSize = (0.1*screenHeight)*(9/11);
 }
 
 function checkDevice() {
@@ -67,7 +67,7 @@ function initImages() {
 			y : - screenHeight,
 			listening : true,
 			image: hand_tuto_img,
-			offset: { x : 0 , y : 0},
+			offset: { x : 0 , y : 0 },
 			width : screenHeight*0.075,
 			height : screenHeight*0.075
 		});
@@ -331,7 +331,7 @@ function initMainMenu() {
 	tutorielH = new Kinetic.Text( {
 		text : activeLang["tuto"],
 		fontFamily : "DemiHautH",
-		fontSize : demiSize,
+		fontSize : demiSize/2,
 		fill : "#FFF",
 		align : "center",
 		x : stage.getWidth()/2,
@@ -343,7 +343,7 @@ function initMainMenu() {
 	tutorielB = new Kinetic.Text( {
 		text : activeLang["tuto"],
 		fontFamily : "DemiHautB",
-		fontSize : demiSize,
+		fontSize : demiSize/2,
 		fill : "#FFF",
 		align : "center",
 		offset : { x :tutorielH.getWidth()/2,
@@ -366,7 +366,7 @@ function initMainMenu() {
 	recitH = new Kinetic.Text( {
 		text : activeLang["story"],
 		fontFamily : "DemiHautH",
-		fontSize : 4 * demiSize,
+		fontSize : 4 * (demiSize/2),
 		fill : "#FFF",
 		align : "center",
 		x : stage.getWidth()/5,
@@ -377,7 +377,7 @@ function initMainMenu() {
 	recitB = new Kinetic.Text( {
 		text : activeLang["story"],
 		fontFamily : "DemiHautB",
-		fontSize : 4 * demiSize,
+		fontSize : 4 * (demiSize/2),
 		fill : "#FFF",
 		align : "center",
 		offset : { x :recitH.getWidth()/2,
@@ -399,7 +399,7 @@ function initMainMenu() {
 	laboratoireH = new Kinetic.Text( {
 		text : activeLang["labo"],
 		fontFamily : "DemiHautH",
-		fontSize : 4 * demiSize,
+		fontSize : 4 * (demiSize/2),
 		fill : "#FFF",
 		align : "center",
 		x : stage.getWidth() / 5 * 4,
@@ -409,7 +409,7 @@ function initMainMenu() {
 	laboratoireB = new Kinetic.Text( {
 		text : activeLang["labo"],
 		fontFamily : "DemiHautB",
-		fontSize : 4 * demiSize,
+		fontSize : 4 * (demiSize/2),
 		fill : "#FFF",
 		align : "center",
 		offset : { x :laboratoireH.getWidth()/2,
@@ -431,7 +431,7 @@ function initMainMenu() {
 	conceptH = new Kinetic.Text( {
 		text : activeLang["concept"],
 		fontFamily : "DemiHautH",
-		fontSize : demiSize,
+		fontSize : demiSize/2,
 		fill : "#FFF",
 		align : "center",
 		x : stage.getWidth()/2,
@@ -442,7 +442,7 @@ function initMainMenu() {
 	conceptB = new Kinetic.Text( {
 		text : activeLang["concept"],
 		fontFamily : "DemiHautB",
-		fontSize : demiSize,
+		fontSize : demiSize/2,
 		fill : "#FFF",
 		align : "center",
 		offset : { x :conceptH.getWidth()/2,
@@ -465,7 +465,7 @@ function initMainMenu() {
 	fr_w = new Kinetic.Text( {
 		text : 'fr',
 		fontFamily : "DemiHaut",
-		fontSize : 1.2 * entireSize,
+		fontSize : 1.2 * (entireSize/2),
 		fill : "#FFF",
 		align : "center",
 		x : stage.getWidth() / 2,
@@ -477,7 +477,7 @@ function initMainMenu() {
 	en_w = new Kinetic.Text( {
 		text : 'en',
 		fontFamily : "DemiHaut",
-		fontSize : 1.2 * entireSize,
+		fontSize : 1.2 * (entireSize/2),
 		fill : "#FFF",
 		align : "center",
 		x : stage.getWidth() / 2,
@@ -489,7 +489,7 @@ function initMainMenu() {
 	trait = new Kinetic.Text( {
 		text : '|',
 		fontFamily : "DemiHaut",
-		fontSize : 1.2 * entireSize,
+		fontSize : 1.2 * (entireSize/2),
 		fill : "#FFF",
 		align : "center",
 		x : stage.getWidth() / 2,
@@ -544,6 +544,9 @@ function changeLanguage(lang) {
 	else {
 		activeLang = en;
 	}
+	
+	alreadyReadXML = false;
+	
 	tutorielH.setText(activeLang["tuto"]);
 	tutorielH.setOffset( tutorielH.getWidth()/2, tutorielH.getHeight()/2 );	
 		
