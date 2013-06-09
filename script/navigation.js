@@ -51,8 +51,8 @@ loadButtons();
 
 initImages();
 
-//introductionStage();
-initMainMenu();
+introductionStage();
+//initMainMenu();
 
 stage.add(mainLayer);
 stage.add(actionLayer);

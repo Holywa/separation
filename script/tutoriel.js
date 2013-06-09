@@ -48,7 +48,7 @@ function getTutorielMenu(langage) {
     img_height = image_dimension * 283;
 
     word_tear_a = 'SHREDS';
-    word_tear_b = 'CHASES';
+    word_tear_b = 'CHAS-S';
     word4_2 = ' ME';
   }
 
