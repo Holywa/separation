@@ -3,7 +3,7 @@
 	setTimeout(function() {
 		clearStage();
 		initAlisDescMenu();
-		displayVideo("animOIO");
+		//displayVideo("animOIO");
 		setHomeBtn();
 	}, 2000);
 	
@@ -13,6 +13,8 @@
 
 
 function initAlisDescMenu(){
+	var sectionNode;
+	var sentenceNode;
 	
 	alisDescTitle = new Kinetic.Text( {
 		text : "La compagnie Alis",
@@ -26,21 +28,45 @@ function initAlisDescMenu(){
 	alisDescTitle.setOffset( alisDescTitle.getWidth()/2, 0 );
 	actionLayer.add(alisDescTitle);
 	
-	alisDescText = new Kinetic.Text( {
-		text : "ALIS s'emploie a manipuler et detourner des signes parfaitement reconnaissables par tous pour ouvrir sur d'autres sens.",
-		fontFamily : "Century Gothic",
-		fontSize : centraleSize,
-		fill : "#FFF",
-		align : "center",
-		x : stage.getWidth()/2,
-		y : stage.getHeight()*0.2
-	} );
-	alisDescText.setOffset( alisDescText.getWidth()/2, 0 );
-	actionLayer.add(alisDescText);	
+	
+	var xhr=getXMLHttpRequest();
+	xmlDescFile=loadXMLDoc("XML/alisDescription.xml");
+	if(activeLang=en){
+		var rootNode=xmlDescFile.getElementsByTagName("english")[0];
+	}
+	else{
+		var rootNode=xmlDescFile.getElementsByTagName("francais")[0];
+	}
+	
+	
+
+	for(var i=0;i<rootNode.getElementsByTagName("section").length;i++){
+		sectionNode=rootNode.getElementsByTagName("section").item(i);
+		for(var j=0;j<sectionNode.getElementsByTagName("sentence").length;j++){
+			sentenceNode=sectionNode.getElementsByTagName("sentence").item(j);
+			writeSentence(i, j, sentenceNode);
+		}
+	}
+	
+	
 	
 }
 
 
+function writeSentence(i, j, sentenceNode){
+	alisDescText = new Kinetic.Text( {
+		text : sentenceNode.textContent,
+		fontFamily : "Century Gothic",
+		fontSize : window.innerWidth*0.015,
+		fill : "#FFF",
+		align : "center",
+		x : stage.getWidth()/2,
+		y : stage.getHeight()*0.2 + stage.getHeight()*0.05 *(4*i+j)
+	} );
+	
+	alisDescText.setOffset(alisDescText.getWidth()/2, 0 );
+	actionLayer.add(alisDescText);
+}
 
 
 function displayVideo(videoName){

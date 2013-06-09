@@ -11,7 +11,7 @@ function getStoriesMenu(lang) {
 	setHomeBtn();
 	
 	if(!alreadyReadXML) {
-		loadXMLDoc(lang);
+		loadXMLDocRecit(lang);
 		storiesFromXML();
 	}
 	

@@ -1,0 +1,25 @@
+<words request="betise">
+    <word name="belles" font="code_min_bas" freq="245" />
+    <word name="billet" font="code_min_bas" freq="356" />
+    <word name="billes" font="code_min_bas" freq="178" />
+	<word name="dunes" font="code_min_bas" freq="245" />
+    <word name="dines" font="code_min_bas" freq="37" />
+    <word name="dinde" font="code_min_bas" freq="267" />
+    <word name="durits" font="code_min_bas" freq="10" />
+    <word name="echec" font="code_min_bas" freq="356" />
+    <word name="baties" font="code_min_haut" freq="42" />
+    <word name="batira" font="code_min_haut" freq="163" />
+    <word name="hatierr" font="code_min_haut" freq="56" />
+	
+	<word name="belles" font="code_min_bas" freq="245" />
+    <word name="billet" font="code_min_bas" freq="356" />
+    <word name="billes" font="code_min_bas" freq="178" />
+	<word name="dunes" font="code_min_bas" freq="245" />
+    <word name="dines" font="code_min_bas" freq="37" />
+    <word name="dinde" font="code_min_bas" freq="267" />
+    <word name="durits" font="code_min_bas" freq="10" />
+    <word name="echec" font="code_min_bas" freq="356" />
+    <word name="baties" font="code_min_haut" freq="42" />
+    <word name="batira" font="code_min_haut" freq="163" />
+    <word name="hatier" font="code_min_haut" freq="56" />
+</words>

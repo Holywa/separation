@@ -203,7 +203,8 @@ function getTutorielMenu(langage) {
 
       setTimeout(function(){ // attente pour récupérer les bons zooms
         anim = new Separation.cut_animation(cut_word);
-        anim.start();          
+        anim.start(); 
+		play_sound('centraleSound');
       }, 2000);
     }
 
@@ -245,6 +246,7 @@ function getTutorielMenu(langage) {
       setTimeout(function(){ // attente pour récupérer les bons zooms
         anim = new Separation.rub_animation(rub_word);
         anim.start();          
+		play_sound('coupableSound');
       }, 2000);
     }
 
@@ -286,6 +288,7 @@ function getTutorielMenu(langage) {
       setTimeout(function(){
         anim = new Separation.tear_animation(tear_word);
         anim.start();
+		play_sound('ombreSound');
       }, 2000)
     }
 

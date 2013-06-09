@@ -10,7 +10,7 @@ var enXmlPath = "./stories/en_xml.xml";
 var StoryType = {"alter" : 0, "continue" : 1};
 var Transition = {"up" : 0, "down" : 1, "central" : 2, "shadow" : 3, "err" : -1};
 
-function loadXMLDoc(lang) {
+function loadXMLDocRecit(lang) {
 	var xmlPath;
 	if(lang == "fr") { xmlPath = frXmlPath; } else { xmlPath = enXmlPath; }
 	if(navigator.appname == 'Microsoft Internet Explorer') {
