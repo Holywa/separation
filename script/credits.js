@@ -6,7 +6,7 @@ function getCreditsMenu(){
 		actionLayer.clear();
 		var creditsTitle = new Kinetic.Text( {
 			text : "Credits",
-			fontFamily : "Century Gothic",
+			fontFamily : "DemiHaut",
 			fontSize : titleSize,
 			fill : "#FFF",
 			align : "center",
