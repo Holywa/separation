@@ -1,0 +1,43 @@
+<description>
+	<francais>
+		<section>
+			<sentence>Bienvenue dans l'univers de la Poesie a 2 mi-mots, de sa police coupable, police de l'ombre et centrale police.</sentence>
+			<sentence>Cet univers a ete invente au debut des annees 2000 et continue d'etre developpe par Pierre Fourny, dans le cadre d'ALIS, compagnie de spectacles.</sentence>
+		</section>
+		<section>
+			<sentence>L'application La Separation est l'une des composantes d'un vaste projet melant art, developpement technologique, pedagogie et observations scientifiques.</sentence>
+			<sentence>"C'est l'arbre qui cache la foret" dirait Pierre Fourny.</sentence>
+			<sentence>Ce projet a ete initie en decembre 2012 par ALIS et Serge Bouchardon, fondateur du collectif d'auteurs numeriques I-Trace.</sentence>
+		</section>
+		<section>
+			<sentence>Mentions legales</sentence>
+			<sentence>Cette application est un prototype developpe en HTML et Javascript</sentence>
+			<sentence>edite par ALIS </sentence>
+			<sentence>ALIS route de Dormans 02130 Fere-en-Tardenois - 03 23 82 21 58 / 03 23 82 39 06.</sentence>
+			<sentence>ALIS est subventionnee pour son fonctionnement par le Ministere de la Culture - DRAC Picardie,</sentence>
+			<sentence>le Conseil Regional de Picardie, le Conseil General de l Aisne et la Ville de Fere-en-Tardenois.</sentence>
+		</section>
+	
+	</francais>
+	<english>
+		<section>
+			<sentence>Welcome to the cutting edge poetry's universe and its fonts.</sentence>
+			<sentence>This universe was designed by Pierre Fourny at the beginning of the 2000s.</sentence>
+			<sentence>It continues to be developed by him under a performance company named ALIS.</sentence>
+		</section>
+		<section>
+			<sentence>The Separation application is included in a larger project, that combines art, technology development, education and scientific observations.</sentence>
+			<sentence>"It is the tree that hides the forest" as Pierre Fourny would say.</sentence>
+			<sentence>The project started in December 2012 under the leadership of ALIS and Serge Bouchardon, teacher-researcher and I-Trace's founder, a group of digital authors.</sentence>
+		</section>
+		<section>
+			<sentence>Legal Mentions</sentence>
+			<sentence>This application is a prototype developped en HTML and Javascript</sentence>
+			<sentence>edited by ALIS </sentence>
+			<sentence>ALIS route de Dormans 02130 Fere-en-Tardenois - 03 23 82 21 58 / 03 23 82 39 06.</sentence>
+			<sentence>ALIS is financially assisted le Ministere de la Culture - DRAC Picardie,</sentence>
+			<sentence>le Conseil Regional de Picardie, le Conseil General de l Aisne and la Ville de Fere-en-Tardenois.</sentence>
+		</section>
+	</english>
+</description>
+

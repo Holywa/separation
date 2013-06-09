@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<credits>
+    <francais>
+        <subtitle>Ont participe ou participent a ce projet, emmenes par Pierre Fourny et Serge Bouchardon</subtitle>
+        <section>
+            <subtitle>Pour ALIS</subtitle>
+            <person>Pierre Fourny, president</person>
+            <person>Patrick Chapus, vice-president de la compagnie</person>
+            <person>Helene Caubel, directrice de production</person>
+            <person>Florine Naude puis Camille Janodet, administratrices</person>
+        </section>
+        
+        <section>
+            <subtitle>Pour le collectif I-Trace</subtitle>
+            <person>Luc Dall  Armellina, auteur, performeur et designer </person>
+            <person>Vincent Volckaert, auteur et developpeur</person>
+            <person>Herve Zenouda, musicien</person>
+        </section>
+        
+        <section>
+            <subtitle>Pour l Universite de Technologie de Compiegne</subtitle>
+            <person>Aurelie Suzanne</person>
+            <person>Marie Collet</person>
+            <person>Olivia Reaney</person>
+            <person>Jeanne Lepetit</person>
+            <person>Jade Copet</person>
+            
+            <person>Vincent Mercier</person>
+            <person>Dany Ferreira</person>
+            <person>Maëva Guerry</person>
+            <person>Laura Daras</person>
+            <person>Gaëlle Raimbaud</person>
+        </section>
+    </francais>
+    
+    
+    <english>
+        <subtitle>People who participated to this project, managed by Pierre Fourny and Serge Bouchardon</subtitle>
+        
+        <section>
+            <subtitle>ALIS</subtitle>
+            <person>Pierre Fourny, president</person>
+            <person>Patrick Chapus, vice-president</person>
+            <person>Helene Caubel, unit production manager</person>
+            <person>Florine Naude and Camille Janodet, administrators</person>
+        </section>
+        
+        <section>
+            <subtitle>I-Trace</subtitle>
+            <person>Luc Dall  Armellina, autor, artist, designer </person>
+            <person>Vincent Volckaert, autor, developer</person>
+            <person>Herve Zenouda, musician</person>
+        </section>
+        
+        <section>
+            <subtitle>Students in the Universite de Technologie de Compiegne</subtitle>
+            <person>Aurelie Suzanne</person>
+            <person>Marie Collet</person>
+            <person>Olivia Reaney</person>
+            <person>Jeanne Lepetit</person>
+            <person>Jade Copet</person>
+            
+            <person>Vincent Mercier</person>
+            <person>Dany Ferreira</person>
+            <person>Maëva Guerry</person>
+            <person>Laura Daras</person>
+            <person>Gaëlle Raimbaud</person>
+        </section>
+                
+    </english>
+</credits>
