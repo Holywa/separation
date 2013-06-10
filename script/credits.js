@@ -74,7 +74,7 @@ function getCreditsMenu(){
 	if(textType=="big"){
 		var kineticText = new Kinetic.Text( {
 			text : text,
-			fontFamily : "DemiHaut",
+			fontFamily : "Century Gothic",
 			fontSize : entireSize,
 			fill : "#FFF",
 			align : "center",
@@ -88,7 +88,7 @@ function getCreditsMenu(){
 	else if (textType=="normal"){
 		var kineticText = new Kinetic.Text( {
 			text : text,
-			fontFamily : "DemiHaut",
+			fontFamily : "Century Gothic",
 			fontSize : demiSize,
 			fill : "#FFF",
 			align : "center",
@@ -106,8 +106,8 @@ function getCreditsMenu(){
 function writeSubtitle(i, sentenceNode){
 	alisDescText = new Kinetic.Text( {
 		text : sentenceNode.textContent,
-		fontFamily : "DemiHaut",
-		fontSize : window.innerWidth*0.018,
+		fontFamily : "Century Gothic",
+		fontSize : window.innerWidth*0.012,
 		fill : "#FFF",
 		align : "center",
 		x : stage.getWidth()/2,
@@ -122,8 +122,8 @@ function writeSubtitle(i, sentenceNode){
 function writePerson(i, j, sentenceNode){
 	alisDescText = new Kinetic.Text( {
 		text : sentenceNode.textContent,
-		fontFamily : "DemiHaut",
-		fontSize : window.innerWidth*0.014,
+		fontFamily : "Century Gothic",
+		fontSize : window.innerWidth*0.009,
 		fill : "#FFF",
 		align : "center",
 		x : stage.getWidth()/2,

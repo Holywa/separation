@@ -6,6 +6,8 @@
 			<sentence>
 				<word font="coupable_haut" next="BOXEUSE">BOUCHER</word>
 				<word>,</word>
+			</sentence>
+			<sentence>
 				<word font="coupable_haut" next="EVE">LUC</word>
 				<word font="coupable_bas" next="DEGUSTE">DECOUPE</word>
 				<word>DU</word>

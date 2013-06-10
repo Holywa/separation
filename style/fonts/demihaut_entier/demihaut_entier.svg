@@ -157,7 +157,7 @@
 <glyph unicode="&#x202f;" horiz-adv-x="304" />
 <glyph unicode="&#x203a;" horiz-adv-x="1394" d="M170 498v565h127v-535l168 -399l170 399v535h127v-535l168 -399l170 399v535h127v-565l-252 -498h-92l-185 371l-186 -371h-94z" />
 <glyph unicode="&#x205f;" horiz-adv-x="381" />
-<glyph unicode="&#xe000;" horiz-adv-x="880" d="M0 0v881h881v-881h-881z" />
+<glyph unicode="&#xe000;" horiz-adv-x="880" d="M0 0v880h880v-880h-880z" />
 <glyph unicode="&#xfb02;" d="M174 342v696h596v-86h-469v-610q0 -152 53 -217q49 -57 115 -57t117 57q57 63 57 217v90h-168v86h295v-176q0 -135 -88 -238q-86 -102 -213 -102t-213 104q-82 100 -82 236z" />
 </font>
 </defs></svg> 

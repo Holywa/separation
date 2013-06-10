@@ -6,6 +6,7 @@
 		//displayVideo("animOIO");
 		setHomeBtn();
 	}, 2000);
+	
 }
 
 
@@ -17,7 +18,7 @@ function initAlisDescMenu(){
 	
 	alisDescTitle = new Kinetic.Text( {
 		text : "La compagnie Alis",
-		fontFamily : "DemiHaut",
+		fontFamily : "Century Gothic",
 		fontSize : titleSize,
 		fill : "#FFF",
 		align : "center",
@@ -55,7 +56,7 @@ function initAlisDescMenu(){
 function writeSentence(i, j, sentenceNode){
 	alisDescText = new Kinetic.Text( {
 		text : sentenceNode.textContent,
-		fontFamily : "DemiHaut",
+		fontFamily : "Century Gothic",
 		fontSize : window.innerWidth*0.015,
 		fill : "#FFF",
 		align : "center",

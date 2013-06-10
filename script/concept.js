@@ -12,9 +12,11 @@ function getConceptMenu() {
 
 
 function initAproposMenu(){
+
+
 	conceptTitle = new Kinetic.Text( {
 		text : "A propos",
-		fontFamily : "DemiHaut",
+		fontFamily : "Century Gothic",
 		fontSize : titleSize,
 		fill : "#FFF",
 		align : "center",

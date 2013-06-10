@@ -51,8 +51,8 @@ loadButtons();
 
 initImages();
 
-//introductionStage();
-initMainMenu();
+introductionStage();
+//initMainMenu();
 
 stage.add(mainLayer);
 stage.add(actionLayer);
@@ -214,7 +214,7 @@ function introductionStage(){
 
 		setTimeout(function(){
 			tween1.finish();
-
+			
 			tween2 = new Kinetic.Tween({
 				node: logo.arc_haut,
 				duration: 6,
@@ -563,7 +563,6 @@ function changeLanguage(lang) {
 	tutorielB.setOffset( tutorielB.getWidth()/2 , tutorielB.getHeight()/2 );
 
 	recitH.setText(activeLang["story"]);
-
 	recitB.setText(activeLang["story"]);
 
 	laboratoireH.setText(activeLang["labo"]);
@@ -572,7 +571,6 @@ function changeLanguage(lang) {
 
 	conceptH.setText(activeLang["concept"]);
 	conceptH.setOffset( conceptH.getWidth()/2, conceptH.getHeight()/2 );
-
 	conceptB.setText(activeLang["concept"]);
 	conceptB.setOffset( conceptB.getWidth()/2 , conceptB.getHeight()/2 );
 
