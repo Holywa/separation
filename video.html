@@ -1,0 +1,83 @@
+ <!doctype html>
+<html>
+	<head>
+	<link rel="stylesheet" href="style/style.css" />
+	<script type="text/javascript">
+	
+	//button. on click: retour main.html
+	function load(){
+		displayVideo("animOIO");
+		
+		setTimeout(function() {
+			window.location='./main.html';
+		}, 20000);	
+	}
+	var screenWidth = window.innerWidth;
+	var screenHeight = window.innerHeight;
+	
+	
+	function displayVideo(videoName){
+		var mainTag=document.getElementsByTagName("body")[0];
+		
+		var videoTag=document.createElement("video");
+		
+		var attTaId=document.createAttribute("id");//ok
+		attTaId.value="animOIO";
+		
+		var attTaId=document.createAttribute("preload");//ok
+		attTaId.value="auto";
+
+		var attTaWidth=document.createAttribute("width");//ok
+		attTaWidth.value=screenWidth;
+		
+		var attTaHeight=document.createAttribute("height");//ok
+		attTaHeight.value=screenHeight;
+		
+		var attControls=document.createAttribute("controls");
+		attControls.value="controls";
+		
+		var attControls=document.createAttribute("autoplay");
+		attControls.value="autoplay";
+		
+		var sourceTag1=document.createElement("source");
+		
+		var attSrc=document.createAttribute("src");
+		attSrc.value=videoName+".mp4";
+		
+		
+		var attType1=document.createAttribute("type");
+		attType1.value="video/mp4";
+		
+
+		var sourceTag2=document.createElement("source");
+		
+		var attSrc2=document.createAttribute("src");
+		attSrc2.value=videoName+".ogg";
+		
+		
+		var attType2=document.createAttribute("type");
+		attType2.value="video/ogg";
+		
+		mainTag.appendChild(videoTag);
+		videoTag.appendChild(sourceTag1);
+		videoTag.appendChild(sourceTag2);
+		
+		videoTag.setAttributeNode(attTaId);
+		videoTag.setAttributeNode(attTaWidth);
+		videoTag.setAttributeNode(attTaHeight);
+		videoTag.setAttributeNode(attControls);
+		sourceTag1.setAttributeNode(attSrc);
+		sourceTag1.setAttributeNode(attType1);	
+		sourceTag2.setAttributeNode(attSrc2);
+		sourceTag2.setAttributeNode(attType2);	
+
+	}
+		
+
+	</script>
+	</head>
+	<body onload="load()">
+	
+	
+	</body>
+</html>

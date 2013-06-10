@@ -14,11 +14,18 @@ var wordsRectKineticGroup;
 var xmlWordsFile;
 */
 
+//function ActiveWord(value, next, type);
+
+
 function play_sound(elemId) {
 	document.getElementById(elemId).play();
 }
 
 function getLaboratoryMenu() {
+
+	// integrer video
+	
+
 	var screenWidth = window.innerWidth;
 	var screenHeight = window.innerHeight;
 	
@@ -39,7 +46,11 @@ function getLaboratoryMenu() {
 	var displayedWord;	
 	
 	load_arrows(); //fleches haut et bas
-	displayedWord = prompt("Give me a word");
+	window.location='./video.html';
+	
+	
+	displayedWord="betise";
+	//displayedWord = prompt("Give me a word");
 	
 	var xhr=getXMLHttpRequest();
 	

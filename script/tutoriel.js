@@ -15,6 +15,7 @@ function getTutorielMenu(langage) {
   var image_dimension = 0.05 * size_font; 
 
   var word1_1;
+
   var img_a, img_b, img_x, img_y, img_width, img_height;
   var word3_fr = 'QUI GLISSE';
   var word2_en = 'which crept';
@@ -47,7 +48,7 @@ function getTutorielMenu(langage) {
     img_height = image_dimension * 283;
 
     word_tear_a = 'SHREDS';
-    word_tear_b = 'CHAS-S';
+    word_tear_b = 'CHASES';
     word4_2 = ' ME';
   }
 
