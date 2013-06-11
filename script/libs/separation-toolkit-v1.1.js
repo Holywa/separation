@@ -229,15 +229,15 @@ Separation.horizontal_move = function(params){
  * détecter des mouvements verticaux
  *
  * @param {Object} paramètres pour dessiner le rectangle : taille du rectangle, placement du rectangle
- * fonction utilisée pour coder cut et rub
+ * fonction utilisée pour scroll
  */
 Separation.vertical_move = function(params){
-  var rTl = 0;
-  var lTr = 0;
-  var x = 0;
-  var oldx = 0;
+  var tTd = 0;
+  var dTt = 0;
+  var y = 0;
+  var oldy = 0;
 
-  var section = params.width / 4;
+  var section = params.height / 6;
 
   function inRectangle(touchPos){
     if(
@@ -248,72 +248,56 @@ Separation.vertical_move = function(params){
     } else { return false; }
   }
 
-  this.downToUp = function(handler){
-    switch(rTl){
+  this.topToDown = function(handler){
+    switch(tTd){
       case 0:
-        if(y > (params.y + section * 3)){ 
-          rTl = 1; 
+        if(y < (params.y + section * 4)){ 
+          tTd = 1; 
         }
         break;
 
       case 1:
-        if(y < oldy){
-          if((y > (params.y + section * 2)) && (y < (params.y + section * 3))){
-            rTl = 2;
+        if(y > oldy){
+          if((y > (params.y + section * 1)) && (y < (params.y + section * 5))){
+            tTd = 2;
           }
-        } else { rTl = 0; }
+        } else { tTd = 0; }
         break;
 
       case 2:
-        if(y < oldy){
-          if((y > (params.y + section)) && (y < (params.y + section * 2))){
-            rTl = 3;
+        if(y > oldy){
+          if((y > (params.y + section*2)) && (y < (params.y + section * 6))){
+            handler();
+			tTd = 0;
           }
-        } else { rTl = 0; }
-        break;
-
-      case 3:
-        if(y < oldy){
-          if(y < (params.y + section)){
-            handler()
-            rTl = 0;
-          }
-        } else { rTl = 0; }
+        } else { tTd = 0; }
         break;
     };
   }
 
-  this.upToDown = function(handler){
-    switch(lTr){
+  this.downToTop = function(handler){
+    switch(dTt){
       case 0:
-        if(y < params.y + section){ 
-          lTr = 1; 
+        if((y < (params.y + section * 6)) && (y > (params.y + section * 2))){ 
+          dTt = 1; 
         }
         break;
 
       case 1:
-        if(y > oldx){
-          if((y > (params.y + section)) && (y < (params.y + section * 2))){
-            lTr = 2;
+        if(y < oldy){
+          if((y < (params.y + section * 5)) && (y > (params.y + section))){
+            dTt = 2;
           }
-        } else { lTr = 0; }
+        } else { dTt = 0; }
         break;
 
       case 2:
-        if(y > oldx){
-          if((y > (params.y + section * 2)) && (y < (params.y + section * 3))){
-            lTr = 3;
+        if(y < oldy){
+          if((y < (params.y + section * 4)) && (y > params.y)){
+            handler();
+			dTt = 0;
           }
-        } else { lTr = 0; }
-        break;
-
-      case 3:
-        if(y > oldy){
-          if(y > params.y + section * 3){
-            handler()
-            lTr = 0;
-          }
-        } else { lTr = 0; }
+        } else { dTt = 0; }
         break;
     };
   }  
@@ -334,17 +318,35 @@ Separation.vertical_move = function(params){
         handler()
       }
       else {
-        rTl = 0;
-        lTr = 0;
+        tTd = 0;
+        dTt = 0;
       }
 
       oldy = y;
-    };
 
+    };
     window.addEventListener("touchmove", detect_touch, false);
   }
 }
 
+/*
+ * Geste qui détecte la séparation d'un mot
+ *
+ * @param {Object} paramètres pour dessiner le rectangle : taille du rectangle, placement du rectangle
+ * @param {Text} type de coupure : "t_d" pour top to down, "d_t" pour le contraire, toutes les autres valeurs pour les deux sens
+ * déclenche la fonction handler dès que la fonction repère un mouvement de coupure
+ * faire attention à définir la fonction après les autres variables pour que le rectangle soit au premier plan
+ */
+Separation.scroll = function(params, type){
+  var detect = new Separation.vertical_move(params);
+
+  this.on = function(handler) {
+    detect.on(function(){
+      if (type != "t_d") {detect.topToDown(handler);}
+      if (type != "d_t") {detect.downToTop(handler);} 
+    });
+  }
+};
 
 /*
  * Geste qui détecte la séparation d'un mot
@@ -550,25 +552,6 @@ Separation.tear = function(params, type){
     };
 
     window.addEventListener("touchmove", detect_touch, false);
-  }
-};
-
-/*
- * Geste qui détecte le scroll sur un mot
- *
- * @param {Object} paramètres pour dessiner le rectangle : taille du rectangle, placement du rectangle
- * @param {Text} type de coupure : "u_d" pour up to down, "d_u" pour le contraire, toutes les autres valeurs pour les deux sens
- * déclenche la fonction handler dès que la fonction repère un mouvement de coupure
- * faire attention à définir la fonction après les autres variables pour que le rectangle soit au premier plan
- */
-Separation.scroll = function(params, type){
-  var detect = new Separation.horizontal_move(params);
-
-  this.on = function(handler) {
-    detect.on(function(){
-      if (type != "u_d") {detect.upToDown(handler);}
-      if (type != "d_u") {detect.downToUp(handler);} 
-    });
   }
 };
 
@@ -1089,5 +1072,34 @@ Separation.tear_animation = function(tear_word){
         }
       }
     });
+  }
+}
+
+/*
+ *  Scrolling story
+ */
+Separation.scrolling = function(story){
+  var waitForScroll = new Separation.scroll({
+			x: story.getX(),
+			y: story.getY(),
+			width: story.getWidth(),
+			height: story.getHeight()
+		});
+
+  var enable = false;
+  
+  this.scrollStory = function(story) {
+  }
+
+  this.start = function(){ enable = true; };
+
+  this.stop = function(){ enable = false; };
+
+  this.play = function(lock){
+    waitForScroll.on(function(){
+      if(enable == true){
+        scrollStory(story);
+        } 
+      });
   }
 }

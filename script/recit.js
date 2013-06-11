@@ -6,6 +6,8 @@ var blank = new Kinetic.Text( {
 	listening : false,
 	} );
 	
+var storyGroup;
+	
 function getStoriesMenu(lang) {
 	clearStage();
 	setHomeBtn();
@@ -75,7 +77,7 @@ function createStoryAlter(story) {
 	
 	var lineStart = returnBtn.getWidth()*1.5;
 	  
-	var storyGroup = new Kinetic.Group({
+	storyGroup = new Kinetic.Group({
         clipFunc: function(canvas) {
             var context = canvas.getContext();
             context.rect(returnBtn.getHeight()*1.5,
@@ -91,9 +93,7 @@ function createStoryAlter(story) {
 	
 	var nbSentences = story.sentences.length;
 	
-	if(nbSentences > maxVisibleLines) { 
-		storyGroup.setListening(true);
-	}
+	var waitForScroll;
 	
 	var lines = 0;
 	
@@ -137,6 +137,12 @@ function createStoryAlter(story) {
 	}
 	mainLayer.add(storyGroup);
 	mainLayer.draw();
+	
+	if(nbSentences > maxVisibleLines) { 
+		//storyGroup.setListening(true);
+		var anim = new Separation.scrolling(storyGroup);
+		anim.start(); 
+	}
 }
 
 function createStoryContinue(sentences) {

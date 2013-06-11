@@ -4,53 +4,53 @@
 		<title>Email</title>
 		<sentences>
 			<sentence>
-				<word>Dear Serge,</word>
+				<word>DEAR SERGE,</word>
 			</sentence>
 			<sentence>
-				<word>On Sunday, you will arrive in</word>
+				<word>ON SUNDAY, YOU WILL ARRIVE IN </word>
 				<word font="ombre" next="CONDOM">LONDON</word>
-				<word>. Please be careful.</word>
+				<word>. PLEASE BE CAREFUL.</word>
 				<word font="ombre" next="CONDOM">LONDON</word>
-				<word>requires precautions.</word>
+				<word> REQUIRES PRECAUTIONS.</word>
 			</sentence>
 			<sentence>
-				<word>The British have a positive view of</word>
+				<word>THE BRITISH HAVE A POSITIVE VIEW OF </word>
 				<word font="coupable_bas" next="CHOR^S">^UROP^</word>
-				<word>and</word>
+				<word> AND </word>
 				<word font="coupable_bas" next="BULLSHIT">^UROP^AN</word>
 				<word>,</word>
 			</sentence>
 			<sentence>
-				<word>but as you know, they refuse the single </word>
+				<word>BUT AS YOU KNOW, THEY REFUSE THE SINGLE </word>
 				<word font="coupable_bas" next="CYB^RS^X">CURR^NCY</word>
 				<word>.</word>
 			</sentence>
 			<sentence>
-				<word>Yet are the</word>
+				<word>YET ARE THE </word>
 				<word font="coupable_bas" next="FR^NCH">ENGLISH</word>
-				<word>and the</word>
+				<word> AND THE </word>
 				<word font="coupable_bas" next="ENGLISH">FR^NCH</word>
-				<word>so different?</word>
+				<word> SO DIFFERENT?</word>
 			</sentence>
 			<sentence>
-				<word>Don't forget to pay a visit to our National historic landmarks such as</word>
-				<word font="coupable_bas" next="DISNEY">BIG-BEN</word>
+				<word>DON'T FORGET TO PAY A VISIT TO OUR NATIONAL HISTORIC LANDMARKS SUCH AS </word>
+				<word font="coupable_bas" next="DISNEY">BIGBEN</word>
 			</sentence>
 			<sentence>
-				<word>landmarks of our cultural heritage like the Globe</word>
+				<word>LANDMARKS OF OUR CULTURAL HERITAGE LIKE THE GLOBE</word>
 			</sentence>
 			<sentence>
-				<word>and of course enjoy the majestic austerity of the city</word>
+				<word>AND OF COURSE ENJOY THE MAJESTIC AUSTERITY OF THE CITY</word>
 			</sentence>
 			<sentence>
-				<word>Finally, welcome to</word>
+				<word>FINALLY, WELCOME TO </word>
 				<word font="coupable_haut" next="LIBERTY">EPOETRY</word>
-				<word>but don't forget,</word>
+				<word> BUT DON'T FORGET, </word>
 				<word font="coupable_haut" next="opium">e-poetry</word>
-				<word>can show two faces!</word>
+				<word> CAN SHOW TWO FACES!</word>
 			</sentence>
 			<sentence>
-				<word>Best wishes,</word>
+				<word>BEST WISHES,</word>
 			</sentence>
 			<sentence>
 				<word font="coupable_bas" next="MAGIC">MARIA</word>

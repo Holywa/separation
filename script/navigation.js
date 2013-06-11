@@ -1,6 +1,7 @@
-﻿window.onload = function() {
+﻿/*window.onload = function() {
 	checkDevice();
-};
+};*/
+document.addEventListener("deviceready", checkDevice, false);
 
 var screenWidth;
 var screenHeight;
@@ -9,6 +10,8 @@ var homeBtn;
 var shuffleBtn;
 var returnBtn;
 
+var images = new Array();
+var sounds = new Array();
 var stage;
 var mainLayer = new Kinetic.Layer();
 var actionLayer = new Kinetic.Layer();
@@ -37,25 +40,26 @@ function readjustSizes() {
 function checkDevice() {
 	readjustSizes();
 
-//Creation of stage with the same size of the device's screen
-stage = new Kinetic.Stage( {
-	container : 'main',
-	width : screenWidth,
-	height : screenHeight
-} );
+	//Creation of stage with the same size of the device's screen
+	stage = new Kinetic.Stage( {
+		container : 'main',
+		width : screenWidth,
+		height : screenHeight
+	} );
 
-//Need to force style in block to not resize the div content of stage
-stage.getContent().style.display = 'block';
+	//Need to force style in block to not resize the div content of stage
+	stage.getContent().style.display = 'block';
 
-loadButtons();
+	loadButtons();
 
-initImages();
+	initImages();
+	initSounds();
 
-introductionStage();
-//initMainMenu();
+	introductionStage();
+	//initMainMenu();
 
-stage.add(mainLayer);
-stage.add(actionLayer);
+	stage.add(mainLayer);
+	stage.add(actionLayer);
 }
 
 function initImages() {
@@ -72,7 +76,34 @@ function initImages() {
 			height : screenHeight*0.075
 		});
 	};
+	
+	images["ombre"] = new Image();
+	images["ombre"] = "imgs/stories/OMBRE.png";
+	images["cygne"] = new Image();
+	images["cygne"] = "imgs/stories/CYGNE.png";
+	images["slicing"] = new Image();
+	images["slicing"] = "imgs/stories/slicing.png";
+	images["shading"] = new Image();
+	images["shading"] = "imgs/stories/shading.png";
 //TODO: load images du tutoriel
+
+//faire un array d'Images avec comme nom le mot
+}
+
+function initSounds() {
+	sounds["cut"] = new Media("/android_asset/www/sounds/Coupable_3.wav");
+	sounds["rub"] = new Media("/android_asset/www/sounds/Ombre_2.wav");
+	sounds["tear"] = new Media("/android_asset/www/sounds/Centrale_1.wav");
+}
+
+// onSuccess Callback
+function onSuccess() {
+	alert("playAudio():Audio Success");
+}
+
+// onError Callback 
+function onError(error) {
+	alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
 }
 
 function loadButtons() {
@@ -307,18 +338,18 @@ function introductionStage(){
 
 		setTimeout(function(){
 			separ_anim();
-		}, 4000)
+		}, 5000)
 
 		setTimeout(function(){
 			separ_cut();
-		}, 6000);
+		}, 5000);
 
 		setTimeout(function(){
 			if(declenched == false){
 				cut_animation();
 				declenched = true;
 			}
-		}, 16000);
+		}, 10000);
 	})	
 
 	mainLayer.add(logo.overall);

@@ -26,8 +26,8 @@ function getTutorielMenu(langage) {
   if(lang == 'fr'){
     word1_1 = 'CETTE ';
 
-    img_a = 'imgs/stories/OMBRE.png';
-    img_b = 'imgs/stories/CYGNE.png';
+    img_a = images["ombre"];
+    img_b = images["cygne"];
     img_x = col;
     img_y = 2*lines + image_y * 3.2;
     img_width = image_dimension * 891 * 0.8;
@@ -39,8 +39,8 @@ function getTutorielMenu(langage) {
   } else {
     word1_1 = 'THIS ';
 
-    img_a = 'imgs/stories/shading.png';
-    img_b = 'imgs/stories/slicing.png';
+    img_a = images['shading'];
+    img_b = images['slicing'];
     img_x = col;
     img_y = 3*lines + image_y;
     img_width = image_dimension * 921;
@@ -203,7 +203,7 @@ function getTutorielMenu(langage) {
       setTimeout(function(){ // attente pour récupérer les bons zooms
         anim = new Separation.cut_animation(cut_word);
         anim.start(); 
-		play_sound('centraleSound');
+		sounds['cut'].play();
       }, 2000);
     }
 
@@ -245,7 +245,7 @@ function getTutorielMenu(langage) {
       setTimeout(function(){ // attente pour récupérer les bons zooms
         anim = new Separation.rub_animation(rub_word);
         anim.start();          
-		play_sound('coupableSound');
+		sounds['rub'].play();
       }, 2000);
     }
 
@@ -287,7 +287,7 @@ function getTutorielMenu(langage) {
       setTimeout(function(){
         anim = new Separation.tear_animation(tear_word);
         anim.start();
-		play_sound('ombreSound');
+		sounds['tear'].play();
       }, 2000)
     }
 

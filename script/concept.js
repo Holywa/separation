@@ -1,4 +1,3 @@
-
 function getConceptMenu() {
 	clearStage();
 	setHomeBtn();
@@ -7,16 +6,10 @@ function getConceptMenu() {
 	actionLayer.draw();
 }
 
-
-
-
-
 function initAproposMenu(){
-
-
 	conceptTitle = new Kinetic.Text( {
 		text : "A propos",
-		fontFamily : "Century Gothic",
+		fontFamily : "DemiHaut",
 		fontSize : titleSize,
 		fill : "#FFF",
 		align : "center",
@@ -118,7 +111,7 @@ function initAproposMenu(){
 	
 	
 	credits.on("tap click", function() {
-		play_sound('centraleSound');
+		sounds['tear'].play();
 		var tweenTitle = new Kinetic.Tween({
 			node: conceptTitle, 
 			duration: 2,
@@ -199,7 +192,7 @@ function initAproposMenu(){
 	
 	
 	AlisDescription.on("tap click", function() {
-		play_sound('centraleSound');
+		sounds['tear'].play();
 		
 		var tweenTitle = new Kinetic.Tween({
 			node: conceptTitle, 

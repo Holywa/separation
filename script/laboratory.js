@@ -14,11 +14,18 @@ var wordsRectKineticGroup;
 var xmlWordsFile;
 */
 
+//function ActiveWord(value, next, type);
+
+
 function play_sound(elemId) {
 	document.getElementById(elemId).play();
 }
 
 function getLaboratoryMenu() {
+
+	// integrer video
+	
+
 	var screenWidth = window.innerWidth;
 	var screenHeight = window.innerHeight;
 	
@@ -33,17 +40,30 @@ function getLaboratoryMenu() {
 	var wordToChoose;
 	var wordToChooseRect;
 	var actualArrayNumber=0; 
+
 	
 	var p1_2_a, p1_2_b, p4_1_d, p4_1_c, p4_1_b, p4_1_a;
 	var userWord;
 	var displayedWord;	
 	
 	load_arrows(); //fleches haut et bas
-	displayedWord = prompt("Give me a word");
+	window.location='./video.html';
+	
+	
+	displayedWord="betise";
+	//displayedWord = prompt("Give me a word");
+	
+	var mainWord;
+	var next="coucou";
+	var type=0;
+	mainWord = new ActiveWord( displayedWord, next, type );	//"up" : 0, "down" : 1, "central" : 2, "shadow" : 3, "err" : -1
+	mainWord.value.group.setX(stage.getWidth()/2);
+	mainWord.value.group.setY(stage.getHeight()/2);	
+	mainLayer.add(mainWord.value.group);
 	
 	var xhr=getXMLHttpRequest();
 	
-	//getXMLresult("0", displayedWord, "min_haut;min_bas"); //requete de la PR
+	//xmlWordsFile=getXMLresult("0", displayedWord, "min_haut;min_bas"); //requete de la PR
 	xmlWordsFile=loadXMLDoc("XML/words_requestResult.xml");
 	
 	
@@ -82,7 +102,7 @@ function getLaboratoryMenu() {
 		
 		title = new Kinetic.Text( {
 			text : "Le laboratoire des mots",
-			fontFamily : "Century Gothic",
+			fontFamily : "DemiHaut",
 			fontSize : titleSize,
 			fill : "#FFF",
 			align : "top",
@@ -90,6 +110,7 @@ function getLaboratoryMenu() {
 			y : stage.getHeight()*0.05
 		} );
 		title.setOffset( title.getWidth()/2, 0 );
+		
 		
 		p1_2_a = new Kinetic.Text( {
 			text : displayedWord,
@@ -582,21 +603,13 @@ function getLaboratoryMenu() {
 				}
 			}
 		}
-		/*
-		for(var k=0;k<5;k++){
-			if (typeof(wordsArray[k+ 5*actualArrayNumber])!='undefined'){
-				wordToChoose[k].on("tap click", function(evt) {
-				p1_2_a.setText(wordToChoose[1].getText()); 
-				p1_2_b.setText(wordToChoose[1].getText());
-				getGoodStage();
-			} );
-		}
-		*/
+
 		if (typeof(wordsArray[1])!='undefined')	{
 			wordToChoose[1].on("tap click", function(evt) {
 				p1_2_a.setText(wordToChoose[1].getText()); 
 				p1_2_b.setText(wordToChoose[1].getText());
-				//coupable_haut_methode(p1_2_a, p1_2_b, procede);
+				//mainWord.setValue(wordToChoose[1].getText());
+				//TODO: ActiveWord.prototype.setValue = function(arg1, arg2, ...) {}
 				getGoodStage();
 			} );
 		}
@@ -645,6 +658,8 @@ function getLaboratoryMenu() {
 		
 		mainLayer.add(p1_2_a);
 		mainLayer.add(p1_2_b);
+		
+		mainLayer.add(mainWord.value.group);
 		
 		if(wordsKineticGroup!=null){
 			mainLayer.add(wordsKineticGroup);
