@@ -26,8 +26,9 @@ function getTutorielMenu(langage) {
   if(lang == 'fr'){
     word1_1 = 'CETTE ';
 
-    img_a = images["ombre"];
-    img_b = images["cygne"];
+    img_a = "imgs/stories/OMBRE.png";
+    img_b = "imgs/stories/CYGNE.png";
+	
     img_x = col;
     img_y = 2*lines + image_y * 3.2;
     img_width = image_dimension * 891 * 0.8;
@@ -39,8 +40,9 @@ function getTutorielMenu(langage) {
   } else {
     word1_1 = 'THIS ';
 
-    img_a = images['shading'];
-    img_b = images['slicing'];
+    img_a = "imgs/stories/shading.png";
+    img_b = "imgs/stories/slicing.png";
+	
     img_x = col;
     img_y = 3*lines + image_y;
     img_width = image_dimension * 921;
@@ -70,13 +72,13 @@ function getTutorielMenu(langage) {
     mot2: 'P^RC^PTION',
     fontSize: demihaut_part_font,
     fill: '#FFF',
-    offsetMot2: - stage.getWidth()*2
+    offsetMot2: stage.getWidth()*2
   });
 
   var word_size_1 = (p1_1.getWidth() + cut_word.group.getWidth()) / 2;
 
   p1_1.setOffset({ x: word_size_1 });
-  cut_word.group.setX(cut_word.group.getX() - word_size_1 + p1_1.getWidth());
+  cut_word.group.setX(Math.abs(cut_word.group.getX() - word_size_1 + p1_1.getWidth()));
 
   actionLayer.add(cut_word.group);
 
@@ -124,7 +126,7 @@ function getTutorielMenu(langage) {
 
   var word_size_3_en = (p3_1_en.getWidth() + rub_word.group.getWidth() + p3_2_en.getWidth()) / 2;
   p3_1_en.setOffset({ x: word_size_3_en });
-  p3_2_en.setOffset({ x: word_size_3_en - p3_1_en.getWidth() - rub_word.group.getWidth() });
+  p3_2_en.setOffset({ x: Math.abs(word_size_3_en - p3_1_en.getWidth() - rub_word.group.getWidth()) });
 
     ////////////////////////////
     // Français
@@ -140,8 +142,8 @@ function getTutorielMenu(langage) {
   p3_1_fr.setOffset({ x: p3_1_fr.getWidth() / 2 });
 
 
-  rub_x = ((lang == 'fr') ? rub_word.group.getWidth() / 2 : word_size_3_en - p3_1_en.getWidth());
-  rub_word.group.setX(rub_word.group.getX() - rub_x);
+  rub_x = ((lang == 'fr') ? rub_word.group.getWidth() / 2 : Math.abs(word_size_3_en - p3_1_en.getWidth()));
+  rub_word.group.setX(Math.abs(rub_word.group.getX() - rub_x));
 
   actionLayer.add(rub_word.group);
 
@@ -168,12 +170,14 @@ function getTutorielMenu(langage) {
 
   var word_size_4 = (tear_word.group.getWidth() + p4_2.getWidth()) / 2;
 
-  tear_word.group.setX(tear_word.group.getX() - word_size_4);
-  p4_2.setOffset({ x: word_size_4 - tear_word.group.getWidth() });
+  tear_word.group.setX(Math.abs(tear_word.group.getX() - word_size_4));
+  p4_2.setOffset({ x: Math.abs(word_size_4 - tear_word.group.getWidth()) });
 
   actionLayer.add(tear_word.group);
 
-  normal_words = new Kinetic.Group();
+  normal_words = new Kinetic.Group( {
+	opacity : 1
+  });
   normal_words.add(p1_1);
   if(lang == 'fr'){ normal_words.add(p3_1_fr); } 
   else {
@@ -196,14 +200,12 @@ function getTutorielMenu(langage) {
 
     var cut_activation = function(){
       node_dark(normal_words);
-      zooming_center(cut_word.group, 2);
-      node_set_opacity(rub_word.group, 0.25 * rub_word.group.getOpacity());
-      node_dark(tear_word.group); 
-
+	  zooming_center(cut_word.group, 2);
+	  node_set_opacity(rub_word.group, 0.25 * rub_word.group.getOpacity());
+	  node_dark(tear_word.group); 
       setTimeout(function(){ // attente pour récupérer les bons zooms
         anim = new Separation.cut_animation(cut_word);
         anim.start(); 
-		sounds['cut'].play();
       }, 2000);
     }
 
@@ -245,7 +247,6 @@ function getTutorielMenu(langage) {
       setTimeout(function(){ // attente pour récupérer les bons zooms
         anim = new Separation.rub_animation(rub_word);
         anim.start();          
-		sounds['rub'].play();
       }, 2000);
     }
 
@@ -287,7 +288,6 @@ function getTutorielMenu(langage) {
       setTimeout(function(){
         anim = new Separation.tear_animation(tear_word);
         anim.start();
-		sounds['tear'].play();
       }, 2000)
     }
 

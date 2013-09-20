@@ -16,6 +16,25 @@
 			</sentence>
 		</sentences>
 	</story>
+	<story type="alter">
+		<title>Separation</title>
+		<sentences>
+			<sentence>
+				<word>CETTE </word>
+				<word font="coupable_bas" next="PERCEPTION">SEPARATION</word>		
+			</sentence>
+			<sentence>
+				<word font="ombre" next="CYGNE">OMBRE</word>		
+			</sentence>
+			<sentence>
+				<word>QUI GLISSE</word>
+			</sentence>
+			<sentence>
+				<word font="centrale" next="SACRE">SABRE</word>
+				<word> NOTRE UNION</word>
+			</sentence>
+		</sentences>
+	</story>
 	<story type="continue">
 		<title>Saison</title>
 		<sentences>

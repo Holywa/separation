@@ -10,22 +10,22 @@ var enXmlPath = "./stories/en_xml.xml";
 var StoryType = {"alter" : 0, "continue" : 1};
 var Transition = {"up" : 0, "down" : 1, "central" : 2, "shadow" : 3, "err" : -1};
 
-function loadXMLDocRecit(lang) {
-	var xmlPath;
-	if(lang == "fr") { xmlPath = frXmlPath; } else { xmlPath = enXmlPath; }
+function loadXMLDoc(xmlPath) {
+	var loadedFile;
 	if(navigator.appname == 'Microsoft Internet Explorer') {
-		xmlFile = new ActiveXObject("Microsoft.XMLDOM");
-		xmlFile.async = false;
-		while(xmlFile.readyState != 4) {};
-		xmlFile.load(xmlPath);
+		loadedFile = new ActiveXObject("Microsoft.XMLDOM");
+		loadedFile.async = false;
+		while(loadedFile.readyState != 4) {};
+		loadedFile.load(xmlPath);
 	}
 	else {
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.open("GET", xmlPath, false);
 		xmlhttp.setRequestHeader('Content-Type', 'text/xml');
 		xmlhttp.send();
-		xmlFile = xmlhttp.responseXML;
+		loadedFile = xmlhttp.responseXML;
 	}
+	return loadedFile;
 }
 
 //Object Story, with its title, its type, and the array of sentences
@@ -71,25 +71,7 @@ function ActiveWord(value, next, type)
 				fill: '#FFF',
 				offsetMot2: - stage.getWidth()*2
 			  });
-			this.value.group.on('tap click', function(){
-				if(lock == 0){
-					lock = 1;
-					//TODO A REFAIRE
-					word_activation(this);
-					setTimeout(function(){ // attente pour récupérer les bons zooms
-						var anim = new Separation.cut_animation(this.value);
-						var can_play = ((lock == 1) ? true : false);
-						anim.start(can_play);          
-
-						var cut_unZoom = new Separation.onCorner();
-						cut_unZoom.on(function(){
-							//TODO A REFAIRE
-							word_desactivation(this.value);
-							lock = 0;
-						});
-					}, 2000);
-				}
-			});
+			
 			break;
 			
 		case Transition["down"] : 
@@ -102,25 +84,7 @@ function ActiveWord(value, next, type)
 				fill: '#FFF',
 				offsetMot2: - stage.getWidth()*2
 			  });
-			this.value.group.on('tap click', function(){
-				if(lock == 0){
-					lock = 1;
-					
-					word_activation(this);
-					
-					setTimeout(function(){ // attente pour récupérer les bons zooms
-						var anim = new Separation.cut_animation(this.value);
-						var can_play = ((lock == 1) ? true : false);
-						anim.start(can_play);          
-
-						var cut_unZoom = new Separation.onCorner();
-						cut_unZoom.on(function(){
-							word_desactivation(this.value);
-							lock = 0;
-							});
-						}, 2000);
-				}
-			});
+			
 			break;
 			
 		case Transition["central"] : 
@@ -134,25 +98,6 @@ function ActiveWord(value, next, type)
 				offsetMot2: - stage.getWidth()*2
 			  });
 			  
-			this.value.group.on('tap click', function(){
-				if(lock == 0){
-					lock = 3;
-					word_activation(this);
-
-					setTimeout(function(){ // attente pour récupérer les bons zooms
-						var anim = new Separation.tear_animation(this.value);
-						var can_play = ((lock == 3) ? true : false);
-						anim.start(((lock == 3) ? true : false));          
-
-						var tear_unZoom = new Separation.onCorner();
-						tear_unZoom.on(function(){
-							word_desactivation(this.value);
-							can_play = false;
-							lock = 0;
-						});
-					}, 2000);
-				}
-			});
 			
 			break;
 			
@@ -167,78 +112,8 @@ function ActiveWord(value, next, type)
 				height : entireSize
 			  });
 			
-			this.value.group.on('tap click', function(){
-				if(lock == 0){
-					lock = 2;
-					//TODO REFAIRE ACTIVATION
-					word_activation(this);
-					setTimeout(function(){
-						var anim = new Separation.rub_animation(this.value);
-						var can_play = ((lock == 2) ? true : false);
-						anim.start(can_play);          
-
-						var rub_unZoom = new Separation.onCorner();
-						rub_unZoom.on(function(){
-							//TODO REFAIRE DEACTIVATION
-							word_desactivation(this.value);
-							lock = 0;
-						});
-					}, 2000); 
-				}
-			});
 			break;
 	}
-}
-
-var previousPos;
-//var currentAnim;
-
-var word_activation = function(word_activated){
-	var words = storyGroup.getChildren().toArray();
-	for(var i = 0; i < words.length; i++) {
-		if(words[i]!=word_activated.value) {
-			node_dark(words[i]);
-		}
-		else {
-			alert("word clicked");
-			previousPos = words[i].getAbsolutePosition();
-			zooming_center(words[i], 2);
-		}
-	}
-	
-	setTimeout(function(){ // attente pour récupérer les bons zooms
-		switch(word_activated.type) {
-			case Transition["up"]:
-			currentAnim	= new Separation.cut_animation(word_activated.value);		
-			break;
-			case Transition["down"]: 
-			currentAnim = new Separation.cut_animation(word_activated.value);
-			break;
-			case Transition["central"]: 
-			currentAnim = new Separation.tear_animation(word_activated.value);
-			break;
-			case Transition["shadow"]: 
-			currentAnim = new Separation.rub_animation(word_activated.value);
-			break;
-		}
-        currentAnim.start(); 
-		//play_sound('centraleSound');
-    }, 2000);     
-}
-
-var word_desactivation = function(word_activated){
-	var words = storyGroup.getChildren().toArray();
-	for(var i = 0; i < words.length; i++) {
-		if(words[i]!=word_activated) {
-			node_light(words[i]);
-		}
-		else {
-			alert("word clicked");
-			node_unzoom(words[i], previousPos.getX(), previousPos.getY());
-		}
-	}
-    
-	anim.stop();
 }
 
 //Getting all stories to display titles

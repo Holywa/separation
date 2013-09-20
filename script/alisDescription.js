@@ -3,12 +3,9 @@
 	setTimeout(function() {
 		clearStage();
 		initAlisDescMenu();
-		//displayVideo("animOIO");
 		setHomeBtn();
 	}, 2000);
 }
-
-
 
 
 function initAlisDescMenu(){
@@ -36,8 +33,6 @@ function initAlisDescMenu(){
 	else{
 		var rootNode=xmlDescFile.getElementsByTagName("francais")[0];
 	}
-	
-	
 
 	for(var i=0;i<rootNode.getElementsByTagName("section").length;i++){
 		sectionNode=rootNode.getElementsByTagName("section").item(i);
@@ -46,9 +41,6 @@ function initAlisDescMenu(){
 			writeSentence(i, j, sentenceNode);
 		}
 	}
-	
-	
-	
 }
 
 
@@ -121,5 +113,3 @@ function displayVideo(videoName){
 	sourceTag2.setAttributeNode(attType2);	
 
 }
-
-

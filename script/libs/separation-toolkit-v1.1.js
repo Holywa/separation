@@ -706,7 +706,7 @@ function word_ombre(params){
     width: params.width,
     height: params.height
   });
-  imageObj1.onload = function() { this.img_a };
+  imageObj1.onload = function() { mainLayer.draw(); };
   
   this.img_b = new Kinetic.Image({
     image: imageObj2,
@@ -714,7 +714,7 @@ function word_ombre(params){
     height: params.height,
     opacity: 0
   });
-  imageObj2.onload = function() { this.img_b };
+  imageObj2.onload = function() { mainLayer.draw(); };
 
   this.group = new Kinetic.Group({
     x: params.x,
@@ -798,7 +798,7 @@ function node_set_opacity(node, opacity){
   var tween = new Kinetic.Tween({
     node: node,
     duration: 1,
-    opacity: opacity
+    opacity: Math.abs(opacity)
   });
   tween.play();
 };
@@ -921,6 +921,7 @@ Separation.cut_animation = function(cut_word){
   this.play = function(){
     couper.on(function(){
       if(enable == true){
+		sounds['cut'].play();
         if(sens == true){
           animation_cut(cut_word.bas_a, cut_word.bas_b);
           sens = false;
@@ -989,6 +990,7 @@ Separation.rub_animation = function(rub_word){
   this.play = function(){
     frotter.on(function(){
       if(enable == true){
+		sounds['rub'].play();
         var new_op = new_opacity();
 
         var tween_a = new Kinetic.Tween({
@@ -1063,6 +1065,7 @@ Separation.tear_animation = function(tear_word){
   this.play = function(lock){
     dechirer.on(function(){
       if(enable == true){
+		sounds['tear'].play();
         if(sens == true){
           animation_tear(tear_word.center_a, tear_word.center_b);
           sens = false;
@@ -1072,34 +1075,5 @@ Separation.tear_animation = function(tear_word){
         }
       }
     });
-  }
-}
-
-/*
- *  Scrolling story
- */
-Separation.scrolling = function(story){
-  var waitForScroll = new Separation.scroll({
-			x: story.getX(),
-			y: story.getY(),
-			width: story.getWidth(),
-			height: story.getHeight()
-		});
-
-  var enable = false;
-  
-  this.scrollStory = function(story) {
-  }
-
-  this.start = function(){ enable = true; };
-
-  this.stop = function(){ enable = false; };
-
-  this.play = function(lock){
-    waitForScroll.on(function(){
-      if(enable == true){
-        scrollStory(story);
-        } 
-      });
   }
 }

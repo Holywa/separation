@@ -2,108 +2,26 @@
 <html>
 	<head>
 	<link rel="stylesheet" href="style/style.css" />
-	<script type="text/javascript" src="script/libs/webintent.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="script/libs/Html5Video.js"></script>
 	<script type="text/javascript">
 	
-	// deviceready is PhoneGap's init event
-	/*document.addEventListener('ondevice', function () {
-		window.plugins.webintent.getExtra(WebIntent.EXTRA\_TEXT, function (url) {
-		// url is the value of EXTRA_TEXT 
-		}, function() {
-		// There was no extra supplied.
+	document.addEventListener("deviceReady", function() {
+		window.plugins.html5Video.initialize( { names:video } );
+		document.addEventListener("click", function() {
+			window.plugins.html5Video.play("names", function() {
+				window.location='./main.html'; 
+			});
 		});
-	});*/
-	
-	function load(){
-		displayVideo("/android_asset/www/videos/PRENOMS");
-/*		setTimeout(function() {
-			window.location='./main.html';
-		}, 20000);	
-*/
-	}
-
-	var screenWidth = window.innerWidth;
-	var screenHeight = window.innerHeight;
-	
-	
-	function displayVideo(videoName){
-		var boolPlay=true;
-		var mainTag=document.getElementsByTagName("body")[0];
-		
-		var videoTag=document.createElement("video");
-		
-		var attTaId=document.createAttribute("id");//ok
-		attTaId.value="prenom";
-		
-		var attTaAuto=document.createAttribute("autobuffer");//ok
-		attTaAuto.value="autobuffer";
-		 
-		
-		var attTaPre=document.createAttribute("preload");//ok
-		attTaPre.value="auto";
-
-		var attTaWidth=document.createAttribute("width");//ok
-		attTaWidth.value=screenWidth;
-		
-		var attOnClick=document.createAttribute("onclick");//ok
-		attOnClick.value="var video=document.getElementsByTagName('video')[0]; if(video.ended==true){window.location='./main.html'} if(video.paused==false){ video.pause();} else{video.play(); }";
-		
-		var attTaHeight=document.createAttribute("height");//ok
-		attTaHeight.value=screenHeight;
-		
-		var sourceTag1=document.createElement("source");
-		
-		var attSrc=document.createAttribute("src");
-		attSrc.value=videoName+".mp4";
-		
-		
-		var attType1=document.createAttribute("type");
-		attType1.value="video/mp4";
-		
-
-		var sourceTag2=document.createElement("source");
-		
-		var attSrc2=document.createAttribute("src");
-		attSrc2.value=videoName+".ogv";
-		
-		
-		var attType2=document.createAttribute("type");
-		attType2.value="video/ogv";
-		
-		mainTag.appendChild(videoTag);
-		videoTag.appendChild(sourceTag1);
-		videoTag.appendChild(sourceTag2);
-		
-		videoTag.setAttributeNode(attTaAuto);
-		
-		videoTag.setAttributeNode(attTaId);
-		videoTag.setAttributeNode(attTaWidth);
-		videoTag.setAttributeNode(attTaHeight);
-		//videoTag.setAttributeNode(attOnClick);
-		
-		sourceTag1.setAttributeNode(attSrc);	
-		sourceTag2.setAttributeNode(attSrc2);
-		
-		
-		var video = document.getElementsByTagName('video')[0];
-		video.addEventListener('click',function(){
-			alert(video.src);
-			if(video.ended==true){
-				window.location='./main.html';
-			}
-			if(video.paused==false){
-				video.pause();
-			}
-			else{
-				video.play();
-			}
-		},false);
-	}
-		
+	},false);	
 
 	</script>
 	</head>
-	<body onload="load()">
-	
+	<body>
+	<br />
+	<br />
+	<center>
+	<video id="names">Your browser doesn't support videos.</video>
+	</center>
 	</body>
 </html>

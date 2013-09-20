@@ -1,44 +1,31 @@
-﻿/*window.onload = function() {
+﻿if(appOnDevice()) {
+	document.addEventListener("deviceReady", checkDevice, false);
+	}
+else {
 	checkDevice();
-};*/
-document.addEventListener("deviceready", checkDevice, false);
+}
 
-var screenWidth;
-var screenHeight;
+document.body.addEventListener('touchmove', function(event) {
+  event.preventDefault();
+}, false); 
 
-var homeBtn;
-var shuffleBtn;
-var returnBtn;
+function appOnDevice() {
+	return true;
+}
 
-var images = new Array();
-var sounds = new Array();
-var stage;
-var mainLayer = new Kinetic.Layer();
-var actionLayer = new Kinetic.Layer();
-
-var titleSize;
-var demiSize;
-var entireSize;
-var centraleSize;
-
-var maxVisibleLines = 5;
-
-var en = {"tuto" : "help", "story" : "story", "labo" : "labo", "concept" : "about", "lang" : "fr"};
-var fr = {"tuto" : "aide", "story" : "recit", "labo" : "labo", "concept" : "a propos", "lang" : "en"};
-var activeLang = fr;
-
-function readjustSizes() {
+function computeSizes() {
 	screenWidth = window.innerWidth;
 	screenHeight = window.innerHeight;
 	
 	titleSize = 0.1*screenHeight;
 	entireSize = 0.1*screenHeight;
-	demiSize = (0.1*screenHeight)*(6/11);
-	centraleSize = (0.1*screenHeight)*(9/11);
+	/*Need to compute sizes because font sizes or not the same between central, normal and cut fonts.*/
+	demiSize = entireSize*(6/11);
+	centraleSize = entireSize*(9/11);
 }
 
 function checkDevice() {
-	readjustSizes();
+	computeSizes();
 
 	//Creation of stage with the same size of the device's screen
 	stage = new Kinetic.Stage( {
@@ -76,34 +63,52 @@ function initImages() {
 			height : screenHeight*0.075
 		});
 	};
-	
-	images["ombre"] = new Image();
-	images["ombre"] = "imgs/stories/OMBRE.png";
-	images["cygne"] = new Image();
-	images["cygne"] = "imgs/stories/CYGNE.png";
-	images["slicing"] = new Image();
-	images["slicing"] = "imgs/stories/slicing.png";
-	images["shading"] = new Image();
-	images["shading"] = "imgs/stories/shading.png";
-//TODO: load images du tutoriel
-
-//faire un array d'Images avec comme nom le mot
+	var arrowUpImg = new Image();
+	arrowUpImg.src = "imgs/btns/arrow_up.png";
+	arrowUpImg.onload = function() {
+		arrowUp = new Kinetic.Image({
+			x : 0,
+			y : - screenHeight,
+			listening : true,
+			image: arrowUpImg,
+			offset: { x : 0 , y : 0 },
+			width : entireSize,
+			height : entireSize
+		});
+	};
+	var arrowDownImg = new Image();
+	arrowDownImg.src = "imgs/btns/arrow_down.png";
+	arrowDownImg.onload = function() {
+		arrowDown = new Kinetic.Image({
+			x : 0,
+			y : - screenHeight,
+			listening : true,
+			image: arrowDownImg,
+			offset: { x : 0 , y : 0 },
+			width : entireSize,
+			height : entireSize
+		});
+	};
 }
 
 function initSounds() {
 	sounds["cut"] = new Media("/android_asset/www/sounds/Coupable_3.wav");
 	sounds["rub"] = new Media("/android_asset/www/sounds/Ombre_2.wav");
 	sounds["tear"] = new Media("/android_asset/www/sounds/Centrale_1.wav");
+	sounds["ambiant"] = new Media("/android_asset/www/sounds/ambiant.wav");
 }
 
-// onSuccess Callback
-function onSuccess() {
-	alert("playAudio():Audio Success");
+btnFunctions['home'] = function () {
+	clearStage();
+	getMainMenu();
 }
-
-// onError Callback 
-function onError(error) {
-	alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+btnFunctions['shuffle'] = function () {
+	clearStage();
+	getRandomStory();
+}
+btnFunctions['return'] = function () {
+	clearStage();
+	getStoriesMenu();
 }
 
 function loadButtons() {
@@ -119,10 +124,7 @@ function loadButtons() {
 			height : screenHeight*0.075
 		});
 		homeBtn.setOffset(0,homeBtn.getHeight());
-		homeBtn.on("tap click", function() {
-			clearStage();
-			getMainMenu();
-		} );
+		homeBtn.on("tap", btnFunctions['home']);
 	};
 
 	var shuffleImg = new Image();
@@ -137,10 +139,7 @@ function loadButtons() {
 			height : screenHeight*0.075
 		});
 		shuffleBtn.setOffset(shuffleBtn.getWidth(),shuffleBtn.getHeight());
-		shuffleBtn.on("tap click", function() {
-			clearStage();
-			getRandomStory();
-		} );
+		shuffleBtn.on("tap", btnFunctions['shuffle']);
 	};
 
 	var returnImg = new Image();
@@ -155,10 +154,7 @@ function loadButtons() {
 			height : screenHeight*0.075
 		});
 		returnBtn.setOffset(0,0);
-		returnBtn.on("tap click", function() {
-			clearStage();
-			getStoriesMenu();
-		} );
+		returnBtn.on("tap", btnFunctions['return']);
 	};
 }
 
@@ -185,7 +181,9 @@ function clearStage() {
 	actionLayer.draw();
 }
 
+/*Starting animation : to avoid this during debug, comment the line where this function is called*/
 function introductionStage(){
+	sounds['ambiant'].play();
 	mainLayer.removeChildren();
 	actionLayer.removeChildren();
 
@@ -233,6 +231,13 @@ function introductionStage(){
 		y: - separ_bas.getHeight() + separation_size_font
 	});
 
+	var tween1, tween2, tween3, tween4, tween5, tween6, tween7, tween8;
+
+	mainLayer.add(logo.overall);
+	mainLayer.add(separ_haut);
+	mainLayer.add(separ_bas);
+	mainLayer.add(rect_logo);
+	
 	function logo_anim(){
 		tween1 = new Kinetic.Tween({
 			node: logo.overall,
@@ -245,7 +250,7 @@ function introductionStage(){
 
 		setTimeout(function(){
 			tween1.finish();
-			
+
 			tween2 = new Kinetic.Tween({
 				node: logo.arc_haut,
 				duration: 6,
@@ -294,7 +299,7 @@ function introductionStage(){
 
 	declenched = false;
 
-	function cut_animation(){
+	function cut_anim(){
 		tween7 = new Kinetic.Tween({
 			node: separ_bas,
 			duration: 4,
@@ -314,6 +319,20 @@ function introductionStage(){
 		tween8.play();	
 
 		setTimeout(function(){
+			tween1.destroy();
+			tween2.destroy();
+			tween3.destroy();
+			tween4.destroy();
+			tween5.destroy();
+			tween6.destroy();
+			tween7.destroy();
+			tween8.destroy();
+			logo.overall.destroy();
+			separ_haut.destroy();
+			separ_bas.destroy();
+			rect_logo.destroy();
+			mainLayer.clear();
+			actionLayer.clear();
 			initMainMenu();
 		}, 4000);
 	}
@@ -329,40 +348,37 @@ function introductionStage(){
 		cut.on(function(){
 			declenched = true;
 
-			cut_animation();
+			cut_anim();
 		});
 	}
 
-	rect_logo.on('tap click', function(){
+	rect_logo.on('tap', function(){
 		logo_anim();
 
 		setTimeout(function(){
 			separ_anim();
-		}, 5000)
+		}, 4000)
 
 		setTimeout(function(){
 			separ_cut();
-		}, 5000);
+		}, 6000);
 
 		setTimeout(function(){
 			if(declenched == false){
-				cut_animation();
+				cut_anim();
 				declenched = true;
 			}
-		}, 10000);
+		}, 16000);
 	})	
-
-	mainLayer.add(logo.overall);
-	mainLayer.add(separ_haut);
-	mainLayer.add(separ_bas);
-	mainLayer.add(rect_logo);
 
 	mainLayer.draw();
 	actionLayer.draw();
 }
 
-//Creating the main menu
+//Creating the main menu interface
 function initMainMenu() {
+	sounds['ambiant'].stop();
+	
 	mainLayer.removeChildren();
 	actionLayer.removeChildren();
 
@@ -511,7 +527,7 @@ function initMainMenu() {
 		x : stage.getWidth() / 2,
 		y : stage.getHeight() * 0.2,
 		listening : true,
-		opacity: opacite
+		opacity: opacite / 3
 	} );
 
 	en_w = new Kinetic.Text( {
@@ -523,7 +539,7 @@ function initMainMenu() {
 		x : stage.getWidth() / 2,
 		y : stage.getHeight() * 0.2,
 		listening : true,
-		opacity: opacite / 3
+		opacity: opacite 
 	} );
 
 	trait = new Kinetic.Text( {
@@ -543,34 +559,47 @@ function initMainMenu() {
 	en_w.setOffset(lang_size / 2 - fr_w.getWidth() - trait.getWidth(), 0);
 
 
-	tutoriel.on("tap click", function() {
+	tutoriel.on("click", function() {
 		var langue = "fr";
 		if(activeLang == en) {
 			langue = "en";
 		}
 		getTutorielMenu(langue);
 	} );
-	recit.on("tap click", function() {
+	recit.on("click", function() {
 		var langue = "fr";
 		if(activeLang == en) {
 			langue = "en";
 		}
 		getStoriesMenu(langue);
 	} );
-	laboratoire.on("tap click", function() {
-		getLaboratoryMenu();
+	laboratoire.on("click", function() {
+		if(navigator.connection.type == Connection.NONE)
+		{
+			var errorMsg = "";
+			if(activeLang == fr) {
+				errorMsg = "Impossible d'utiliser le labo des mots : aucune connection détectée.";
+			}
+			else {
+				errorMsg = "Can not use the word lab : no connection detected.";
+			}
+			alert(errorMsg);
+		}
+		else {
+			getLaboratoryMenu();
+		}
 	} );
-	concept.on("tap click", function() {
+	concept.on("click", function() {
 		getConceptMenu();
 	} );
-	fr_w.on("tap click", function() {
-		fr_w.setOpacity(opacite);
-		en_w.setOpacity(opacite/3);
+	fr_w.on("click", function() {
+		fr_w.setOpacity(opacite/3);
+		en_w.setOpacity(opacite);
 		changeLanguage(fr);	
 	});
-	en_w.on("tap click", function(){
-		en_w.setOpacity(opacite);
-		fr_w.setOpacity(opacite/3);
+	en_w.on("click", function(){
+		en_w.setOpacity(opacite/3);
+		fr_w.setOpacity(opacite);
 		changeLanguage(en);
 	});
 
@@ -578,12 +607,8 @@ function initMainMenu() {
 }
 
 function changeLanguage(lang) {
-	if(lang == fr) {
-		activeLang = fr;
-	}
-	else {
-		activeLang = en;
-	}
+	if(lang == fr) { activeLang = fr; }
+	else { activeLang = en; }
 	
 	alreadyReadXML = false;
 	
@@ -594,21 +619,31 @@ function changeLanguage(lang) {
 	tutorielB.setOffset( tutorielB.getWidth()/2 , tutorielB.getHeight()/2 );
 
 	recitH.setText(activeLang["story"]);
+	recitH.setOffset( recitH.getWidth()/2, recitH.getHeight()/2 );
+	
 	recitB.setText(activeLang["story"]);
+	recitB.setOffset( recitB.getWidth()/2, recitB.getHeight()/2 );
 
 	laboratoireH.setText(activeLang["labo"]);
+	laboratoireH.setOffset( laboratoireH.getWidth()/2, laboratoireH.getHeight()/2 );	
 
 	laboratoireB.setText(activeLang["labo"]);
+	laboratoireB.setOffset( laboratoireB.getWidth()/2, laboratoireB.getHeight()/2 );	
 
 	conceptH.setText(activeLang["concept"]);
 	conceptH.setOffset( conceptH.getWidth()/2, conceptH.getHeight()/2 );
+	
 	conceptB.setText(activeLang["concept"]);
 	conceptB.setOffset( conceptB.getWidth()/2 , conceptB.getHeight()/2 );
 
 	mainLayer.draw();
 }
 
+/*Displaying the main menu interface*/
 function getMainMenu() {
+	inTuto = false;
+	inLab = false;
+
 	mainLayer.add(tutorielH);
 	mainLayer.add(tutorielB);
 	mainLayer.add(recitH);

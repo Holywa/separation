@@ -57,4 +57,25 @@
 			</sentence>
 		</sentences>
 	</story>
+	<story type="alter">
+		<title>Separation</title>
+		<sentences>
+			<sentence>
+				<word>THIS </word>
+				<word font="coupable_bas" next="PERCEPTION">SEPARATION</word>		
+			</sentence>
+			<sentence>
+				<word>which crept</word>		
+			</sentence>
+			<sentence>
+				<word>in the </word>
+				<word font="ombre" next="slicing">shading</word>
+				<word> of words</word>
+			</sentence>
+			<sentence>
+				<word font="centrale" next="CHASES">SHREDS</word>
+				<word> ME</word>
+			</sentence>
+		</sentences>
+	</story>
 </stories>

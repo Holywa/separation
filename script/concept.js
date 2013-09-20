@@ -17,22 +17,11 @@ function initAproposMenu(){
 		y : stage.getHeight()*0.05
 	} );
 	conceptTitle.setOffset( conceptTitle.getWidth()/2, 0 );
-
-//a modifier...	
-	screenWidth = window.innerWidth;
-	screenHeight = window.innerHeight;
-	
-	var titleSizeConcept = 0.10*screenHeight;
-	var entireSizeConcept = 0.05*screenHeight;
-	var demiSizeConcept = (entireSizeConcept*6)/11;
-	var centraleSizeConcept = (entireSizeConcept*9)/11;
-// jusque là
-
 	
 	creditsH = new Kinetic.Text( {
 		text : "credits",
 		fontFamily : "DemiHautH",
-		fontSize : demiSizeConcept,
+		fontSize : demiSize/2,
 		fill : "#FFF",
 		align : "center",
 		x : stage.getWidth()/2,
@@ -43,7 +32,7 @@ function initAproposMenu(){
 	creditsB = new Kinetic.Text( {
 		text : "credits",
 		fontFamily : "DemiHautB",
-		fontSize : demiSizeConcept,
+		fontSize : demiSize/2,
 		fill : "#FFF",
 		align : "center",
 		offset : { x :creditsH.getWidth()/2,
@@ -66,7 +55,7 @@ function initAproposMenu(){
 	AlisDescriptionH = new Kinetic.Text( {
 		text : "la compagnie alis",
 		fontFamily : "DemiHautH",
-		fontSize : demiSizeConcept,
+		fontSize : demiSize/2,
 		fill : "#FFF",
 		align : "center",
 		x : stage.getWidth()/2,
@@ -77,7 +66,7 @@ function initAproposMenu(){
 	AlisDescriptionB = new Kinetic.Text( {
 		text : "la compagnie alis",
 		fontFamily : "DemiHautB",
-		fontSize : demiSizeConcept,
+		fontSize : demiSize/2,
 		fill : "#FFF",
 		align : "center",
 		offset : { x :AlisDescriptionH.getWidth()/2,
@@ -105,9 +94,6 @@ function initAproposMenu(){
 	actionLayer.add(AlisDescriptionH);
 	actionLayer.add(AlisDescription);
 	actionLayer.add(credits);
-	
-	
-	
 	
 	
 	credits.on("tap click", function() {
@@ -188,9 +174,7 @@ function initAproposMenu(){
 		
 	});
 	
-	
-	
-	
+		
 	AlisDescription.on("tap click", function() {
 		sounds['tear'].play();
 		
@@ -268,27 +252,5 @@ function initAproposMenu(){
 		
 		getAlisDescMenu();
 	});
-
-
 	
-}
-
-function play_sound(elemId) {
-
-	document.getElementById(elemId).play();
-	
-	/*
-	soundManager.url = 'soundmanager/swf/';
-
-    soundManager.onready(function() {
-        soundManager.createSound({
-            id: 'mySound',
-            url: '/path/to/an.mp3',
-			preferFlash : false
-        });
-
-        // ...and play it
-        soundManager.play('mySound');
-    });
-	*/
 }
